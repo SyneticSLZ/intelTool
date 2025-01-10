@@ -54,7 +54,7 @@ searchPatents(searchTerm) {
     async fetchPatentData(companyName) {
         try {
             // Get historical data
-            const historicalResponse = await fetch('http://localhost:3000/api/company-patents', {
+            const historicalResponse = await fetch('https://intelbackend.onrender.com/api/company-patents', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

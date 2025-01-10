@@ -1,7 +1,7 @@
 // async function renderProductPortfolio(companyName) {
 //     try {
 //         // Fetch FDA data
-//         const response = await fetch('http://localhost:3000/api/company-fda-filings', {
+//         const response = await fetch('https://intelbackend.onrender.com/api/company-fda-filings', {
 //             method: 'POST',
 //             headers: {
 //                 'Content-Type': 'application/json'
@@ -359,7 +359,7 @@ async function renderFDADashboard(companyName) {
                 document.getElementById('table-skeleton')?.classList.remove('hidden');
                 document.getElementById('loading-spinner')?.classList.remove('hidden');
         
-        const response = await fetch('http://localhost:3000/api/fda', {
+        const response = await fetch('https://intelbackend.onrender.com/api/fda', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ companyName })

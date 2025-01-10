@@ -1553,7 +1553,7 @@ const data = metrics.metrics
 
 async function getCompetitorMetrics(cik) {
     try {
-        const response = await fetch(`http://localhost:3000/api/competitor/${cik}`);
+        const response = await fetch(`https://intelbackend.onrender.com/api/competitor/${cik}`);
         const data = await response.json();
         
         if (response.ok) {
@@ -1580,8 +1580,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     document.getElementById('industry').textContent = companyData.industry
 
 //     // Example frontend call
-// const response = await fetch('http://localhost:3000/api/fda', {
-//     const response = await fetch('http://localhost:3000/api/fda', {
+// const response = await fetch('https://intelbackend.onrender.com/api/fda', {
+//     const response = await fetch('https://intelbackend.onrender.com/api/fda', {
 //         method: 'POST',
 //         headers: { 'Content-Type': 'application/json' },
 //         body: JSON.stringify({

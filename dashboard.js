@@ -126,32 +126,32 @@ class CompetitorDashboard {
 
     // API Calls
     async fetchCompanyOverview(company) {
-        const response = await fetch(`http://localhost:3000/company/${symbol}/overview`);
+        const response = await fetch(`https://intelbackend.onrender.com/company/${symbol}/overview`);
         return response.json();
     }
 
     async fetchPatentData(company) {
-        const response = await fetch(`http://localhost:3000/api/patents/${company}`);
+        const response = await fetch(`https://intelbackend.onrender.com/api/patents/${company}`);
         return response.json();
     }
 
     async fetchFDAData(company) {
-        const response = await fetch(`http://localhost:3000/api/fda/${company}`);
+        const response = await fetch(`https://intelbackend.onrender.com/api/fda/${company}`);
         return response.json();
     }
 
     async fetchNewsData(company) {
-        const response = await fetch(`http://localhost:3000/company/${company}/news/latest`);
+        const response = await fetch(`https://intelbackend.onrender.com/company/${company}/news/latest`);
         return response.json();
     }
 
     async fetchSEOData(company) {
-        const response = await fetch(`http://localhost:3000/api/seo/${company}`);
+        const response = await fetch(`https://intelbackend.onrender.com/api/seo/${company}`);
         return response.json();
     }
 
     async fetchTwitterData(company) {
-        const response = await fetch(`http://localhost:3000/api/twitter/${company}`);
+        const response = await fetch(`https://intelbackend.onrender.com/api/twitter/${company}`);
         return response.json();
     }
 

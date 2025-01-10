@@ -258,7 +258,7 @@
 
         async function fetchNews(clientData) {
             try {
-                const response = await fetch('http://localhost:3000/api/news', {
+                const response = await fetch('https://intelbackend.onrender.com/api/news', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -279,7 +279,7 @@
 
         async function fetchPatents(clientData) {
             try {
-                const response = await fetch('http://localhost:3000/api/patents', {
+                const response = await fetch('https://intelbackend.onrender.com/api/patents', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -312,7 +312,7 @@
 
         async function fetchFDAFilings(clientData) {
             try {
-                const response = await fetch('http://localhost:3000/api/fda-filings', {
+                const response = await fetch('https://intelbackend.onrender.com/api/fda-filings', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -339,7 +339,7 @@
 
         async function fetchFundingRounds(clientData) {
             try {
-                const response = await fetch('http://localhost:3000/api/funding-rounds', {
+                const response = await fetch('https://intelbackend.onrender.com/api/funding-rounds', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
