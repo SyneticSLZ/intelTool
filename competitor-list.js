@@ -254,57 +254,59 @@ const components = {
     competitorRow: {
         render(competitor) {
             return `
-                <tr class="hover:bg-gray-50">
-                    <td class="px-6 py-4 whitespace-nowrap">
-                        <div class="flex items-center">
-                            <div class="ml-4">
-                                <div class="text-sm font-medium text-gray-900">${competitor.name}</div>
-                                <div class="text-sm text-gray-500">${competitor.industry}</div>
-                            </div>
+            <tr class="hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-200">
+                <td class="px-6 py-4 whitespace-nowrap">
+                    <div class="flex items-center">
+                        <div class="ml-4">
+                            <div class="text-sm font-medium text-gray-900 dark:text-white">${competitor.name}</div>
+                            <div class="text-sm text-gray-500 dark:text-gray-400">${competitor.industry}</div>
                         </div>
-                    </td>
-
-                    <td class="px-6 py-4 whitespace-nowrap">
-                        <div class="flex items-center">
-                            ${this.renderMarketPosition(competitor.marketPosition)}
-                        </div>
-                    </td>
-                    <td class="px-6 py-4">
-                        <div class="space-y-2">
-                            ${this.renderRecentActivities(competitor.recentActivities)}
-                        </div>
-                    </td>
-                    <td class="px-6 py-4 whitespace-nowrap">
-                        ${this.renderStrategicImpact(competitor.strategicImpact)}
-                    </td>
-                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                        <button onclick="app.viewCompetitor(${competitor.id})" class="text-blue-600 hover:text-blue-900 mr-3">
-                            View
-                        </button>
-                        <button onclick="app.editCompetitor(${competitor.id})" class="text-green-600 hover:text-green-900 mr-3">
-                            Edit
-                        </button>
-                        <button onclick="app.deleteCompetitor(${competitor.id})" class="text-red-600 hover:text-red-900">
-                            Delete
-                        </button>
-                    </td>
-                </tr>
-            `;
-        },
+                    </div>
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap">
+                    <div class="flex items-center">
+                        ${this.renderMarketPosition(competitor.marketPosition)}
+                    </div>
+                </td>
+                <td class="px-6 py-4">
+                    <div class="space-y-2">
+                        ${this.renderRecentActivities(competitor.recentActivities)}
+                    </div>
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap">
+                    ${this.renderStrategicImpact(competitor.strategicImpact)}
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                    <button onclick="app.viewCompetitor(${competitor.id})" 
+                        class="text-starkey-blue hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300 mr-3 transition-colors duration-200">
+                        View
+                    </button>
+                    <button onclick="app.editCompetitor(${competitor.id})" 
+                        class="text-green-600 hover:text-green-700 dark:text-green-400 dark:hover:text-green-300 mr-3 transition-colors duration-200">
+                        Edit
+                    </button>
+                    <button onclick="app.deleteCompetitor(${competitor.id})" 
+                        class="text-red-600 hover:text-red-700 dark:text-red-400 dark:hover:text-red-300 transition-colors duration-200">
+                        Delete
+                    </button>
+                </td>
+            </tr>
+        `;
+    },
 
         renderMarketPosition(position) {
             const colors = {
-                'Market Leader': 'bg-green-100 text-green-800',
-                'Challenger': 'bg-blue-100 text-blue-800',
-                'Follower': 'bg-yellow-100 text-yellow-800'
+                'Market Leader': 'bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200',
+                'Challenger': 'bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200',
+                'Follower': 'bg-yellow-100 dark:bg-yellow-900 text-yellow-800 dark:text-yellow-200'
             };
-
+    
             return `
-                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full 
-                    ${colors[position.type] || 'bg-gray-100 text-gray-800'}">
+                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full transition-colors duration-200
+                    ${colors[position.type] || 'bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200'}">
                     ${position.type}
                 </span>
-                <span class="ml-2 text-sm text-gray-500">
+                <span class="ml-2 text-sm text-gray-500 dark:text-gray-400">
                     Rank #${position.rank}
                 </span>
             `;
@@ -320,26 +322,31 @@ const components = {
 
             return activities.map(activity => `
                 <div class="flex items-center text-sm">
-                    <i class="fas ${icons[activity.type]} text-gray-400 mr-2"></i>
-                    <span class="truncate">${activity.title}</span>
+                    <i class="fas ${icons[activity.type]} text-gray-400 dark:text-gray-500 mr-2"></i>
+                    <span class="truncate text-gray-900 dark:text-gray-300">${activity.title}</span>
                 </div>
             `).join('');
+        
         },
 
         renderStrategicImpact(impact) {
-            const threatColor = impact.threat === 'High' ? 'text-red-600' : 'text-yellow-600';
-            const opportunityColor = impact.opportunity === 'High' ? 'text-green-600' : 'text-blue-600';
-
+            const threatColor = impact.threat === 'High' 
+                ? 'text-red-600 dark:text-red-400' 
+                : 'text-yellow-600 dark:text-yellow-400';
+            const opportunityColor = impact.opportunity === 'High' 
+                ? 'text-green-600 dark:text-green-400' 
+                : 'text-blue-600 dark:text-blue-400';
+    
             return `
                 <div class="space-y-1">
                     <div class="flex items-center">
-                        <span class="text-sm ${threatColor}">
+                        <span class="text-sm ${threatColor} transition-colors duration-200">
                             <i class="fas fa-exclamation-triangle mr-1"></i>
                             ${impact.threat} Threat
                         </span>
                     </div>
                     <div class="flex items-center">
-                        <span class="text-sm ${opportunityColor}">
+                        <span class="text-sm ${opportunityColor} transition-colors duration-200">
                             <i class="fas fa-star mr-1"></i>
                             ${impact.opportunity} Opportunity
                         </span>
@@ -352,39 +359,39 @@ const components = {
     quickView: {
         render(competitor) {
             return `
-                <div class="grid grid-cols-2 gap-6">
-                    <div>
-                        <h4 class="text-lg font-medium mb-4">Company Overview</h4>
-                        <div class="space-y-4">
-                            <div>
-                                <p class="text-sm text-gray-600">Industry</p>
-                                <p class="text-base font-medium">${competitor.industry}</p>
-                            </div>
-                            <div>
-                                <p class="text-sm text-gray-600">Revenue</p>
-                                <p class="text-base font-medium">$${(competitor.keyMetrics.revenue / 1e9).toFixed(1)}B</p>
-                            </div>
-                            <div>
-                                <p class="text-sm text-gray-600">Market Share</p>
-                                <p class="text-base font-medium">${competitor.keyMetrics.marketShare}%</p>
-                            </div>
+            <div class="grid grid-cols-2 gap-6">
+                <div>
+                    <h4 class="text-lg font-medium mb-4 text-gray-900 dark:text-white">Company Overview</h4>
+                    <div class="space-y-4">
+                        <div>
+                            <p class="text-sm text-gray-600 dark:text-gray-400">Industry</p>
+                            <p class="text-base font-medium text-gray-900 dark:text-white">${competitor.industry}</p>
                         </div>
-                    </div>
-                    <div>
-                        <h4 class="text-lg font-medium mb-4">Recent Activities</h4>
-                        <div class="space-y-4">
-                            ${competitor.recentActivities.map(activity => `
-                                <div>
-                                    <p class="text-sm font-medium">${activity.title}</p>
-                                    <p class="text-sm text-gray-600">${activity.date}</p>
-                                </div>
-                            `).join('')}
+                        <div>
+                            <p class="text-sm text-gray-600 dark:text-gray-400">Revenue</p>
+                            <p class="text-base font-medium text-gray-900 dark:text-white">$${(competitor.keyMetrics.revenue / 1e9).toFixed(1)}B</p>
+                        </div>
+                        <div>
+                            <p class="text-sm text-gray-600 dark:text-gray-400">Market Share</p>
+                            <p class="text-base font-medium text-gray-900 dark:text-white">${competitor.keyMetrics.marketShare}%</p>
                         </div>
                     </div>
                 </div>
-            `;
-        }
+                <div>
+                    <h4 class="text-lg font-medium mb-4 text-gray-900 dark:text-white">Recent Activities</h4>
+                    <div class="space-y-4">
+                        ${competitor.recentActivities.map(activity => `
+                            <div>
+                                <p class="text-sm font-medium text-gray-900 dark:text-white">${activity.title}</p>
+                                <p class="text-sm text-gray-600 dark:text-gray-400">${activity.date}</p>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            </div>
+        `;
     }
+}
 };
 
 // Application Logic
@@ -403,16 +410,16 @@ const app = {
             });
         });
 
-        // Search
-        document.getElementById('search-input').addEventListener('input', (e) => {
-            this.handleSearch(e.target.value);
-        });
+        // // Search
+        // document.getElementById('search-input').addEventListener('input', (e) => {
+        //     this.handleSearch(e.target.value);
+        // });
 
-        // View toggle
-        document.getElementById('view-toggle').addEventListener('click', () => {
-            state.view = state.view === 'table' ? 'grid' : 'table';
-            this.render();
-        });
+        // // View toggle
+        // document.getElementById('view-toggle').addEventListener('click', () => {
+        //     state.view = state.view === 'table' ? 'grid' : 'table';
+        //     this.render();
+        // });
 
         // Add competitor button
         document.getElementById('add-competitor-btn').addEventListener('click', () => {

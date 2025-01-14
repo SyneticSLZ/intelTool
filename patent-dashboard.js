@@ -233,7 +233,13 @@ searchPatents(searchTerm) {
         if (recentPatentsTable && data.recentPatents.length > 0) {
             recentPatentsTable.innerHTML = data.recentPatents.map(patent => `
                 <tr>
-                    <td class="px-6 py-4 whitespace-nowrap">${patent.number}</td>
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            <a href="https://patents.google.com/patent/US${patent.number}"
+                               target="_blank"
+                               class="text-blue-600 hover:text-blue-800 hover:underline">
+                                ${patent.number}
+                            </a>
+                        </td>
                     <td class="px-6 py-4">${patent.title}</td>
                     <td class="px-6 py-4">${patent.date}</td>
                     <td class="px-6 py-4">
@@ -264,7 +270,13 @@ searchPatents(searchTerm) {
         if (patentTableBody && data.historicalPatents.length > 0) {
             patentTableBody.innerHTML = data.historicalPatents.map(patent => `
                 <tr>
-                    <td class="px-6 py-4 whitespace-nowrap">${patent.number}</td>
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            <a href="https://patents.google.com/patent/US${patent.number}"
+                               target="_blank"
+                               class="text-blue-600 hover:text-blue-800 hover:underline">
+                                ${patent.number}
+                            </a>
+                        </td>
                     <td class="px-6 py-4">${patent.title}</td>
                     <td class="px-6 py-4">${patent.date}</td>
                     <td class="px-6 py-4">
@@ -312,7 +324,13 @@ searchPatents(searchTerm) {
                 console.log("yes")
                 patentTableBody.innerHTML = patents.map(patent => `
                     <tr>
-                        <td class="px-6 py-4 whitespace-nowrap">${patent.number}</td>
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            <a href="https://patents.google.com/patent/US${patent.number}"
+                               target="_blank"
+                               class="text-blue-600 hover:text-blue-800 hover:underline">
+                                ${patent.number}
+                            </a>
+                        </td>
                         <td class="px-6 py-4">${patent.title}</td>
                         <td class="px-6 py-4">${patent.date}</td>
                         <td class="px-6 py-4">
