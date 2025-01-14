@@ -8,38 +8,89 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
-
+    <script>
+        // Configure Tailwind with Starkey's colors
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        starkey: {
+                            blue: '#0072CE',
+                            dark: '#1a1a1a',
+                            gray: '#4A5568'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .dark-mode-transition {
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+    </style>
 </head>
-<body class="bg-gray-100">
+<body class="bg-gray-100 dark:bg-gray-900 transition-colors duration-200">
     <!-- Navigation (Same as list view) -->
-    <nav class="bg-white shadow-lg">
+    <nav class="bg-white dark:bg-gray-800 shadow-lg transition-colors duration-200">
         <div class="max-w-7xl mx-auto px-4">
             <div class="flex justify-between items-center h-16">
                 <div class="flex items-center">
                     <div class="flex-shrink-0">
-                        <img src="./starkey-seeklogo.svg"   width="120" height="70 "alt="">
+                        <img src="./starkey-seeklogo.svg" width="120" height="70" alt="Starkey Logo" class="dark:brightness-200">
                     </div>
                     <div class="hidden md:block">
                         <div class="ml-10 flex items-baseline space-x-4">
-                            <a href="./indexold.html"   style="display: none;" class="text-gray-600 hover:bg-gray-100 px-3 py-2 rounded-md text-sm font-medium">Dashboard</a>
-                            <a href="#"  class="bg-blue-500 text-white px-3 py-2 rounded-md text-sm font-medium">Companies</a>
-                            <a href="./updatedindex.html" class="text-gray-600 hover:bg-gray-100 px-3 py-2 rounded-md text-sm font-medium">Industry</a>
-                            <a href="./startups.html"  style="display: none;" class="text-gray-600 hover:bg-gray-100 px-3 py-2 rounded-md text-sm font-medium">Startups</a>
-                            <a href="./Intelligence.html" class="text-gray-600 hover:bg-gray-100 px-3 py-2 rounded-md text-sm font-medium">Intelligence</a>
-                            <a href="./reports.html"  style="display: none;" class="text-gray-600 hover:bg-gray-100 px-3 py-2 rounded-md text-sm font-medium">Reports</a>
-                            <a href="./settings.html"  style="display: none;" class="text-gray-600 hover:bg-gray-100 px-3 py-2 rounded-md text-sm font-medium">Settings</a>
-                        </div>
-                        
+                            <a href="./indexold.html" style="display: none;" 
+                           class="text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200">
+                            Dashboard
+                        </a>
+                        <a href="#" 
+                           class="bg-starkey-blue text-white px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200">
+                            Companies
+                        </a>
+                        <a href="./updatedindex.html" 
+                           class="text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200">
+                            Industry
+                        </a>
+                        <a href="./startups.html" style="display: none;" 
+                           class="text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200">
+                            Startups
+                        </a>
+                        <a href="./Intelligence.html" 
+                           class="text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200">
+                            Intelligence
+                        </a>
+                        <a href="./reports.html" style="display: none;" 
+                           class="text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200">
+                            Reports
+                        </a>
+                        <a href="./settings.html" style="display: none;" 
+                           class="text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200">
+                            Settings
+                        </a>
                     </div>
                 </div>
+            </div>
+
                 <div class="flex items-center space-x-4">
-                    <div class="relative">
-                        <input type="text" id="search-input" class="bg-gray-100 rounded-full px-4 py-2 w-64 focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Search competitors...">
-                    </div>
-                    <button id="view-toggle" class="px-4 py-2 bg-gray-200 hover:bg-gray-300 rounded-md flex items-center">
-                        <i class="fas fa-table-list mr-2"></i>
-                        <span>View Style</span>
-                    </button>
+                    <div id="dark-mode-toggle" 
+                    class="p-2 rounded-full text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-200">
+                <i class="fas fa-sun dark:hidden"></i>
+                <i class="fas fa-moon hidden dark:inline"></i>
+            </div>
+            <div class="relative">
+                <input type="text" id="search-input" 
+                       class="bg-gray-100 dark:bg-gray-700 dark:text-white rounded-full px-4 py-2 w-64 focus:outline-none focus:ring-2 focus:ring-starkey-blue transition-colors duration-200" 
+                       placeholder="Search competitors...">
+            </div>
+            <button id="view-toggle" 
+                    class="px-4 py-2 bg-gray-200 dark:bg-gray-700 dark:text-white hover:bg-gray-300 dark:hover:bg-gray-600 rounded-md flex items-center transition-colors duration-200">
+                <i class="fas fa-table-list mr-2"></i>
+                <span>View Style</span>
+            </button>
+
                 </div>
             </div>
         </div>
@@ -50,25 +101,26 @@
 
     <!-- Main Content -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <!-- Header with Company Overview -->
-        <div class="bg-white rounded-lg shadow-lg p-6 mb-8">
+        <!-- Company Overview -->
+        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 mb-8 transition-colors duration-200">
             <div class="flex justify-between items-start">
                 <div>
                     <div class="flex items-center space-x-4">
-                        <h1 id='title' class="text-3xl font-bold text-gray-900">3M Corporation</h1>
-                        <span class="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm">Manufacturing</span>
+                        <h1 id="title" class="text-3xl font-bold text-gray-900 dark:text-white">3M Corporation</h1>
+                        <span class="px-3 py-1 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 rounded-full text-sm">Manufacturing</span>
                     </div>
-                    <p id="industry" class="mt-2 text-gray-600">Global manufacturing and technology company</p>
+                    <p id="industry" class="mt-2 text-gray-600 dark:text-gray-400">Global manufacturing and technology company</p>
                 </div>
                 <div class="flex space-x-4">
-                    <button class="px-4 py-2 bg-gray-100 text-gray-700 rounded hover:bg-gray-200">
+                    <button class="px-4 py-2 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors duration-200">
                         <i class="fas fa-file-export mr-2"></i>Export Analysis
                     </button>
-                    <button class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">
+                    <button class="px-4 py-2 bg-starkey-blue text-white rounded hover:bg-blue-600 transition-colors duration-200">
                         <i class="fas fa-edit mr-2"></i>Edit Details
                     </button>
                 </div>
             </div>
+        </div>
 
             <!-- Quick Stats -->
             <div class="grid grid-cols-6 gap-6 mt-6" style="display: none;">
@@ -102,29 +154,30 @@
 
 
         <!-- Analysis Tabs -->
-        <div class="bg-white rounded-lg shadow-lg p-6">
-            <div class="border-b border-gray-200">
-                <nav class="-mb-px flex space-x-8">
-                    <button class="border-blue-500 text-blue-600 whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm">
+        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 transition-colors duration-200">
+            <div class="border-b border-gray-200 dark:border-gray-700">
+                <nav class="-mb-px flex space-x-8" aria-label="Tabs">
+                    <button class="tab-button text-starkey-blue dark:text-blue-400 whitespace-nowrap py-4 px-1 border-b-2 border-starkey-blue font-medium text-sm transition-colors duration-200">
                         Market Analysis
                     </button>
-                    <button class="text-gray-500 hover:text-gray-700 whitespace-nowrap py-4 px-1 border-b border-transparent font-medium text-sm">
+                    <button class="tab-button text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 whitespace-nowrap py-4 px-1 border-b-2 border-transparent font-medium text-sm transition-colors duration-200">
                         Product Portfolio
                     </button>
-                    <button class="text-gray-500 hover:text-gray-700 whitespace-nowrap py-4 px-1 border-b border-transparent font-medium text-sm">
+                    <button class="tab-button text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 whitespace-nowrap py-4 px-1 border-b-2 border-transparent font-medium text-sm transition-colors duration-200">
                         Technology & Patents
                     </button>
-                    <button class="text-gray-500 hover:text-gray-700 whitespace-nowrap py-4 px-1 border-b border-transparent font-medium text-sm">
+                    <button style="display: none;" class="tab-button text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 whitespace-nowrap py-4 px-1 border-b-2 border-transparent font-medium text-sm transition-colors duration-200">
                         Digital Presence
                     </button>
-                    <button class="text-gray-500 hover:text-gray-700 whitespace-nowrap py-4 px-1 border-b border-transparent font-medium text-sm">                       
-                         Strategic Initiatives
+                    <button class="tab-button text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 whitespace-nowrap py-4 px-1 border-b-2 border-transparent font-medium text-sm transition-colors duration-200">                       
+                        Strategic Initiatives
                     </button>
-                    <button class="text-gray-500 hover:text-gray-700 whitespace-nowrap py-4 px-1 border-b border-transparent font-medium text-sm">
+                    <button class="tab-button text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 whitespace-nowrap py-4 px-1 border-b-2 border-transparent font-medium text-sm transition-colors duration-200">
                         Financial Analysis
                     </button>
                 </nav>
             </div>
+        
 
             
 
@@ -132,84 +185,77 @@
             <div class="mt-6">
 
                 <!-- Market Analysis Section -->
-                <div id="market-analysis-content" class="space-y-6">
-                    <!-- Market Share Analysis -->
-<!-- Company Overview Content -->
-<!-- <div id="company-overview-content" class="space-y-6"> -->
+<!-- Market Analysis Content -->
+<div id="market-analysis-content" class="space-y-6">
     <!-- Recent Activity Timeline -->
-    <div class="bg-white rounded-lg shadow p-6">
+    <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-6 transition-colors duration-200">
         <div class="p-4">
-            <h3 class="text-lg font-semibold mb-4">Recent Company Activity</h3>
+            <h3 class="text-lg font-semibold mb-4 text-gray-900 dark:text-white">Recent Company Activity</h3>
             <div class="space-y-4">
-              <div class="flex">
-                <div class="flex flex-col items-center">
-                  <div class="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center">
-                   <i class="fas fa-lightbulb text-white"></i>   
-                  </div>
-                  <div class="flex-1 w-px bg-gray-300 h-full"></div>
+                <div class="flex">
+                    <div class="flex flex-col items-center">
+                        <div class="w-8 h-8 bg-blue-500 dark:bg-blue-600 rounded-full flex items-center justify-center">
+                            <i class="fas fa-lightbulb text-white"></i>   
+                        </div>
+                        <div class="flex-1 w-px bg-gray-300 dark:bg-gray-600 h-full"></div>
+                    </div>
+                    <div class="flex-1 ml-4 mb-6">
+                        <div class="font-medium text-gray-900 dark:text-white">Patent Filed: Fluorochemical Composition</div>
+                        <div class="text-sm text-gray-600 dark:text-gray-400">US Patent App. 17/982,432 - Method for producing fluoropolymer materials with enhanced properties</div>
+                        <div class="text-xs text-gray-500 dark:text-gray-500 mt-1">December 28, 2024</div>
+                    </div>
                 </div>
-                <div class="flex-1 ml-4 mb-6">
-                  <div class="font-medium">Patent Filed: Fluorochemical Composition</div>
-                  <div class="text-sm text-gray-600">US Patent App. 17/982,432 - Method for producing fluoropolymer materials with enhanced properties</div>
-                  <div class="text-xs text-gray-500 mt-1">December 28, 2024</div>
-                </div>
-              </div>
       
-              <div class="flex">
-                <div class="flex flex-col items-center">
-                  <div class="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center">
-                    <i class="fas fa-file-medical text-white"></i> 
-                  </div>
-                  <div class="flex-1 w-px bg-gray-300 h-full"></div>
+                <div class="flex">
+                    <div class="flex flex-col items-center">
+                        <div class="w-8 h-8 bg-green-500 dark:bg-green-600 rounded-full flex items-center justify-center">
+                            <i class="fas fa-file-medical text-white"></i> 
+                        </div>
+                        <div class="flex-1 w-px bg-gray-300 dark:bg-gray-600 h-full"></div>
+                    </div>
+                    <div class="flex-1 ml-4 mb-6">
+                        <div class="font-medium text-gray-900 dark:text-white">FDA 510(k) Clearance Received</div>
+                        <div class="text-sm text-gray-600 dark:text-gray-400">Scotchbond™ Universal Plus Adhesive - K243789</div>
+                        <div class="text-xs text-gray-500 dark:text-gray-500 mt-1">December 15, 2024</div>
+                    </div>
                 </div>
-                <div class="flex-1 ml-4 mb-6">
-                  <div class="font-medium">FDA 510(k) Clearance Received</div>
-                  <div class="text-sm text-gray-600">Scotchbond™ Universal Plus Adhesive - K243789</div>
-                  <div class="text-xs text-gray-500 mt-1">December 15, 2024</div>
-                </div>
-              </div>
       
-              <div class="flex">
-                <div class="flex flex-col items-center">
-                  <div class="w-8 h-8 bg-purple-500 rounded-full flex items-center justify-center">
-                    <i class="fas fa-chart-line text-white"></i> 
-                  </div>
+                <div class="flex">
+                    <div class="flex flex-col items-center">
+                        <div class="w-8 h-8 bg-purple-500 dark:bg-purple-600 rounded-full flex items-center justify-center">
+                            <i class="fas fa-chart-line text-white"></i> 
+                        </div>
+                    </div>
+                    <div class="flex-1 ml-4">
+                        <div class="font-medium text-gray-900 dark:text-white">Q3 2024 Form 10-Q Filed</div>
+                        <div class="text-sm text-gray-600 dark:text-gray-400">Quarterly Report with SEC - Revenue $8.2B</div>
+                        <div class="text-xs text-gray-500 dark:text-gray-500 mt-1">November 30, 2024</div>
+                    </div>
                 </div>
-                <div class="flex-1 ml-4">
-                  <div class="font-medium">Q3 2024 Form 10-Q Filed</div>
-                  <div class="text-sm text-gray-600">Quarterly Report with SEC - Revenue $8.2B</div>
-                  <div class="text-xs text-gray-500 mt-1">November 30, 2024</div>
-                </div>
-              </div>
             </div>
-          </div>
-
-
+        </div>
+    </div>
 
     <!-- News and Market Sentiment -->
     <div class="gap-6">
-        <div class="bg-white rounded-lg shadow p-6">
-            <h3 class="text-lg font-semibold mb-4">Latest News</h3>
+        <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-6 transition-colors duration-200">
+            <h3 class="text-lg font-semibold mb-4 text-gray-900 dark:text-white">Latest News</h3>
             <div class="space-y-4" id="newsContainer">
                 <!-- News items will be dynamically inserted here -->
             </div>
         </div>
-        <!-- <div class="bg-white rounded-lg shadow p-6" >
-            <h3 class="text-lg font-semibold mb-4">Market Sentiment</h3>
-            <canvas id="sentiment-trend-chart" class="w-full h-64"></canvas>
-        </div> -->
     </div>
 
     <!-- Strategic Focus Areas -->
-    <div class="bg-white rounded-lg shadow p-6">
-        <h3 class="text-lg font-semibold mb-4">Strategic Focus Areas</h3>
+    <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-6 transition-colors duration-200">
+        <h3 class="text-lg font-semibold mb-4 text-gray-900 dark:text-white">Strategic Focus Areas</h3>
         <div class="grid grid-cols-3 gap-6">
-            <div class="bg-blue-50 rounded-lg p-4">
+            <div class="bg-blue-50 dark:bg-blue-900/30 rounded-lg p-4 transition-colors duration-200">
                 <div class="flex items-center mb-2">
-                    <i class="fas fa-microscope text-blue-600 mr-2"></i>
-                    <h4 class="font-medium">R&D Initiatives</h4>
+                    <i class="fas fa-microscope text-blue-600 dark:text-blue-400 mr-2"></i>
+                    <h4 class="font-medium text-gray-900 dark:text-white">R&D Initiatives</h4>
                 </div>
-                <div class="text-sm text-gray-600">
+                <div class="text-sm text-gray-600 dark:text-gray-400">
                     <ul class="space-y-2">
                         <li>Advanced Materials Research</li>
                         <li>AI-Driven Manufacturing</li>
@@ -217,12 +263,12 @@
                     </ul>
                 </div>
             </div>
-            <div class="bg-green-50 rounded-lg p-4">
+            <div class="bg-green-50 dark:bg-green-900/30 rounded-lg p-4 transition-colors duration-200">
                 <div class="flex items-center mb-2">
-                    <i class="fas fa-globe text-green-600 mr-2"></i>
-                    <h4 class="font-medium">Market Expansion</h4>
+                    <i class="fas fa-globe text-green-600 dark:text-green-400 mr-2"></i>
+                    <h4 class="font-medium text-gray-900 dark:text-white">Market Expansion</h4>
                 </div>
-                <div class="text-sm text-gray-600">
+                <div class="text-sm text-gray-600 dark:text-gray-400">
                     <ul class="space-y-2">
                         <li>Southeast Asia Growth</li>
                         <li>European Market Entry</li>
@@ -230,12 +276,12 @@
                     </ul>
                 </div>
             </div>
-            <div class="bg-purple-50 rounded-lg p-4">
+            <div class="bg-purple-50 dark:bg-purple-900/30 rounded-lg p-4 transition-colors duration-200">
                 <div class="flex items-center mb-2">
-                    <i class="fas fa-chart-pie text-purple-600 mr-2"></i>
-                    <h4 class="font-medium">Business Development</h4>
+                    <i class="fas fa-chart-pie text-purple-600 dark:text-purple-400 mr-2"></i>
+                    <h4 class="font-medium text-gray-900 dark:text-white">Business Development</h4>
                 </div>
-                <div class="text-sm text-gray-600">
+                <div class="text-sm text-gray-600 dark:text-gray-400">
                     <ul class="space-y-2">
                         <li>Strategic Acquisitions</li>
                         <li>Partnership Programs</li>
@@ -245,11 +291,7 @@
             </div>
         </div>
     </div>
-<!-- </div> -->
-                   
-                </div>
-                </div>
-
+</div>
                     <!-- Product Portfolio Analysis -->
                      <!-- Product Portfolio Analysis -->
 <!-- <div id="product-portfolio-content" class="hidden space-y-6">
@@ -1103,6 +1145,9 @@
 <div id="loading-spinner" class="hidden fixed inset-0 bg-white bg-opacity-75 flex items-center justify-center z-50">
     <div class="animate-spin rounded-full h-32 w-32 border-b-2 border-blue-500"></div>
 </div>
+
+
+
                     <!-- Technology & Patents Content -->
     <div id="technology-patents-content" class="hidden space-y-6">
 
@@ -1518,7 +1563,7 @@
 </div>
 
     <!-- Strategic Initiatives Content -->
-    <div id="strategic-initiatives-content" class="hidden space-y-6">
+<div id="strategic-initiatives-content" class="hidden space-y-6">
         <!-- Twitter Section -->
     <!-- <div class="mb-6"> -->
         <!-- <h3 class="text-xl font-semibold mb-4">Twitter Analytics</h3> -->
@@ -1786,6 +1831,44 @@
 
     <script type="module"  src="competitor-analysis.js"></script>
     <script>
+        document.addEventListener('DOMContentLoaded', function() {
+    // Dark mode toggle functionality
+    const darkModeToggle = document.getElementById('dark-mode-toggle');
+    const html = document.documentElement;
+
+    // Check for saved theme preference or system preference
+    const darkMode = localStorage.getItem('darkMode') === 'true' || 
+                    (!localStorage.getItem('darkMode') && 
+                     window.matchMedia('(prefers-color-scheme: dark)').matches);
+    
+    // Set initial dark mode state
+    if (darkMode) {
+        html.classList.add('dark');
+    }
+
+    // Toggle dark mode
+    darkModeToggle.addEventListener('click', function() {
+        html.classList.toggle('dark');
+        localStorage.setItem('darkMode', html.classList.contains('dark'));
+    });
+
+    // Tab functionality
+    const tabs = document.querySelectorAll('.tab-button');
+    
+    tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+            // Remove active state from all tabs
+            tabs.forEach(t => {
+                t.classList.remove('text-starkey-blue', 'dark:text-blue-400', 'border-starkey-blue');
+                t.classList.add('text-gray-500', 'dark:text-gray-400', 'border-transparent');
+            });
+
+            // Add active state to clicked tab
+            tab.classList.remove('text-gray-500', 'dark:text-gray-400', 'border-transparent');
+            tab.classList.add('text-starkey-blue', 'dark:text-blue-400', 'border-starkey-blue');
+        });
+    });
+});
         // Enhanced digital presence data structure
 const digitalPresenceData = {
     socialMedia: {
@@ -2420,26 +2503,30 @@ function updateNewsSection() {
     if (!newsContainer) return;
 
     const newsHtml = companyOverviewData.news.map(news => `
-        <div class="border-l-4 ${getSentimentColor(news.sentiment)} pl-4">
-            <div class="font-medium">${news.title}</div>
-            <div class="flex justify-between text-sm text-gray-500 mt-1">
-                <span>${news.source}</span>
-                <span>${news.date}</span>
-            </div>
+    <div class="border-l-4 ${getSentimentColor(news.sentiment)} pl-4 transition-colors duration-200">
+        <div class="font-medium text-gray-900 dark:text-white">${news.title}</div>
+        <div class="flex justify-between text-sm text-gray-500 dark:text-gray-400 mt-1">
+            <span>${news.source}</span>
+            <span>${news.date}</span>
         </div>
-    `).join('');
+    </div>
+`).join('');
 
-    newsContainer.innerHTML = newsHtml;
+newsContainer.innerHTML = newsHtml;
 }
+
+
+
 
 function getSentimentColor(sentiment) {
     const colors = {
-        positive: 'border-green-500',
-        neutral: 'border-gray-500',
-        negative: 'border-red-500'
+        positive: 'border-green-500 dark:border-green-400',
+        neutral: 'border-gray-500 dark:border-gray-400',
+        negative: 'border-red-500 dark:border-red-400'
     };
     return colors[sentiment] || colors.neutral;
 }
+
 
 function initializeSentimentChart() {
     const ctx = document.getElementById('sentiment-trend-chart');

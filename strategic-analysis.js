@@ -22,15 +22,31 @@ const formatCurrency = (num) => new Intl.NumberFormat('en-US', {
 }).format(num);
 
 // Chart Colors
-const chartColors = [
-    { main: 'rgba(59, 130, 246, 0.8)', light: 'rgba(147, 197, 253, 0.8)' }, // Blue
-    { main: 'rgba(16, 185, 129, 0.8)', light: 'rgba(110, 231, 183, 0.8)' }, // Green
-    { main: 'rgba(139, 92, 246, 0.8)', light: 'rgba(167, 139, 250, 0.8)' }, // Purple
-    { main: 'rgba(245, 158, 11, 0.8)', light: 'rgba(252, 211, 77, 0.8)' }, // Amber
-    { main: 'rgba(239, 68, 68, 0.8)', light: 'rgba(252, 165, 165, 0.8)' }  // Red
-];
+const chartColors = {
+    light: [
+        { main: 'rgba(59, 130, 246, 0.8)', light: 'rgba(147, 197, 253, 0.8)' },
+        { main: 'rgba(16, 185, 129, 0.8)', light: 'rgba(110, 231, 183, 0.8)' },
+        { main: 'rgba(139, 92, 246, 0.8)', light: 'rgba(167, 139, 250, 0.8)' },
+        { main: 'rgba(245, 158, 11, 0.8)', light: 'rgba(252, 211, 77, 0.8)' },
+        { main: 'rgba(239, 68, 68, 0.8)', light: 'rgba(252, 165, 165, 0.8)' }
+    ],
+    dark: [
+        { main: 'rgba(96, 165, 250, 0.8)', light: 'rgba(191, 219, 254, 0.8)' },
+        { main: 'rgba(52, 211, 153, 0.8)', light: 'rgba(167, 243, 208, 0.8)' },
+        { main: 'rgba(167, 139, 250, 0.8)', light: 'rgba(196, 181, 253, 0.8)' },
+        { main: 'rgba(251, 191, 36, 0.8)', light: 'rgba(253, 230, 138, 0.8)' },
+        { main: 'rgba(248, 113, 113, 0.8)', light: 'rgba(254, 202, 202, 0.8)' }
+    ]
+};
 
-const getChartColors = (index) => chartColors[index % chartColors.length];
+// const getChartColors = (index) => chartColors[index % chartColors.length];
+
+
+function getChartColors(index) {
+    const isDark = document.documentElement.classList.contains('dark');
+    const colors = isDark ? chartColors.dark : chartColors.light;
+    return colors[index % colors.length];
+}
 
 // Data Processing Functions
 const calculateMarketShare = (data) => {
@@ -92,6 +108,7 @@ function createMarketSharePieChart(canvas, data, title) {
         options: {
             responsive: true,
             maintainAspectRatio: false,
+            
             plugins: {
                 title: {
                     display: true,
@@ -482,11 +499,11 @@ const processExcelData = async () => {
 
 function createChartContainer(title, data) {
     const container = document.createElement('div');
-    container.className = 'mb-8 p-6 bg-white rounded-lg shadow';
+    container.className = 'mb-8 p-6 bg-white dark:bg-gray-800 rounded-lg shadow transition-colors duration-200';
     
     // Chart header
     const header = document.createElement('h3');
-    header.className = 'text-xl font-bold mb-4 text-gray-800';
+    header.className = 'text-xl font-bold mb-4 text-gray-800 dark:text-white transition-colors duration-200';
     header.textContent = title;
     
     // Chart wrapper
@@ -505,20 +522,22 @@ function createChartContainer(title, data) {
     
     // Create table header
     const thead = document.createElement('thead');
-    thead.className = 'bg-gray-50';
+    thead.className = 'bg-gray-50 dark:bg-gray-700 transition-colors duration-200';
     thead.innerHTML = `
-        <tr>
-            <th class="px-4 py-2 text-left font-medium text-gray-500">Brand</th>
-            <th class="px-4 py-2 text-right font-medium text-gray-500">Current Sales ($)</th>
-            <th class="px-4 py-2 text-right font-medium text-gray-500">Current Share (%)</th>
-            <th class="px-4 py-2 text-right font-medium text-gray-500">Previous Sales ($)</th>
-            <th class="px-4 py-2 text-right font-medium text-gray-500">Previous Share (%)</th>
-            <th class="px-4 py-2 text-right font-medium text-gray-500">Change (%)</th>
-        </tr>
-    `;
+    <tr>
+        <th class="px-4 py-2 text-left font-medium text-gray-500 dark:text-gray-300">Brand</th>
+        <th class="px-4 py-2 text-right font-medium text-gray-500 dark:text-gray-300">Current Sales ($)</th>
+        <th class="px-4 py-2 text-right font-medium text-gray-500 dark:text-gray-300">Current Share (%)</th>
+        <th class="px-4 py-2 text-right font-medium text-gray-500 dark:text-gray-300">Previous Sales ($)</th>
+        <th class="px-4 py-2 text-right font-medium text-gray-500 dark:text-gray-300">Previous Share (%)</th>
+        <th class="px-4 py-2 text-right font-medium text-gray-500 dark:text-gray-300">Change (%)</th>
+    </tr>
+`;
 
     // Create table body
     const tbody = document.createElement('tbody');
+    tbody.className = 'divide-y divide-gray-200 dark:divide-gray-600';
+
     if (data && data.rawData) {
         const currentTotal = Object.values(data.rawData.current).reduce((sum, val) => sum + (val || 0), 0);
         const previousTotal = Object.values(data.rawData.previous).reduce((sum, val) => sum + (val || 0), 0);
@@ -537,13 +556,13 @@ function createChartContainer(title, data) {
             const shareChange = currentShare - previousShare;
 
             tbody.innerHTML += `
-                <tr class="border-t">
-                    <td class="px-4 py-2 font-medium">${brand}</td>
-                    <td class="px-4 py-2 text-right">${formatCurrency(currentSales)}</td>
-                    <td class="px-4 py-2 text-right">${formatNumber(currentShare)}%</td>
-                    <td class="px-4 py-2 text-right">${formatCurrency(previousSales)}</td>
-                    <td class="px-4 py-2 text-right">${formatNumber(previousShare)}%</td>
-                    <td class="px-4 py-2 text-right ${shareChange >= 0 ? 'text-green-600' : 'text-red-600'}">
+                <tr class="border-t dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-200">
+                    <td class="px-4 py-2 font-medium text-gray-900 dark:text-white">${brand}</td>
+                    <td class="px-4 py-2 text-right text-gray-900 dark:text-white">${formatCurrency(currentSales)}</td>
+                    <td class="px-4 py-2 text-right text-gray-900 dark:text-white">${formatNumber(currentShare)}%</td>
+                    <td class="px-4 py-2 text-right text-gray-900 dark:text-white">${formatCurrency(previousSales)}</td>
+                    <td class="px-4 py-2 text-right text-gray-900 dark:text-white">${formatNumber(previousShare)}%</td>
+                    <td class="px-4 py-2 text-right ${shareChange >= 0 ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400'}">
                         ${shareChange > 0 ? '+' : ''}${formatNumber(shareChange)}%
                     </td>
                 </tr>
@@ -552,13 +571,13 @@ function createChartContainer(title, data) {
 
         // Add totals row
         tbody.innerHTML += `
-            <tr class="border-t bg-gray-50 font-medium">
-                <td class="px-4 py-2">Total</td>
-                <td class="px-4 py-2 text-right">${formatCurrency(currentTotal)}</td>
-                <td class="px-4 py-2 text-right">100%</td>
-                <td class="px-4 py-2 text-right">${formatCurrency(previousTotal)}</td>
-                <td class="px-4 py-2 text-right">100%</td>
-                <td class="px-4 py-2 text-right">-</td>
+            <tr class="border-t dark:border-gray-600 bg-gray-50 dark:bg-gray-700 font-medium transition-colors duration-200">
+                <td class="px-4 py-2 text-gray-900 dark:text-white">Total</td>
+                <td class="px-4 py-2 text-right text-gray-900 dark:text-white">${formatCurrency(currentTotal)}</td>
+                <td class="px-4 py-2 text-right text-gray-900 dark:text-white">100%</td>
+                <td class="px-4 py-2 text-right text-gray-900 dark:text-white">${formatCurrency(previousTotal)}</td>
+                <td class="px-4 py-2 text-right text-gray-900 dark:text-white">100%</td>
+                <td class="px-4 py-2 text-right text-gray-900 dark:text-white">-</td>
             </tr>
         `;
     }
@@ -579,63 +598,63 @@ function createChartContainer(title, data) {
 
 function createEnhancedChartContainer(title, data) {
     const container = document.createElement('div');
-    container.className = 'mb-12 p-6 bg-white rounded-lg shadow';
+    container.className = 'mb-12 p-6 bg-white dark:bg-gray-800 rounded-lg shadow transition-colors duration-200';
     
-    // Main header
+    // Main header - Updated to always white in dark mode
     const header = document.createElement('h3');
-    header.className = 'text-xl font-bold mb-6 text-gray-800';
+    header.className = 'text-xl font-bold mb-6 text-gray-800 dark:text-white transition-colors duration-200';
     header.textContent = title;
     
-    // Create grid for multiple charts
+    // Chart grid remains the same
     const chartGrid = document.createElement('div');
     chartGrid.className = 'grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6';
     
-    // Pie chart wrapper
+    // Updated chart wrappers
     const pieWrapper = document.createElement('div');
-    pieWrapper.className = 'relative h-96';
+    pieWrapper.className = 'relative h-96 bg-white dark:bg-gray-800 rounded-lg transition-colors duration-200';
     const pieCanvas = document.createElement('canvas');
     pieCanvas.id = `pie-${title.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`;
     pieWrapper.appendChild(pieCanvas);
     
-    // Precision bar chart wrapper
     const barWrapper = document.createElement('div');
-    barWrapper.className = 'relative h-96';
+    barWrapper.className = 'relative h-96 bg-white dark:bg-gray-800 rounded-lg transition-colors duration-200';
     const barCanvas = document.createElement('canvas');
     barCanvas.id = `bar-${title.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`;
     barWrapper.appendChild(barCanvas);
     
-    // Trend line chart wrapper
     const trendWrapper = document.createElement('div');
-    trendWrapper.className = 'relative h-96';
+    trendWrapper.className = 'relative h-96 bg-white dark:bg-gray-800 rounded-lg transition-colors duration-200';
     const trendCanvas = document.createElement('canvas');
     trendCanvas.id = `trend-${title.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`;
     trendWrapper.appendChild(trendCanvas);
     
-    // Data table with enhanced precision
+    // Data table
     const tableWrapper = document.createElement('div');
     tableWrapper.className = 'mt-6 overflow-x-auto';
     
     const table = document.createElement('table');
     table.className = 'min-w-full text-sm';
     
-    // Enhanced table header with more metrics
+    // Enhanced table header
     const thead = document.createElement('thead');
-    thead.className = 'bg-gray-50';
+    thead.className = 'bg-gray-50 dark:bg-gray-700 transition-colors duration-200';
     thead.innerHTML = `
         <tr>
-            <th class="px-4 py-2 text-left font-medium text-gray-500">Brand</th>
-            <th class="px-4 py-2 text-right font-medium text-gray-500">Current Sales ($)</th>
-            <th class="px-4 py-2 text-right font-medium text-gray-500">Current Share (%)</th>
-            <th class="px-4 py-2 text-right font-medium text-gray-500">Previous Sales ($)</th>
-            <th class="px-4 py-2 text-right font-medium text-gray-500">Previous Share (%)</th>
-            <th class="px-4 py-2 text-right font-medium text-gray-500">Absolute Change (%)</th>
-            <th class="px-4 py-2 text-right font-medium text-gray-500">Relative Change (%)</th>
-            <th class="px-4 py-2 text-right font-medium text-gray-500">YoY Growth</th>
+            <th class="px-4 py-2 text-left font-medium text-gray-500 dark:text-gray-300">Brand</th>
+            <th class="px-4 py-2 text-right font-medium text-gray-500 dark:text-gray-300">Current Sales ($)</th>
+            <th class="px-4 py-2 text-right font-medium text-gray-500 dark:text-gray-300">Current Share (%)</th>
+            <th class="px-4 py-2 text-right font-medium text-gray-500 dark:text-gray-300">Previous Sales ($)</th>
+            <th class="px-4 py-2 text-right font-medium text-gray-500 dark:text-gray-300">Previous Share (%)</th>
+            <th class="px-4 py-2 text-right font-medium text-gray-500 dark:text-gray-300">Absolute Change (%)</th>
+            <th class="px-4 py-2 text-right font-medium text-gray-500 dark:text-gray-300">Relative Change (%)</th>
+            <th class="px-4 py-2 text-right font-medium text-gray-500 dark:text-gray-300">YoY Growth</th>
         </tr>
     `;
 
-    // Enhanced table body with more precise calculations
+    // Enhanced table body
     const tbody = document.createElement('tbody');
+    tbody.className = 'divide-y divide-gray-200 dark:divide-gray-600';
+    
     if (data && data.rawData) {
         const currentTotal = Object.values(data.rawData.current).reduce((sum, val) => sum + (val || 0), 0);
         const previousTotal = Object.values(data.rawData.previous).reduce((sum, val) => sum + (val || 0), 0);
@@ -655,19 +674,19 @@ function createEnhancedChartContainer(title, data) {
             const yoyGrowth = previousSales ? ((currentSales - previousSales) / previousSales * 100) : 0;
 
             tbody.innerHTML += `
-                <tr class="border-t hover:bg-gray-50">
-                    <td class="px-4 py-2 font-medium">${brand}</td>
-                    <td class="px-4 py-2 text-right">${formatCurrency(currentSales)}</td>
-                    <td class="px-4 py-2 text-right">${formatNumber(currentShare)}%</td>
-                    <td class="px-4 py-2 text-right">${formatCurrency(previousSales)}</td>
-                    <td class="px-4 py-2 text-right">${formatNumber(previousShare)}%</td>
-                    <td class="px-4 py-2 text-right ${absoluteChange >= 0 ? 'text-green-600' : 'text-red-600'}">
+                <tr class="border-t dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-200">
+                    <td class="px-4 py-2 font-medium text-gray-900 dark:text-white">${brand}</td>
+                    <td class="px-4 py-2 text-right text-gray-900 dark:text-white">${formatCurrency(currentSales)}</td>
+                    <td class="px-4 py-2 text-right text-gray-900 dark:text-white">${formatNumber(currentShare)}%</td>
+                    <td class="px-4 py-2 text-right text-gray-900 dark:text-white">${formatCurrency(previousSales)}</td>
+                    <td class="px-4 py-2 text-right text-gray-900 dark:text-white">${formatNumber(previousShare)}%</td>
+                    <td class="px-4 py-2 text-right ${absoluteChange >= 0 ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400'}">
                         ${absoluteChange > 0 ? '+' : ''}${formatNumber(absoluteChange)}%
                     </td>
-                    <td class="px-4 py-2 text-right ${relativeChange >= 0 ? 'text-green-600' : 'text-red-600'}">
+                    <td class="px-4 py-2 text-right ${relativeChange >= 0 ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400'}">
                         ${relativeChange > 0 ? '+' : ''}${formatNumber(relativeChange)}%
                     </td>
-                    <td class="px-4 py-2 text-right ${yoyGrowth >= 0 ? 'text-green-600' : 'text-red-600'}">
+                    <td class="px-4 py-2 text-right ${yoyGrowth >= 0 ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400'}">
                         ${yoyGrowth > 0 ? '+' : ''}${formatNumber(yoyGrowth)}%
                     </td>
                 </tr>
@@ -676,20 +695,19 @@ function createEnhancedChartContainer(title, data) {
 
         // Enhanced totals row
         tbody.innerHTML += `
-            <tr class="border-t bg-gray-50 font-medium">
-                <td class="px-4 py-2">Total</td>
-                <td class="px-4 py-2 text-right">${formatCurrency(currentTotal)}</td>
-                <td class="px-4 py-2 text-right">100.000%</td>
-                <td class="px-4 py-2 text-right">${formatCurrency(previousTotal)}</td>
-                <td class="px-4 py-2 text-right">100.000%</td>
-                <td class="px-4 py-2 text-right">-</td>
-                <td class="px-4 py-2 text-right">${formatNumber(((currentTotal - previousTotal) / previousTotal * 100) || 0)}%</td>
-                <td class="px-4 py-2 text-right">-</td>
+            <tr class="border-t dark:border-gray-600 bg-gray-50 dark:bg-gray-700 font-medium transition-colors duration-200">
+                <td class="px-4 py-2 text-gray-900 dark:text-white">Total</td>
+                <td class="px-4 py-2 text-right text-gray-900 dark:text-white">${formatCurrency(currentTotal)}</td>
+                <td class="px-4 py-2 text-right text-gray-900 dark:text-white">100.000%</td>
+                <td class="px-4 py-2 text-right text-gray-900 dark:text-white">${formatCurrency(previousTotal)}</td>
+                <td class="px-4 py-2 text-right text-gray-900 dark:text-white">100.000%</td>
+                <td class="px-4 py-2 text-right text-gray-900 dark:text-white">-</td>
+                <td class="px-4 py-2 text-right text-gray-900 dark:text-white">${formatNumber(((currentTotal - previousTotal) / previousTotal * 100) || 0)}%</td>
+                <td class="px-4 py-2 text-right text-gray-900 dark:text-white">-</td>
             </tr>
         `;
     }
 
-    // Assemble all components
     table.appendChild(thead);
     table.appendChild(tbody);
     tableWrapper.appendChild(table);
@@ -698,55 +716,51 @@ function createEnhancedChartContainer(title, data) {
     chartGrid.appendChild(barWrapper);
     chartGrid.appendChild(trendWrapper);
     
-    // Assemble the complete container
     container.appendChild(header);
     container.appendChild(chartGrid);
     container.appendChild(tableWrapper);
     
-    // Create all charts
+    // Create charts with dark mode awareness
     createMarketSharePieChart(pieCanvas, data, `${title} - Market Share Distribution`);
     createPrecisionBarChart(barCanvas, data, `${title} - Market Share Comparison`);
     createTrendLineChart(trendCanvas, data, `${title} - Market Share Trends`);
     
-    // Add analysis section
     const analysisSection = document.createElement('div');
-    analysisSection.className = 'mt-6 p-4 bg-gray-50 rounded-lg';
+    analysisSection.className = 'mt-6 p-4 bg-gray-50 dark:bg-gray-700 rounded-lg transition-colors duration-200';
     
-    // Calculate key metrics
     const metrics = calculateKeyMetrics(data);
     
     analysisSection.innerHTML = `
-        <h4 class="font-bold text-lg mb-3">Key Insights</h4>
+        <h4 class="font-bold text-lg mb-3 text-gray-900 dark:text-white">Key Insights</h4>
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            <div class="p-3 bg-white rounded-lg shadow">
-                <h5 class="font-semibold text-sm text-gray-600">Market Concentration</h5>
-                <p class="text-lg font-bold">${metrics.concentration.toFixed(2)}%</p>
-                <p class="text-xs text-gray-500">Top 3 brands market share</p>
+            <div class="p-3 bg-white dark:bg-gray-800 rounded-lg shadow transition-colors duration-200">
+                <h5 class="font-semibold text-sm text-gray-600 dark:text-white">Market Concentration</h5>
+                <p class="text-lg font-bold text-gray-900 dark:text-white">${metrics.concentration.toFixed(2)}%</p>
+                <p class="text-xs text-gray-500 dark:text-gray-300">Top 3 brands market share</p>
             </div>
-            <div class="p-3 bg-white rounded-lg shadow">
-                <h5 class="font-semibold text-sm text-gray-600">Market Leader</h5>
-                <p class="text-lg font-bold">${metrics.leader.brand}</p>
-                <p class="text-xs text-gray-500">${metrics.leader.share.toFixed(2)}% market share</p>
+            <div class="p-3 bg-white dark:bg-gray-800 rounded-lg shadow transition-colors duration-200">
+                <h5 class="font-semibold text-sm text-gray-600 dark:text-white">Market Leader</h5>
+                <p class="text-lg font-bold text-gray-900 dark:text-white">${metrics.leader.brand}</p>
+                <p class="text-xs text-gray-500 dark:text-gray-300">${metrics.leader.share.toFixed(2)}% market share</p>
             </div>
-            <div class="p-3 bg-white rounded-lg shadow">
-                <h5 class="font-semibold text-sm text-gray-600">Fastest Growing</h5>
-                <p class="text-lg font-bold">${metrics.fastestGrowing.brand}</p>
-                <p class="text-xs text-gray-500">+${metrics.fastestGrowing.growth.toFixed(2)}% growth</p>
+            <div class="p-3 bg-white dark:bg-gray-800 rounded-lg shadow transition-colors duration-200">
+                <h5 class="font-semibold text-sm text-gray-600 dark:text-white">Fastest Growing</h5>
+                <p class="text-lg font-bold text-gray-900 dark:text-white">${metrics.fastestGrowing.brand}</p>
+                <p class="text-xs text-gray-500 dark:text-gray-300">+${metrics.fastestGrowing.growth.toFixed(2)}% growth</p>
             </div>
         </div>
         <div class="mt-4 text-sm">
-            <h5 class="font-semibold mb-2">Competitive Analysis</h5>
-            <ul class="space-y-1 text-gray-600">
+            <h5 class="font-semibold mb-2 text-gray-900 dark:text-white">Competitive Analysis</h5>
+            <ul class="space-y-1 text-gray-600 dark:text-white">
                 ${generateCompetitiveInsights(data).map(insight => 
                     `<li class="flex items-start">
-                        <span class="inline-block w-2 h-2 mt-1.5 mr-2 rounded-full bg-blue-500"></span>
+                        <span class="inline-block w-2 h-2 mt-1.5 mr-2 rounded-full bg-blue-500 dark:bg-blue-300"></span>
                         ${insight}
                     </li>`
                 ).join('')}
             </ul>
         </div>
     `;
-    
     container.appendChild(analysisSection);
     
     return container;
@@ -1047,8 +1061,8 @@ export async function VetrenderStrategicInitiatives() {
 
     // Show loading state
     container.innerHTML = `
-        <div class="flex items-center justify-center p-12">
-            <div class="text-xl text-gray-600">Loading market analysis...</div>
+        <div class="flex items-center justify-center p-12 transition-colors duration-200">
+            <div class="text-xl text-gray-600 dark:text-gray-300">Loading market analysis...</div>
         </div>
     `;
 
@@ -1063,7 +1077,7 @@ export async function VetrenderStrategicInitiatives() {
 
         // Create overall market summary
         const summarySection = document.createElement('div');
-        summarySection.className = 'mb-12';
+        summarySection.className = 'mb-12 transition-colors duration-200';
 
         // Calculate overall metrics
         const overallData = {
@@ -1101,22 +1115,22 @@ export async function VetrenderStrategicInitiatives() {
         // Process each main category
         for (const [mainCategory, categoryData] of Object.entries(marketData.categories)) {
             const categorySection = document.createElement('div');
-            categorySection.className = 'mb-16';
+            categorySection.className = 'mb-16 transition-colors duration-200';
 
             // Add category header
             const categoryHeader = document.createElement('h2');
-            categoryHeader.className = 'text-3xl font-bold mb-8 pb-2 border-b text-gray-800';
+            categoryHeader.className = 'text-3xl font-bold mb-8 pb-2 border-b text-gray-800 dark:text-white border-gray-200 dark:border-gray-700 transition-colors duration-200';
             categoryHeader.textContent = mainCategory;
             categorySection.appendChild(categoryHeader);
 
             // Process each subcategory
             for (const [subCategory, data] of Object.entries(categoryData)) {
                 const subCategorySection = document.createElement('div');
-                subCategorySection.className = 'mb-12';
+                subCategorySection.className = 'mb-12 transition-colors duration-200';
 
                 // Add subcategory header
                 const subHeader = document.createElement('h3');
-                subHeader.className = 'text-2xl font-bold mb-6 text-gray-700';
+                subHeader.className = 'text-2xl font-bold mb-6 text-gray-700 dark:text-gray-200 transition-colors duration-200';
                 subHeader.textContent = subCategory;
                 subCategorySection.appendChild(subHeader);
 
@@ -1142,15 +1156,14 @@ export async function VetrenderStrategicInitiatives() {
 
             container.appendChild(categorySection);
         }
-
     } catch (error) {
         console.error('Error rendering strategic initiatives:', error);
         container.innerHTML = `
-            <div class="p-6 bg-red-50 rounded-lg">
-                <h3 class="text-xl font-bold text-red-800">Error Loading Data</h3>
-                <p class="text-red-600">Unable to load market data. Details: ${error.message}</p>
-                <p class="text-sm text-red-600 mt-2">Please check that:</p>
-                <ul class="list-disc list-inside text-sm text-red-600 mt-1">
+            <div class="p-6 bg-red-50 dark:bg-red-900/30 rounded-lg transition-colors duration-200">
+                <h3 class="text-xl font-bold text-red-800 dark:text-red-200">Error Loading Data</h3>
+                <p class="text-red-600 dark:text-red-300">Unable to load market data. Details: ${error.message}</p>
+                <p class="text-sm text-red-600 dark:text-red-300 mt-2">Please check that:</p>
+                <ul class="list-disc list-inside text-sm text-red-600 dark:text-red-300 mt-1">
                     <li>The data file exists at ./data/vetData.xlsx</li>
                     <li>The file is a valid Excel file</li>
                     <li>You have permission to access the file</li>
