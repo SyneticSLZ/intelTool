@@ -2,6 +2,8 @@
 import UserenderProductPortfolio from './portfolio-visualization.js';
 // import { renderFDAIntelligence, initDashboard } from './portfolio-visualization.js';
 import { renderPatentAnalysis } from './patent-dashboard.js';
+import { VetrenderStrategicInitiatives } from './strategic-analysis.js';
+
 
 
 const analysisData = {
@@ -1045,100 +1047,103 @@ Object.assign(app, {
 // renderFDAIntelligence(companyName)
         UserenderProductPortfolio(companyName);
     },
-
     renderStrategicInitiatives() {
-        
-        const data = mockData.strategicInitiatives;
-    console.log(data.twitter.sentiment.recentTweets)
-        // Twitter Stats
-        document.getElementById('twitterFollowers').textContent = 
-            (data.twitter.followers.current);
-        document.getElementById('followerGrowth').textContent = 
-            `+${data.twitter.followers.growth}%`;
-        
-        document.getElementById('engagementRate').textContent = 
-            data.twitter.engagement.rate + '%';
-        document.getElementById('engagementTrend').textContent = 
-            data.twitter.engagement.growth + '%';
-        
-        document.getElementById('monthlyMentions').textContent = 
-            (data.twitter.mentions.count);
-        document.getElementById('mentionsTrend').textContent = 
-            data.twitter.mentions.growth + '%';
-        
-        document.getElementById('sentimentScore').textContent = 
-            data.twitter.sentiment.score.toFixed(1);
-        document.getElementById('sentimentTrend').textContent = 
-            data.twitter.sentiment.status;
-    
-        // SEO Stats
-        document.getElementById('domainAuthority').textContent = 
-            data.seo.domainAuthority.score;
-        document.getElementById('authorityTrend').textContent = 
-             data.seo.domainAuthority.change + 'pts';
-        
-        document.getElementById('organicKeywords').textContent = 
-            (data.seo.organicKeywords.count);
-        document.getElementById('keywordsTrend').textContent = 
-            (data.seo.organicKeywords.growth) + '%';
-        
-        document.getElementById('totalBacklinks').textContent = 
-            (data.seo.backlinks.count);
-        document.getElementById('backlinksTrend').textContent = 
-            (data.seo.backlinks.growth) + '%';
-    
-        // Update Recent Tweets
-        const tweetsContainer = document.getElementById('recentTweets');
-        if (tweetsContainer && data.twitter.sentiment.recentTweets) {
-            tweetsContainer.innerHTML = data.twitter.sentiment.recentTweets.map(tweet => `
-                <div class="p-4">
-                    <p class="text-sm">${tweet.content}</p>
-                    <div class="mt-2 flex justify-between text-sm text-gray-500">
-                        <span>Engagement: ${(tweet.engagement)}</span>
-                        <span>Sentiment: ${tweet.sentiment}</span>
-                        <span>${tweet.date}</span>
-                    </div>
-                </div>
-            `).join('');
-        }
-    
-        // Update Keywords Table
-        const keywordsTableBody = document.getElementById('keywordsTableBody');
-        if (keywordsTableBody && data.seo.topKeywords) {
-            keywordsTableBody.innerHTML = data.seo.topKeywords.map(keyword => `
-                <tr>
-                    <td class="px-6 py-4">${keyword.keyword}</td>
-                    <td class="px-6 py-4 text-center">${keyword.position}</td>
-                    <td class="px-6 py-4 text-right">${(keyword.volume)}</td>
-                </tr>
-            `).join('');
-        }
-    
-        // Create/update visibility trend chart
-        const visibilityCtx = document.getElementById('visibilityTrendChart');
-        if (visibilityCtx && data.seo.visibility) {
-            new Chart(visibilityCtx, {
-                type: 'line',
-                data: {
-                    labels: data.seo.visibility.map(item => item.month),
-                    datasets: [{
-                        label: 'Visibility Score',
-                        data: data.seo.visibility.map(item => item.score),
-                        borderColor: '#4299E1',
-                        tension: 0.4
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    scales: {
-                        y: {
-                            beginAtZero: false
-                        }
-                    }
-                }
-            });
-        }
+        VetrenderStrategicInitiatives()
     },
+    
+    // renderStrategicInitiatives() {
+        
+    //     const data = mockData.strategicInitiatives;
+    // console.log(data.twitter.sentiment.recentTweets)
+    //     // Twitter Stats
+    //     document.getElementById('twitterFollowers').textContent = 
+    //         (data.twitter.followers.current);
+    //     document.getElementById('followerGrowth').textContent = 
+    //         `+${data.twitter.followers.growth}%`;
+        
+    //     document.getElementById('engagementRate').textContent = 
+    //         data.twitter.engagement.rate + '%';
+    //     document.getElementById('engagementTrend').textContent = 
+    //         data.twitter.engagement.growth + '%';
+        
+    //     document.getElementById('monthlyMentions').textContent = 
+    //         (data.twitter.mentions.count);
+    //     document.getElementById('mentionsTrend').textContent = 
+    //         data.twitter.mentions.growth + '%';
+        
+    //     document.getElementById('sentimentScore').textContent = 
+    //         data.twitter.sentiment.score.toFixed(1);
+    //     document.getElementById('sentimentTrend').textContent = 
+    //         data.twitter.sentiment.status;
+    
+    //     // SEO Stats
+    //     document.getElementById('domainAuthority').textContent = 
+    //         data.seo.domainAuthority.score;
+    //     document.getElementById('authorityTrend').textContent = 
+    //          data.seo.domainAuthority.change + 'pts';
+        
+    //     document.getElementById('organicKeywords').textContent = 
+    //         (data.seo.organicKeywords.count);
+    //     document.getElementById('keywordsTrend').textContent = 
+    //         (data.seo.organicKeywords.growth) + '%';
+        
+    //     document.getElementById('totalBacklinks').textContent = 
+    //         (data.seo.backlinks.count);
+    //     document.getElementById('backlinksTrend').textContent = 
+    //         (data.seo.backlinks.growth) + '%';
+    
+    //     // Update Recent Tweets
+    //     const tweetsContainer = document.getElementById('recentTweets');
+    //     if (tweetsContainer && data.twitter.sentiment.recentTweets) {
+    //         tweetsContainer.innerHTML = data.twitter.sentiment.recentTweets.map(tweet => `
+    //             <div class="p-4">
+    //                 <p class="text-sm">${tweet.content}</p>
+    //                 <div class="mt-2 flex justify-between text-sm text-gray-500">
+    //                     <span>Engagement: ${(tweet.engagement)}</span>
+    //                     <span>Sentiment: ${tweet.sentiment}</span>
+    //                     <span>${tweet.date}</span>
+    //                 </div>
+    //             </div>
+    //         `).join('');
+    //     }
+    
+    //     // Update Keywords Table
+    //     const keywordsTableBody = document.getElementById('keywordsTableBody');
+    //     if (keywordsTableBody && data.seo.topKeywords) {
+    //         keywordsTableBody.innerHTML = data.seo.topKeywords.map(keyword => `
+    //             <tr>
+    //                 <td class="px-6 py-4">${keyword.keyword}</td>
+    //                 <td class="px-6 py-4 text-center">${keyword.position}</td>
+    //                 <td class="px-6 py-4 text-right">${(keyword.volume)}</td>
+    //             </tr>
+    //         `).join('');
+    //     }
+    
+    //     // Create/update visibility trend chart
+    //     const visibilityCtx = document.getElementById('visibilityTrendChart');
+    //     if (visibilityCtx && data.seo.visibility) {
+    //         new Chart(visibilityCtx, {
+    //             type: 'line',
+    //             data: {
+    //                 labels: data.seo.visibility.map(item => item.month),
+    //                 datasets: [{
+    //                     label: 'Visibility Score',
+    //                     data: data.seo.visibility.map(item => item.score),
+    //                     borderColor: '#4299E1',
+    //                     tension: 0.4
+    //                 }]
+    //             },
+    //             options: {
+    //                 responsive: true,
+    //                 scales: {
+    //                     y: {
+    //                         beginAtZero: false
+    //                     }
+    //                 }
+    //             }
+    //         });
+    //     }
+    // },
 
     updateWebsiteMetrics(data) {
         
