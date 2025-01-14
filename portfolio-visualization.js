@@ -686,10 +686,16 @@ function populateUDIDevices(udiData) {
 
     tableBody.innerHTML = udiData.map(device => `
         <tr class="hover:bg-gray-50">
-            <td class="px-6 py-4">
-                <div class="font-medium">${device.brand_name}</div>
+            <td class="px-6 py-4 whitespace-nowrap">
+                            <a href="https://accessgudid.nlm.nih.gov/devices/${device.identifiers?.[0]?.id}"
+                               target="_blank"
+                               class="text-blue-600 hover:text-blue-800 hover:underline">
+                               <div class="font-medium">${device.brand_name}</div>
                 <div class="text-sm text-gray-500">${device.company_name}</div>
-            </td>
+            
+                            </a>
+        </td>
+                
             <td class="px-6 py-4">${device.version_or_model_number}</td>
             <td class="px-6 py-4">
                 <span class="px-2 py-1 text-sm rounded-full ${getDeviceClassBadgeColor(device)}">
@@ -726,10 +732,16 @@ function populate510k(k501Data) {
     if (tabContent) {
         tabContent.classList.remove('hidden');
     }
-
+            // <td class="px-6 py-4">${submission.k_number}</td>
     tableBody.innerHTML = k501Data.map(submission => `
         <tr class="hover:bg-gray-50">
-            <td class="px-6 py-4">${submission.k_number}</td>
+        <td class="px-6 py-4 whitespace-nowrap">
+                            <a href="https://www.accessdata.fda.gov/scripts/cdrh/cfdocs/cfpmn/pmn.cfm?ID=${submission.k_number}"
+                               target="_blank"
+                               class="text-blue-600 hover:text-blue-800 hover:underline">
+                               ${submission.k_number}
+                            </a>
+        </td>
             <td class="px-6 py-4">
                 <div class="font-medium">${truncateText(submission.device_name, 100)}</div>
                 <div class="text-sm text-gray-500">${submission.applicant}</div>
