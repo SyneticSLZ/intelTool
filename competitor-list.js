@@ -9,7 +9,7 @@ const mockCompetitors = {
     competitors: [
         {
             id: 1,
-            name: '3M',
+            name: 'Sonova',
             industry: 'Manufacturing',
             keyMetrics: {
                 revenue: 35200000000,
@@ -49,7 +49,7 @@ const mockCompetitors = {
         },
         {
             id: 2,
-            name: 'Medtronic',
+            name: 'GN ReSound',
             industry: 'Healthcare',
             keyMetrics: {
                 revenue: 28900000000,
@@ -84,7 +84,7 @@ const mockCompetitors = {
         },
         {
             id: 3,
-            name: 'Cargill',
+            name: 'WS Audiology',
             industry: 'Agriculture',
             keyMetrics: {
                 revenue: 165000000000,
@@ -124,7 +124,7 @@ const mockCompetitors = {
         },
         {
             id: 4,
-            name: 'Voya Financial',
+            name: 'Oticon',
             industry: 'Financial Services',
             keyMetrics: {
                 revenue: 12500000000,
@@ -164,7 +164,7 @@ const mockCompetitors = {
         },
         {
             id: 5,
-            name: 'Pearson',
+            name: 'Starkey',
             industry: 'Education',
             keyMetrics: {
                 revenue: 4500000000,
