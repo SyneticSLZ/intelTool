@@ -464,29 +464,29 @@ function getCompanyData() {
     // };
     const companyMap = {
         1: { 
-            name: '3M', 
+            name: 'Sonova', 
             cik: '0000066740', 
-            industry: 'Global manufacturing and technology company'
+            industry: 'Hearing Aids'
         },
         2: { 
-            name: 'Medtronic Inc', 
-            cik: '0000064670', 
-            industry: 'Healthcare'
+            name: 'GN ReSound', 
+            cik: '0000854341', 
+            industry: 'Hearing Aids'
         },
         3: { 
-            name: 'Cargill', 
+            name: 'WS Audiology', 
             cik: '0000020569', 
-            industry: 'Global food and agriculture corporation'
+            industry: 'Hearing Aids'
         },
         4: { 
-            name: 'Voya Financial', 
+            name: 'Oticon', 
             cik: '0001535929', 
-            industry: 'Financial services and insurance'
+            industry: 'Hearing Aids'
         },
         5: { 
-            name: 'Pearson', 
+            name: 'Starkey', 
             cik: '0000313119', 
-            industry: 'Educational publishing and services'
+            industry: 'Hearing Aids'
         }
     };
 
