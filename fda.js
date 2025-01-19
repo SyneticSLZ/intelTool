@@ -74,10 +74,10 @@ setupTableSearch();
 async function loadFDAData(companyName) {
     try {
         const [udiData, k510Data, registrationData, adverseData] = await Promise.all([
-            fetch(`/data/${companyName}/udi.json`).then(res => res.json()),
-            fetch(`/data/${companyName}/510k.json`).then(res => res.json()),
-            fetch(`/data/${companyName}/registrations.json`).then(res => res.json()),
-            fetch(`/data/${companyName}/adverse.json`).then(res => res.json())
+            fetch(`./data/${companyName}/udi.json`).then(res => res.json()),
+            fetch(`./data/${companyName}/510k.json`).then(res => res.json()),
+            fetch(`./data/${companyName}/registrations.json`).then(res => res.json()),
+            fetch(`./data/${companyName}/adverse.json`).then(res => res.json())
         ]);
 
         return {
