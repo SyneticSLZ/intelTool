@@ -1,5 +1,6 @@
 // Enhanced competitor analysis data with detailed metrics
-import UserenderProductPortfolio from './portfolio-visualization.js';
+import UserenderProductvPortfolio from './portfolio-visualization.js';
+import renderFDADashboard from './fda.js';
 // import { renderFDAIntelligence, initDashboard } from './portfolio-visualization.js';
 import { renderPatentAnalysis } from './patent-dashboard.js';
 import { VetrenderStrategicInitiatives } from './strategic-analysis.js';
@@ -469,12 +470,12 @@ function getCompanyData() {
             industry: 'Hearing Aids'
         },
         2: { 
-            name: 'GN ReSound', 
+            name: 'Gn', 
             cik: '0000854341', 
             industry: 'Hearing Aids'
         },
         3: { 
-            name: 'WS Audiology', 
+            name: 'Ws', 
             cik: '0000020569', 
             industry: 'Hearing Aids'
         },
@@ -1045,7 +1046,8 @@ Object.assign(app, {
 
 // Call when you want to render/update the dashboard
 // renderFDAIntelligence(companyName)
-        UserenderProductPortfolio(companyName);
+        // UserenderProductPortfolio(companyName);
+        renderFDADashboard(companyName);
     },
     renderStrategicInitiatives() {
         VetrenderStrategicInitiatives()
