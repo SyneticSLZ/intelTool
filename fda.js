@@ -75,10 +75,10 @@ async function loadFDAData(companyName) {
     try {
         console.log(".")
         const [udiData, k510Data, registrationData, adverseData] = await Promise.all([
-            fetch(`./data/${companyName}/udi.json`).then(res => res.json()),
-            fetch(`./data/${companyName}/510k.json`).then(res => res.json()),
-            fetch(`./data/${companyName}/registrations.json`).then(res => res.json()),
-            fetch(`./data/${companyName}/adverse.json`).then(res => res.json())
+            fetch(`./intelTool/data/${companyName}/udi.json`).then(res => res.json()),
+            fetch(`./intelTool/data/${companyName}/510k.json`).then(res => res.json()),
+            fetch(`./intelTool/data/${companyName}/registrations.json`).then(res => res.json()),
+            fetch(`./intelTool/data/${companyName}/adverse.json`).then(res => res.json())
         ]);
 
         return {
