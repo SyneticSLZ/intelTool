@@ -1043,7 +1043,7 @@ async function initializeFinancialDashboard(companyName) {
         }
 
         // Normalize company name
-        const normalizedName = companyName.toLowerCase();
+        const normalizedName = companyName;
         const data = companyData[normalizedName];
 
         if (!data) {
@@ -1324,410 +1324,410 @@ async function initializeFinancialDashboard(companyName) {
 // }
 
 // // GN Store Nord Dashboard Implementation
-function generateGNDashboard(data) {
-    return `
-        <div class="container mx-auto px-4 py-8">
-            <!-- Company Header -->
-            <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 mb-6">
-                <div class="flex justify-between items-start">
-                    <div>
-                        <h1 class="text-3xl font-bold mb-2">GN Store Nord A/S</h1>
-                        <p class="text-gray-600 dark:text-gray-400">${data.period.quarter} ${data.period.year}</p>
-                    </div>
-                    <div class="text-right">
-                        <p class="text-sm text-gray-600 dark:text-gray-400">Report Date: ${data.period.report_date}</p>
-                    </div>
-                </div>
-            </div>
+// function generateGNDashboard(data) {
+//     return `
+//         <div class="container mx-auto px-4 py-8">
+//             <!-- Company Header -->
+//             <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 mb-6">
+//                 <div class="flex justify-between items-start">
+//                     <div>
+//                         <h1 class="text-3xl font-bold mb-2">GN Store Nord A/S</h1>
+//                         <p class="text-gray-600 dark:text-gray-400">${data.period.quarter} ${data.period.year}</p>
+//                     </div>
+//                     <div class="text-right">
+//                         <p class="text-sm text-gray-600 dark:text-gray-400">Report Date: ${data.period.report_date}</p>
+//                     </div>
+//                 </div>
+//             </div>
 
-            <!-- KPIs -->
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
-                <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
-                    <h3 class="text-sm font-medium text-gray-500 dark:text-gray-400">Revenue</h3>
-                    <p class="mt-2 text-3xl font-semibold">${formatCurrency(data.financial_highlights.revenue.total)}</p>
-                    <p class="text-sm text-gray-600 dark:text-gray-400">Organic Growth: ${formatPercentage(data.financial_highlights.revenue.organic_growth)}</p>
-                </div>
-                <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
-                    <h3 class="text-sm font-medium text-gray-500 dark:text-gray-400">EBITA</h3>
-                    <p class="mt-2 text-3xl font-semibold">${formatCurrency(data.financial_highlights.profitability.ebita.value)}</p>
-                    <p class="text-sm text-gray-600 dark:text-gray-400">Margin: ${formatPercentage(data.financial_highlights.profitability.ebita.margin)}</p>
-                </div>
-                <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
-                    <h3 class="text-sm font-medium text-gray-500 dark:text-gray-400">Free Cash Flow</h3>
-                    <p class="mt-2 text-3xl font-semibold">${formatCurrency(data.financial_highlights.cash_flow.free_cash_flow.excl_ma)}</p>
-                    <p class="text-sm text-gray-600 dark:text-gray-400">Cash Conversion: ${formatPercentage(data.financial_highlights.cash_flow.cash_conversion)}</p>
-                </div>
-                <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
-                    <h3 class="text-sm font-medium text-gray-500 dark:text-gray-400">Gross Profit</h3>
-                    <p class="mt-2 text-3xl font-semibold">${formatCurrency(data.financial_highlights.profitability.gross_profit.value)}</p>
-                    <p class="text-sm text-gray-600 dark:text-gray-400">Margin: ${formatPercentage(data.financial_highlights.profitability.gross_profit.margin)}</p>
-                </div>
-            </div>
+//             <!-- KPIs -->
+//             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
+//                 <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
+//                     <h3 class="text-sm font-medium text-gray-500 dark:text-gray-400">Revenue</h3>
+//                     <p class="mt-2 text-3xl font-semibold">${formatCurrency(data.financial_highlights.revenue.total)}</p>
+//                     <p class="text-sm text-gray-600 dark:text-gray-400">Organic Growth: ${formatPercentage(data.financial_highlights.revenue.organic_growth)}</p>
+//                 </div>
+//                 <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
+//                     <h3 class="text-sm font-medium text-gray-500 dark:text-gray-400">EBITA</h3>
+//                     <p class="mt-2 text-3xl font-semibold">${formatCurrency(data.financial_highlights.profitability.ebita.value)}</p>
+//                     <p class="text-sm text-gray-600 dark:text-gray-400">Margin: ${formatPercentage(data.financial_highlights.profitability.ebita.margin)}</p>
+//                 </div>
+//                 <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
+//                     <h3 class="text-sm font-medium text-gray-500 dark:text-gray-400">Free Cash Flow</h3>
+//                     <p class="mt-2 text-3xl font-semibold">${formatCurrency(data.financial_highlights.cash_flow.free_cash_flow.excl_ma)}</p>
+//                     <p class="text-sm text-gray-600 dark:text-gray-400">Cash Conversion: ${formatPercentage(data.financial_highlights.cash_flow.cash_conversion)}</p>
+//                 </div>
+//                 <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
+//                     <h3 class="text-sm font-medium text-gray-500 dark:text-gray-400">Gross Profit</h3>
+//                     <p class="mt-2 text-3xl font-semibold">${formatCurrency(data.financial_highlights.profitability.gross_profit.value)}</p>
+//                     <p class="text-sm text-gray-600 dark:text-gray-400">Margin: ${formatPercentage(data.financial_highlights.profitability.gross_profit.margin)}</p>
+//                 </div>
+//             </div>
 
-            <!-- Charts -->
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
-                <div class="bg-white dark:bg-gray-800 rounded-lg shadow">
-                    <div class="p-4 border-b border-gray-200 dark:border-gray-700">
-                        <h2 class="text-lg font-medium">Revenue by Division</h2>
-                    </div>
-                    <div class="p-4 h-80">
-                        <canvas id="gn-revenue-by-division"></canvas>
-                    </div>
-                </div>
-                <div class="bg-white dark:bg-gray-800 rounded-lg shadow">
-                    <div class="p-4 border-b border-gray-200 dark:border-gray-700">
-                        <h2 class="text-lg font-medium">Geographic Distribution</h2>
-                    </div>
-                    <div class="p-4 h-80">
-                        <canvas id="gn-geographic-revenue"></canvas>
-                    </div>
-                </div>
-            </div>
+//             <!-- Charts -->
+//             <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+//                 <div class="bg-white dark:bg-gray-800 rounded-lg shadow">
+//                     <div class="p-4 border-b border-gray-200 dark:border-gray-700">
+//                         <h2 class="text-lg font-medium">Revenue by Division</h2>
+//                     </div>
+//                     <div class="p-4 h-80">
+//                         <canvas id="gn-revenue-by-division"></canvas>
+//                     </div>
+//                 </div>
+//                 <div class="bg-white dark:bg-gray-800 rounded-lg shadow">
+//                     <div class="p-4 border-b border-gray-200 dark:border-gray-700">
+//                         <h2 class="text-lg font-medium">Geographic Distribution</h2>
+//                     </div>
+//                     <div class="p-4 h-80">
+//                         <canvas id="gn-geographic-revenue"></canvas>
+//                     </div>
+//                 </div>
+//             </div>
 
-            <!-- Additional Metrics -->
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                <div class="bg-white dark:bg-gray-800 rounded-lg shadow">
-                    <div class="p-4 border-b border-gray-200 dark:border-gray-700">
-                        <h2 class="text-lg font-medium">Guidance 2024</h2>
-                    </div>
-                    <div class="p-4">
-                        <div class="space-y-4">
-                            <div class="flex justify-between">
-                                <span class="text-gray-600 dark:text-gray-400">Organic Growth Target</span>
-                                <span class="font-medium">${data.guidance_2024.organic_growth.range}</span>
-                            </div>
-                            <div class="flex justify-between">
-                                <span class="text-gray-600 dark:text-gray-400">EBITA Margin Target</span>
-                                <span class="font-medium">${data.guidance_2024.ebita_margin.range}</span>
-                            </div>
-                            <div class="flex justify-between">
-                                <span class="text-gray-600 dark:text-gray-400">Free Cash Flow Target</span>
-                                <span class="font-medium">> ${formatCurrency(1100)}</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="bg-white dark:bg-gray-800 rounded-lg shadow">
-                    <div class="p-4 border-b border-gray-200 dark:border-gray-700">
-                        <h2 class="text-lg font-medium">Capital Structure</h2>
-                    </div>
-                    <div class="p-4">
-                        <div class="space-y-4">
-                            <div class="flex justify-between">
-                                <span class="text-gray-600 dark:text-gray-400">Market Cap</span>
-                                <span class="font-medium">${formatCurrency(data.capital_structure.market_metrics.market_cap)}</span>
-                            </div>
-                            <div class="flex justify-between">
-                                <span class="text-gray-600 dark:text-gray-400">Share Price</span>
-                                <span class="font-medium">${data.capital_structure.market_metrics.share_price} DKK</span>
-                            </div>
-                            <div class="flex justify-between">
-                                <span class="text-gray-600 dark:text-gray-400">Foreign Ownership</span>
-                                <span class="font-medium">${data.capital_structure.market_metrics.foreign_ownership}</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    `;
-}
+//             <!-- Additional Metrics -->
+//             <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+//                 <div class="bg-white dark:bg-gray-800 rounded-lg shadow">
+//                     <div class="p-4 border-b border-gray-200 dark:border-gray-700">
+//                         <h2 class="text-lg font-medium">Guidance 2024</h2>
+//                     </div>
+//                     <div class="p-4">
+//                         <div class="space-y-4">
+//                             <div class="flex justify-between">
+//                                 <span class="text-gray-600 dark:text-gray-400">Organic Growth Target</span>
+//                                 <span class="font-medium">${data.guidance_2024.organic_growth.range}</span>
+//                             </div>
+//                             <div class="flex justify-between">
+//                                 <span class="text-gray-600 dark:text-gray-400">EBITA Margin Target</span>
+//                                 <span class="font-medium">${data.guidance_2024.ebita_margin.range}</span>
+//                             </div>
+//                             <div class="flex justify-between">
+//                                 <span class="text-gray-600 dark:text-gray-400">Free Cash Flow Target</span>
+//                                 <span class="font-medium">> ${formatCurrency(1100)}</span>
+//                             </div>
+//                         </div>
+//                     </div>
+//                 </div>
+//                 <div class="bg-white dark:bg-gray-800 rounded-lg shadow">
+//                     <div class="p-4 border-b border-gray-200 dark:border-gray-700">
+//                         <h2 class="text-lg font-medium">Capital Structure</h2>
+//                     </div>
+//                     <div class="p-4">
+//                         <div class="space-y-4">
+//                             <div class="flex justify-between">
+//                                 <span class="text-gray-600 dark:text-gray-400">Market Cap</span>
+//                                 <span class="font-medium">${formatCurrency(data.capital_structure.market_metrics.market_cap)}</span>
+//                             </div>
+//                             <div class="flex justify-between">
+//                                 <span class="text-gray-600 dark:text-gray-400">Share Price</span>
+//                                 <span class="font-medium">${data.capital_structure.market_metrics.share_price} DKK</span>
+//                             </div>
+//                             <div class="flex justify-between">
+//                                 <span class="text-gray-600 dark:text-gray-400">Foreign Ownership</span>
+//                                 <span class="font-medium">${data.capital_structure.market_metrics.foreign_ownership}</span>
+//                             </div>
+//                         </div>
+//                     </div>
+//                 </div>
+//             </div>
+//         </div>
+//     `;
+// }
 
-// Chart initialization for WS Audiology
-// Chart initialization for WS Audiology
-function initializeWSACharts(data) {
-    // Revenue by Region chart
-    const regionCtx = document.getElementById('wsa-revenue-by-region');
-    if (regionCtx) {
-        new Chart(regionCtx, {
-            type: 'pie',
-            data: {
-                labels: ['EMEA', 'Americas', 'APAC'],
-                datasets: [{
-                    data: [
-                        data.key_financials.revenue.by_region.EMEA.revenue,
-                        data.key_financials.revenue.by_region.Americas.revenue,
-                        data.key_financials.revenue.by_region.APAC.revenue
-                    ],
-                    backgroundColor: [
-                        'rgba(96, 165, 250, 0.8)',
-                        'rgba(52, 211, 153, 0.8)',
-                        'rgba(167, 139, 250, 0.8)'
-                    ]
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: {
-                        position: 'bottom',
-                        labels: {
-                            color: document.documentElement.classList.contains('dark') ? '#E5E7EB' : '#374151'
-                        }
-                    },
-                    tooltip: {
-                        callbacks: {
-                            label: function(context) {
-                                return `${context.label}: ${formatCurrency(context.raw)} (${data.key_financials.revenue.by_region[context.label].share}%)`;
-                            }
-                        }
-                    }
-                }
-            }
-        });
-    }
+// // Chart initialization for WS Audiology
+// // Chart initialization for WS Audiology
+// function initializeWSACharts(data) {
+//     // Revenue by Region chart
+//     const regionCtx = document.getElementById('wsa-revenue-by-region');
+//     if (regionCtx) {
+//         new Chart(regionCtx, {
+//             type: 'pie',
+//             data: {
+//                 labels: ['EMEA', 'Americas', 'APAC'],
+//                 datasets: [{
+//                     data: [
+//                         data.key_financials.revenue.by_region.EMEA.revenue,
+//                         data.key_financials.revenue.by_region.Americas.revenue,
+//                         data.key_financials.revenue.by_region.APAC.revenue
+//                     ],
+//                     backgroundColor: [
+//                         'rgba(96, 165, 250, 0.8)',
+//                         'rgba(52, 211, 153, 0.8)',
+//                         'rgba(167, 139, 250, 0.8)'
+//                     ]
+//                 }]
+//             },
+//             options: {
+//                 responsive: true,
+//                 maintainAspectRatio: false,
+//                 plugins: {
+//                     legend: {
+//                         position: 'bottom',
+//                         labels: {
+//                             color: document.documentElement.classList.contains('dark') ? '#E5E7EB' : '#374151'
+//                         }
+//                     },
+//                     tooltip: {
+//                         callbacks: {
+//                             label: function(context) {
+//                                 return `${context.label}: ${formatCurrency(context.raw)} (${data.key_financials.revenue.by_region[context.label].share}%)`;
+//                             }
+//                         }
+//                     }
+//                 }
+//             }
+//         });
+//     }
 
-    // Financial Metrics chart
-    const metricsCtx = document.getElementById('wsa-financial-metrics');
-    if (metricsCtx) {
-        new Chart(metricsCtx, {
-            type: 'bar',
-            data: {
-                labels: ['Revenue', 'EBITDA', 'Gross Profit', 'Operating Cash Flow'],
-                datasets: [{
-                    label: 'Financial Metrics',
-                    data: [
-                        data.key_financials.revenue.total,
-                        data.key_financials.profitability.EBITDA.before_special_items,
-                        data.key_financials.profitability.gross_profit,
-                        data.key_financials.cash_flow.operating
-                    ],
-                    backgroundColor: [
-                        'rgba(96, 165, 250, 0.8)',
-                        'rgba(52, 211, 153, 0.8)',
-                        'rgba(167, 139, 250, 0.8)',
-                        'rgba(249, 168, 212, 0.8)'
-                    ]
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: {
-                        display: false
-                    }
-                },
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                        grid: {
-                            color: document.documentElement.classList.contains('dark') ? '#374151' : '#E5E7EB'
-                        },
-                        ticks: {
-                            color: document.documentElement.classList.contains('dark') ? '#E5E7EB' : '#374151',
-                            callback: function(value) {
-                                return formatCurrency(value);
-                            }
-                        }
-                    },
-                    x: {
-                        grid: {
-                            display: false
-                        },
-                        ticks: {
-                            color: document.documentElement.classList.contains('dark') ? '#E5E7EB' : '#374151'
-                        }
-                    }
-                }
-            }
-        });
-    }
-}
+//     // Financial Metrics chart
+//     const metricsCtx = document.getElementById('wsa-financial-metrics');
+//     if (metricsCtx) {
+//         new Chart(metricsCtx, {
+//             type: 'bar',
+//             data: {
+//                 labels: ['Revenue', 'EBITDA', 'Gross Profit', 'Operating Cash Flow'],
+//                 datasets: [{
+//                     label: 'Financial Metrics',
+//                     data: [
+//                         data.key_financials.revenue.total,
+//                         data.key_financials.profitability.EBITDA.before_special_items,
+//                         data.key_financials.profitability.gross_profit,
+//                         data.key_financials.cash_flow.operating
+//                     ],
+//                     backgroundColor: [
+//                         'rgba(96, 165, 250, 0.8)',
+//                         'rgba(52, 211, 153, 0.8)',
+//                         'rgba(167, 139, 250, 0.8)',
+//                         'rgba(249, 168, 212, 0.8)'
+//                     ]
+//                 }]
+//             },
+//             options: {
+//                 responsive: true,
+//                 maintainAspectRatio: false,
+//                 plugins: {
+//                     legend: {
+//                         display: false
+//                     }
+//                 },
+//                 scales: {
+//                     y: {
+//                         beginAtZero: true,
+//                         grid: {
+//                             color: document.documentElement.classList.contains('dark') ? '#374151' : '#E5E7EB'
+//                         },
+//                         ticks: {
+//                             color: document.documentElement.classList.contains('dark') ? '#E5E7EB' : '#374151',
+//                             callback: function(value) {
+//                                 return formatCurrency(value);
+//                             }
+//                         }
+//                     },
+//                     x: {
+//                         grid: {
+//                             display: false
+//                         },
+//                         ticks: {
+//                             color: document.documentElement.classList.contains('dark') ? '#E5E7EB' : '#374151'
+//                         }
+//                     }
+//                 }
+//             }
+//         });
+//     }
+// }
 
-// Chart initialization for GN Store Nord
-function initializeGNCharts(data) {
-    // Revenue by Division chart
-    const divisionCtx = document.getElementById('gn-revenue-by-division');
-    if (divisionCtx) {
-        new Chart(divisionCtx, {
-            type: 'doughnut',
-            data: {
-                labels: ['Hearing', 'Enterprise', 'Gaming & Consumer'],
-                datasets: [{
-                    data: [
-                        data.financial_highlights.revenue.by_division.hearing.revenue,
-                        data.financial_highlights.revenue.by_division.enterprise.revenue,
-                        data.financial_highlights.revenue.by_division.gaming_consumer.revenue
-                    ],
-                    backgroundColor: [
-                        'rgba(96, 165, 250, 0.8)',
-                        'rgba(52, 211, 153, 0.8)',
-                        'rgba(167, 139, 250, 0.8)'
-                    ]
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: {
-                        position: 'bottom',
-                        labels: {
-                            color: document.documentElement.classList.contains('dark') ? '#E5E7EB' : '#374151'
-                        }
-                    },
-                    tooltip: {
-                        callbacks: {
-                            label: function(context) {
-                                const division = context.label.toLowerCase().replace(' & ', '_');
-                                return `${context.label}: ${formatCurrency(context.raw)} (${formatPercentage(data.financial_highlights.revenue.by_division[division].organic_growth)} org. growth)`;
-                            }
-                        }
-                    }
-                }
-            }
-        });
-    }
+// // Chart initialization for GN Store Nord
+// function initializeGNCharts(data) {
+//     // Revenue by Division chart
+//     const divisionCtx = document.getElementById('gn-revenue-by-division');
+//     if (divisionCtx) {
+//         new Chart(divisionCtx, {
+//             type: 'doughnut',
+//             data: {
+//                 labels: ['Hearing', 'Enterprise', 'Gaming & Consumer'],
+//                 datasets: [{
+//                     data: [
+//                         data.financial_highlights.revenue.by_division.hearing.revenue,
+//                         data.financial_highlights.revenue.by_division.enterprise.revenue,
+//                         data.financial_highlights.revenue.by_division.gaming_consumer.revenue
+//                     ],
+//                     backgroundColor: [
+//                         'rgba(96, 165, 250, 0.8)',
+//                         'rgba(52, 211, 153, 0.8)',
+//                         'rgba(167, 139, 250, 0.8)'
+//                     ]
+//                 }]
+//             },
+//             options: {
+//                 responsive: true,
+//                 maintainAspectRatio: false,
+//                 plugins: {
+//                     legend: {
+//                         position: 'bottom',
+//                         labels: {
+//                             color: document.documentElement.classList.contains('dark') ? '#E5E7EB' : '#374151'
+//                         }
+//                     },
+//                     tooltip: {
+//                         callbacks: {
+//                             label: function(context) {
+//                                 const division = context.label.toLowerCase().replace(' & ', '_');
+//                                 return `${context.label}: ${formatCurrency(context.raw)} (${formatPercentage(data.financial_highlights.revenue.by_division[division].organic_growth)} org. growth)`;
+//                             }
+//                         }
+//                     }
+//                 }
+//             }
+//         });
+//     }
 
-    // Geographic Revenue Distribution chart
-    const geoCtx = document.getElementById('gn-geographic-revenue');
-    if (geoCtx) {
-        new Chart(geoCtx, {
-            type: 'bar',
-            data: {
-                labels: ['Europe', 'North America', 'Rest of World'],
-                datasets: [{
-                    label: 'Revenue',
-                    data: [
-                        data.financial_highlights.revenue.by_geography.europe.revenue,
-                        data.financial_highlights.revenue.by_geography.north_america.revenue,
-                        data.financial_highlights.revenue.by_geography.rest_of_world.revenue
-                    ],
-                    backgroundColor: [
-                        'rgba(96, 165, 250, 0.8)',
-                        'rgba(52, 211, 153, 0.8)',
-                        'rgba(167, 139, 250, 0.8)'
-                    ]
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: {
-                        display: false
-                    }
-                },
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                        grid: {
-                            color: document.documentElement.classList.contains('dark') ? '#374151' : '#E5E7EB'
-                        },
-                        ticks: {
-                            color: document.documentElement.classList.contains('dark') ? '#E5E7EB' : '#374151',
-                            callback: function(value) {
-                                return formatCurrency(value);
-                            }
-                        }
-                    },
-                    x: {
-                        grid: {
-                            display: false
-                        },
-                        ticks: {
-                            color: document.documentElement.classList.contains('dark') ? '#E5E7EB' : '#374151'
-                        }
-                    }
-                }
-            }
-        });
-    }
-}
+//     // Geographic Revenue Distribution chart
+//     const geoCtx = document.getElementById('gn-geographic-revenue');
+//     if (geoCtx) {
+//         new Chart(geoCtx, {
+//             type: 'bar',
+//             data: {
+//                 labels: ['Europe', 'North America', 'Rest of World'],
+//                 datasets: [{
+//                     label: 'Revenue',
+//                     data: [
+//                         data.financial_highlights.revenue.by_geography.europe.revenue,
+//                         data.financial_highlights.revenue.by_geography.north_america.revenue,
+//                         data.financial_highlights.revenue.by_geography.rest_of_world.revenue
+//                     ],
+//                     backgroundColor: [
+//                         'rgba(96, 165, 250, 0.8)',
+//                         'rgba(52, 211, 153, 0.8)',
+//                         'rgba(167, 139, 250, 0.8)'
+//                     ]
+//                 }]
+//             },
+//             options: {
+//                 responsive: true,
+//                 maintainAspectRatio: false,
+//                 plugins: {
+//                     legend: {
+//                         display: false
+//                     }
+//                 },
+//                 scales: {
+//                     y: {
+//                         beginAtZero: true,
+//                         grid: {
+//                             color: document.documentElement.classList.contains('dark') ? '#374151' : '#E5E7EB'
+//                         },
+//                         ticks: {
+//                             color: document.documentElement.classList.contains('dark') ? '#E5E7EB' : '#374151',
+//                             callback: function(value) {
+//                                 return formatCurrency(value);
+//                             }
+//                         }
+//                     },
+//                     x: {
+//                         grid: {
+//                             display: false
+//                         },
+//                         ticks: {
+//                             color: document.documentElement.classList.contains('dark') ? '#E5E7EB' : '#374151'
+//                         }
+//                     }
+//                 }
+//             }
+//         });
+//     }
+// }
 
-// Chart initialization functions for each company
-function initializeSonovaCharts(data) {
-    // Financial metrics chart
-    const financialCtx = document.getElementById('sonova-financial-metrics');
-    if (financialCtx) {
-        new Chart(financialCtx, {
-            type: 'bar',
-            data: {
-                labels: ['Revenue', 'EBITA', 'Gross Profit'],
-                datasets: [{
-                    label: 'Current Period (Millions)',
-                    data: [
-                        data.current_period.key_financials.revenue.total,
-                        data.current_period.key_financials.ebita.adjusted,
-                        data.prior_year.key_financials.gross_profit
-                    ],
-                    backgroundColor: [
-                        'rgba(96, 165, 250, 0.8)',
-                        'rgba(52, 211, 153, 0.8)',
-                        'rgba(167, 139, 250, 0.8)'
-                    ]
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: {
-                        display: true,
-                        position: 'top',
-                        labels: {
-                            color: document.documentElement.classList.contains('dark') ? '#E5E7EB' : '#374151'
-                        }
-                    }
-                },
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                        grid: {
-                            color: document.documentElement.classList.contains('dark') ? '#374151' : '#E5E7EB'
-                        },
-                        ticks: {
-                            color: document.documentElement.classList.contains('dark') ? '#E5E7EB' : '#374151'
-                        }
-                    },
-                    x: {
-                        grid: {
-                            display: false
-                        },
-                        ticks: {
-                            color: document.documentElement.classList.contains('dark') ? '#E5E7EB' : '#374151'
-                        }
-                    }
-                }
-            }
-        });
-    }
+// // Chart initialization functions for each company
+// function initializeSonovaCharts(data) {
+//     // Financial metrics chart
+//     const financialCtx = document.getElementById('sonova-financial-metrics');
+//     if (financialCtx) {
+//         new Chart(financialCtx, {
+//             type: 'bar',
+//             data: {
+//                 labels: ['Revenue', 'EBITA', 'Gross Profit'],
+//                 datasets: [{
+//                     label: 'Current Period (Millions)',
+//                     data: [
+//                         data.current_period.key_financials.revenue.total,
+//                         data.current_period.key_financials.ebita.adjusted,
+//                         data.prior_year.key_financials.gross_profit
+//                     ],
+//                     backgroundColor: [
+//                         'rgba(96, 165, 250, 0.8)',
+//                         'rgba(52, 211, 153, 0.8)',
+//                         'rgba(167, 139, 250, 0.8)'
+//                     ]
+//                 }]
+//             },
+//             options: {
+//                 responsive: true,
+//                 maintainAspectRatio: false,
+//                 plugins: {
+//                     legend: {
+//                         display: true,
+//                         position: 'top',
+//                         labels: {
+//                             color: document.documentElement.classList.contains('dark') ? '#E5E7EB' : '#374151'
+//                         }
+//                     }
+//                 },
+//                 scales: {
+//                     y: {
+//                         beginAtZero: true,
+//                         grid: {
+//                             color: document.documentElement.classList.contains('dark') ? '#374151' : '#E5E7EB'
+//                         },
+//                         ticks: {
+//                             color: document.documentElement.classList.contains('dark') ? '#E5E7EB' : '#374151'
+//                         }
+//                     },
+//                     x: {
+//                         grid: {
+//                             display: false
+//                         },
+//                         ticks: {
+//                             color: document.documentElement.classList.contains('dark') ? '#E5E7EB' : '#374151'
+//                         }
+//                     }
+//                 }
+//             }
+//         });
+//     }
 
-    // Segment revenue chart
-    const segmentCtx = document.getElementById('sonova-segment-revenue');
-    if (segmentCtx) {
-        new Chart(segmentCtx, {
-            type: 'doughnut',
-            data: {
-                labels: ['Hearing Instruments', 'Cochlear Implants'],
-                datasets: [{
-                    data: [
-                        data.current_period.key_financials.segments.hearing_instruments.revenue,
-                        data.current_period.key_financials.segments.cochlear_implants.revenue
-                    ],
-                    backgroundColor: [
-                        'rgba(96, 165, 250, 0.8)',
-                        'rgba(52, 211, 153, 0.8)'
-                    ]
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: {
-                        position: 'bottom',
-                        labels: {
-                            color: document.documentElement.classList.contains('dark') ? '#E5E7EB' : '#374151'
-                        }
-                    }
-                }
-            }
-        });
-    }
-}
+//     // Segment revenue chart
+//     const segmentCtx = document.getElementById('sonova-segment-revenue');
+//     if (segmentCtx) {
+//         new Chart(segmentCtx, {
+//             type: 'doughnut',
+//             data: {
+//                 labels: ['Hearing Instruments', 'Cochlear Implants'],
+//                 datasets: [{
+//                     data: [
+//                         data.current_period.key_financials.segments.hearing_instruments.revenue,
+//                         data.current_period.key_financials.segments.cochlear_implants.revenue
+//                     ],
+//                     backgroundColor: [
+//                         'rgba(96, 165, 250, 0.8)',
+//                         'rgba(52, 211, 153, 0.8)'
+//                     ]
+//                 }]
+//             },
+//             options: {
+//                 responsive: true,
+//                 maintainAspectRatio: false,
+//                 plugins: {
+//                     legend: {
+//                         position: 'bottom',
+//                         labels: {
+//                             color: document.documentElement.classList.contains('dark') ? '#E5E7EB' : '#374151'
+//                         }
+//                     }
+//                 }
+//             }
+//         });
+//     }
+// }
 
 
 // Sonova Dashboard Implementation
@@ -2105,6 +2105,367 @@ function generateWSADashboard(data) {
         </div>
     `;
 }
+
+
+function initializeSonovaCharts(data) {
+    // Segment Revenue Distribution
+    new Chart(document.getElementById('sonova-segment-revenue').getContext('2d'), {
+        type: 'pie',
+        data: {
+            labels: ['Hearing Instruments', 'Audiological Care', 'Consumer Hearing', 'Cochlear Implants'],
+            datasets: [{
+                data: [
+                    data.current_period.key_financials.segments.hearing_instruments.subsegments.hearing_instruments_business.revenue,
+                    data.current_period.key_financials.segments.hearing_instruments.subsegments.audiological_care.revenue,
+                    data.current_period.key_financials.segments.hearing_instruments.subsegments.consumer_hearing.revenue,
+                    data.current_period.key_financials.segments.cochlear_implants.revenue
+                ],
+                backgroundColor: ['#4299E1', '#48BB78', '#F6AD55', '#F56565']
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false
+        }
+    });
+
+    // Financial Metrics Trend
+    new Chart(document.getElementById('sonova-financial-metrics').getContext('2d'), {
+        type: 'line',
+        data: {
+            labels: ['HY 2024/25'],
+            datasets: [{
+                label: 'Revenue',
+                data: [data.current_period.key_financials.revenue.total],
+                borderColor: '#4299E1'
+            }, {
+                label: 'EBITA',
+                data: [data.current_period.key_financials.ebita.adjusted],
+                borderColor: '#48BB78'
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false
+        }
+    });
+
+    new Chart(document.getElementById('sonova-growth-metrics').getContext('2d'), {
+        type: 'bar',
+        data: {
+            labels: ['Revenue Growth LC', 'HI Growth', 'CI Growth'],
+            datasets: [{
+                label: 'Growth Rate (%)',
+                data: [
+                    data.current_period.key_financials.revenue.growth.local_currency,
+                    data.current_period.key_financials.segments.hearing_instruments.organic_growth,
+                    data.current_period.key_financials.segments.cochlear_implants.organic_growth
+                ],
+                backgroundColor: ['#4299E1', '#48BB78', '#F6AD55']
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    display: false
+                },
+                tooltip: {
+                    callbacks: {
+                        label: function(context) {
+                            return `${context.raw}%`;
+                        }
+                    }
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    ticks: {
+                        callback: function(value) {
+                            return value + '%';
+                        }
+                    }
+                }
+            }
+        }
+    });
+}
+
+function initializeWSACharts(data) {
+    // Revenue by Region
+    new Chart(document.getElementById('wsa-revenue-by-region').getContext('2d'), {
+        type: 'doughnut',
+        data: {
+            labels: ['EMEA', 'Americas', 'APAC'],
+            datasets: [{
+                data: [
+                    data.key_financials.revenue.by_region.EMEA.revenue,
+                    data.key_financials.revenue.by_region.Americas.revenue,
+                    data.key_financials.revenue.by_region.APAC.revenue
+                ],
+                backgroundColor: ['#4299E1', '#48BB78', '#F6AD55']
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false
+        }
+    });
+    new Chart(document.getElementById('wsa-operational-metrics').getContext('2d'), {
+        type: 'bar',
+        data: {
+            labels: ['R&D Spend', 'R&D Staff', 'Production Sites'],
+            datasets: [{
+                label: 'Key Operational Metrics',
+                data: [
+                    data.operational_metrics.research_development.total_spend,
+                    data.operational_metrics.employees.by_function.RnD,
+                    data.operational_metrics.infrastructure.production_sites
+                ],
+                backgroundColor: ['#4299E1', '#48BB78', '#F6AD55']
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    display: false
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    ticks: {
+                        callback: function(value) {
+                            if (value >= 1000) {
+                                return value / 1000 + 'k';
+                            }
+                            return value;
+                        }
+                    }
+                }
+            }
+        }
+    });
+
+    // Sustainability Metrics Chart
+    new Chart(document.getElementById('wsa-sustainability-metrics').getContext('2d'), {
+        type: 'bar',
+        data: {
+            labels: ['Renewable Energy', 'Recycling Rate'],
+            datasets: [{
+                label: 'Sustainability Metrics (%)',
+                data: [
+                    data.sustainability_metrics.energy.renewable_electricity_share,
+                    data.sustainability_metrics.waste_management.recycling_rate
+                ],
+                backgroundColor: ['#48BB78', '#4299E1']
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    display: false
+                },
+                tooltip: {
+                    callbacks: {
+                        label: function(context) {
+                            return `${context.raw}%`;
+                        }
+                    }
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    max: 100,
+                    ticks: {
+                        callback: function(value) {
+                            return value + '%';
+                        }
+                    }
+                }
+            }
+        }
+    });
+}
+
+function initializeGNCharts(data) {
+    // Revenue Distribution
+    new Chart(document.getElementById('gn-revenue-distribution').getContext('2d'), {
+        type: 'pie',
+        data: {
+            labels: ['Hearing', 'Enterprise', 'Gaming & Consumer'],
+            datasets: [{
+                data: [
+                    data.financial_highlights.revenue.by_division.hearing.revenue,
+                    data.financial_highlights.revenue.by_division.enterprise.revenue,
+                    data.financial_highlights.revenue.by_division.gaming_consumer.revenue
+                ],
+                backgroundColor: ['#4299E1', '#48BB78', '#F6AD55']
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false
+        }
+    });
+}
+
+// GN Dashboard Implementation
+function generateGNDashboard(data) {
+    return `
+        <div class="container mx-auto px-4 py-8">
+            <!-- Company Header -->
+            <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 mb-6">
+                <div class="flex justify-between items-start">
+                    <div>
+                        <h1 class="text-3xl font-bold mb-2">${data.company_info.name}</h1>
+                        <p class="text-gray-600 dark:text-gray-400">${data.period.quarter} ${data.period.year}</p>
+                    </div>
+                    <div class="text-right">
+                        <p class="text-sm text-gray-600 dark:text-gray-400">Report Date: ${data.period.report_date}</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Primary KPIs -->
+            <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-6 gap-6 mb-6">
+                <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
+                    <h3 class="text-sm font-medium text-gray-500 dark:text-gray-400">Revenue</h3>
+                    <p class="mt-2 text-3xl font-semibold">${formatCurrency(data.financial_highlights.revenue.total)}</p>
+                    <p class="text-sm text-gray-600 dark:text-gray-400">Organic Growth: ${formatPercentage(data.financial_highlights.revenue.organic_growth)}</p>
+                </div>
+                <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
+                    <h3 class="text-sm font-medium text-gray-500 dark:text-gray-400">EBITA</h3>
+                    <p class="mt-2 text-3xl font-semibold">${formatCurrency(data.financial_highlights.profitability.ebita.value)}</p>
+                    <p class="text-sm text-gray-600 dark:text-gray-400">Margin: ${formatPercentage(data.financial_highlights.profitability.ebita.margin)}</p>
+                </div>
+                <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
+                    <h3 class="text-sm font-medium text-gray-500 dark:text-gray-400">Free Cash Flow</h3>
+                    <p class="mt-2 text-3xl font-semibold">${formatCurrency(data.financial_highlights.cash_flow.free_cash_flow.excl_ma)}</p>
+                    <p class="text-sm text-gray-600 dark:text-gray-400">Cash Conversion: ${data.financial_highlights.cash_flow.cash_conversion}%</p>
+                </div>
+                <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
+                    <h3 class="text-sm font-medium text-gray-500 dark:text-gray-400">Gross Profit</h3>
+                    <p class="mt-2 text-3xl font-semibold">${formatCurrency(data.financial_highlights.profitability.gross_profit.value)}</p>
+                    <p class="text-sm text-gray-600 dark:text-gray-400">Margin: ${formatPercentage(data.financial_highlights.profitability.gross_profit.margin)}</p>
+                </div>
+                <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
+                    <h3 class="text-sm font-medium text-gray-500 dark:text-gray-400">Net Debt</h3>
+                    <p class="mt-2 text-3xl font-semibold">${formatCurrency(data.financial_highlights.balance_sheet.net_interest_bearing_debt)}</p>
+                    <p class="text-sm text-gray-600 dark:text-gray-400">Leverage: ${data.financial_highlights.balance_sheet.leverage_ratio.adjusted}x</p>
+                </div>
+                <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
+                    <h3 class="text-sm font-medium text-gray-500 dark:text-gray-400">Equity Ratio</h3>
+                    <p class="mt-2 text-3xl font-semibold">${formatPercentage(data.financial_highlights.balance_sheet.equity_ratio)}</p>
+                </div>
+            </div>
+
+            <!-- Charts Section -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
+                <div class="bg-white dark:bg-gray-800 rounded-lg shadow">
+                    <div class="p-4 border-b border-gray-200 dark:border-gray-700">
+                        <h2 class="text-lg font-medium">Revenue Distribution</h2>
+                    </div>
+                    <div class="p-4 h-80">
+                        <canvas id="gn-revenue-distribution"></canvas>
+                    </div>
+                </div>
+                <div class="bg-white dark:bg-gray-800 rounded-lg shadow">
+                    <div class="p-4 border-b border-gray-200 dark:border-gray-700">
+                        <h2 class="text-lg font-medium">Divisional Performance</h2>
+                    </div>
+                    <div class="p-4">
+                        <div class="space-y-4">
+                            ${Object.entries(data.financial_highlights.revenue.by_division).map(([division, info]) => `
+                                <div>
+                                    <h3 class="font-medium mb-2">${division.charAt(0).toUpperCase() + division.slice(1)}</h3>
+                                    <div class="flex justify-between mb-1">
+                                        <span>Revenue</span>
+                                        <span>${formatCurrency(info.revenue)}</span>
+                                    </div>
+                                    <div class="flex justify-between">
+                                        <span>Organic Growth</span>
+                                        <span>${formatPercentage(info.organic_growth)}</span>
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white dark:bg-gray-800 rounded-lg shadow">
+                    <div class="p-4 border-b border-gray-200 dark:border-gray-700">
+                        <h2 class="text-lg font-medium">Geographic Distribution</h2>
+                    </div>
+                    <div class="p-4">
+                        <div class="space-y-4">
+                            ${Object.entries(data.financial_highlights.revenue.by_geography).map(([region, info]) => `
+                                <div class="flex justify-between">
+                                    <span>${region.charAt(0).toUpperCase() + region.slice(1)}</span>
+                                    <span>${formatCurrency(info.revenue)}</span>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Additional Metrics -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <div class="bg-white dark:bg-gray-800 rounded-lg shadow">
+                    <div class="p-4 border-b border-gray-200 dark:border-gray-700">
+                        <h2 class="text-lg font-medium">Operational Metrics</h2>
+                    </div>
+                    <div class="p-4">
+                        <div class="space-y-4">
+                            <div class="flex justify-between">
+                                <span>Total Employees</span>
+                                <span>${data.operational_metrics.employees.total}</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span>R&D Intensity</span>
+                                <span>${formatPercentage(data.operational_metrics.development_costs.rd_intensity)}</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span>Development Costs</span>
+                                <span>${formatCurrency(data.operational_metrics.development_costs.total)}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white dark:bg-gray-800 rounded-lg shadow">
+                    <div class="p-4 border-b border-gray-200 dark:border-gray-700">
+                        <h2 class="text-lg font-medium">2024 Guidance</h2>
+                    </div>
+                    <div class="p-4">
+                        <div class="space-y-4">
+                            <div class="flex justify-between">
+                                <span>Organic Growth</span>
+                                <span>${data.guidance_2024.organic_growth.range}</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span>EBITA Margin</span>
+                                <span>${data.guidance_2024.ebita_margin.range}</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span>Free Cash Flow (excl. M&A)</span>
+                                <span>>${data.guidance_2024.free_cash_flow_excl_ma.target}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `;
+}
+
 
 // I'll continue with the GN implementation and chart initializations in the next section. Would you like me to proceed?
 
