@@ -1,4 +1,4 @@
-const gnQ3_2024_data = {
+const gnData = {
     company_info: {
       name: "GN Store Nord A/S",
       headquarters: "Lautrupbjerg 7, 2750 Ballerup, Denmark",
@@ -163,4 +163,7 @@ const gnQ3_2024_data = {
     }
   };
   
-  console.log(JSON.stringify(gnQ3_2024_data, null, 2));
+
+  // console.log(JSON.stringify(gnQ3_2024_data, null, 2));
+
+  export default gnData;

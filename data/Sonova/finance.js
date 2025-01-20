@@ -1,4 +1,4 @@
-const sonovaFinancialData = {
+const sonovaData = {
     current_period: {
       period: "First half 2024/25",
       key_financials: {
@@ -137,4 +137,4 @@ const sonovaFinancialData = {
     }
   };
   
-  export default sonovaFinancialData;
+  export default sonovaData;

@@ -1,4 +1,4 @@
-const WSAudiology_2023_24_data = {
+const wsData = {
     "company": "WS Audiology A/S",
     "fiscal_year": "2023/24",
     "key_financials": {
@@ -153,4 +153,4 @@ const WSAudiology_2023_24_data = {
     }
   };
   
-  export default WSAudiology_2023_24_data;
+  export default wsData;

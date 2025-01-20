@@ -2273,7 +2273,135 @@
     <!-- Financial Analysis Content -->
 <!-- Financial Analysis Content -->
 <div id="financial-analysis-content" class="hidden space-y-6">
-    <div class="grid grid-cols-1 lg:grid-cols-4 gap-6 mb-6">
+
+    <div class="container mx-auto px-4 py-8">
+        <!-- Company Header -->
+        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 mb-6">
+            <div class="flex justify-between items-start">
+                <div>
+                    <h1 id="company-name" class="text-3xl font-bold mb-2">Company Name</h1>
+                    <p id="company-period" class="text-gray-600 dark:text-gray-400">Fiscal Period</p>
+                </div>
+                <div class="text-right">
+                    <p id="last-updated" class="text-sm text-gray-600 dark:text-gray-400">Last Updated: </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Key Performance Indicators -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
+            <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
+                <div class="flex items-center justify-between">
+                    <h3 class="text-sm font-medium text-gray-500 dark:text-gray-400">Revenue</h3>
+                    <span class="text-xs px-2 py-1 rounded-full bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200">TTM</span>
+                </div>
+                <p id="revenue-value" class="mt-2 text-3xl font-semibold">-</p>
+                <div id="revenue-growth" class="mt-2 text-sm"></div>
+            </div>
+            <!-- More KPI cards -->
+        </div>
+
+        <!-- Financial Charts -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+            <div class="bg-white dark:bg-gray-800 rounded-lg shadow">
+                <div class="p-4 border-b border-gray-200 dark:border-gray-700">
+                    <h2 class="text-lg font-medium">Revenue & Profitability</h2>
+                </div>
+                <div class="p-4">
+                    <canvas id="revenue-profit-chart" height="300"></canvas>
+                </div>
+            </div>
+            <div class="bg-white dark:bg-gray-800 rounded-lg shadow">
+                <div class="p-4 border-b border-gray-200 dark:border-gray-700">
+                    <h2 class="text-lg font-medium">Segment Performance</h2>
+                </div>
+                <div class="p-4">
+                    <canvas id="segment-chart" height="300"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- Detailed Metrics Grid -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
+            <!-- Financial Metrics -->
+            <div class="bg-white dark:bg-gray-800 rounded-lg shadow">
+                <div class="p-4 border-b border-gray-200 dark:border-gray-700">
+                    <h2 class="text-lg font-medium">Financial Metrics</h2>
+                </div>
+                <div class="p-4">
+                    <div id="financial-metrics" class="space-y-4">
+                        <!-- Metrics will be inserted here -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Operating Metrics -->
+            <div class="bg-white dark:bg-gray-800 rounded-lg shadow">
+                <div class="p-4 border-b border-gray-200 dark:border-gray-700">
+                    <h2 class="text-lg font-medium">Operating Metrics</h2>
+                </div>
+                <div class="p-4">
+                    <div id="operating-metrics" class="space-y-4">
+                        <!-- Metrics will be inserted here -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Market Metrics -->
+            <div class="bg-white dark:bg-gray-800 rounded-lg shadow">
+                <div class="p-4 border-b border-gray-200 dark:border-gray-700">
+                    <h2 class="text-lg font-medium">Market Metrics</h2>
+                </div>
+                <div class="p-4">
+                    <div id="market-metrics" class="space-y-4">
+                        <!-- Metrics will be inserted here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Regional Performance -->
+        <div class="bg-white dark:bg-gray-800 rounded-lg shadow mb-6">
+            <div class="p-4 border-b border-gray-200 dark:border-gray-700">
+                <h2 class="text-lg font-medium">Regional Performance</h2>
+            </div>
+            <div class="p-4">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                    <div id="regional-metrics">
+                        <!-- Regional metrics will be inserted here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Additional Metrics Sections -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <!-- Balance Sheet Summary -->
+            <div class="bg-white dark:bg-gray-800 rounded-lg shadow">
+                <div class="p-4 border-b border-gray-200 dark:border-gray-700">
+                    <h2 class="text-lg font-medium">Balance Sheet Summary</h2>
+                </div>
+                <div class="p-4">
+                    <div id="balance-sheet-metrics" class="space-y-4">
+                        <!-- Balance sheet metrics will be inserted here -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Cash Flow Analysis -->
+            <div class="bg-white dark:bg-gray-800 rounded-lg shadow">
+                <div class="p-4 border-b border-gray-200 dark:border-gray-700">
+                    <h2 class="text-lg font-medium">Cash Flow Analysis</h2>
+                </div>
+                <div class="p-4">
+                    <div id="cash-flow-metrics" class="space-y-4">
+                        <!-- Cash flow metrics will be inserted here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- <div class="grid grid-cols-1 lg:grid-cols-4 gap-6 mb-6">
         <div class="bg-white rounded-lg shadow p-4">
             <h3 class="text-sm font-medium text-gray-500">Revenue</h3>
             <p id="revenueTTM" class="mt-2 text-3xl font-semibold">-</p>
@@ -2316,7 +2444,7 @@
         </div>
     </div>
 
-    <!-- Financial Metrics -->
+
     <div class="mt-6 grid grid-cols-1 lg:grid-cols-2 gap-6">
         <div class="bg-white rounded-lg shadow">
             <div class="p-4 border-b">
@@ -2381,7 +2509,7 @@
                 </table>
             </div>
         </div>
-    </div>
+    </div> -->
 </div>
                
 
