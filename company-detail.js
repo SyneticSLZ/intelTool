@@ -1079,13 +1079,13 @@ async function initializeFinancialDashboard(companyName) {
 
         // Initialize charts based on company
         switch(normalizedName) {
-            case 'sonova':
+            case 'Sonova':
                 initializeSonovaCharts(data);
                 break;
-            case 'ws':
+            case 'Ws':
                 initializeWSACharts(data);
                 break;
-            case 'gn':
+            case 'Gn':
                 initializeGNCharts(data);
                 break;
         }
