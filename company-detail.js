@@ -1060,13 +1060,13 @@ async function initializeFinancialDashboard(companyName) {
         // Generate HTML based on company
         let dashboardHTML;
         switch(normalizedName) {
-            case 'sonova':
+            case 'Sonova':
                 dashboardHTML = generateSonovaDashboard(data);
                 break;
-            case 'ws':
+            case 'Ws':
                 dashboardHTML = generateWSADashboard(data);
                 break;
-            case 'gn':
+            case 'Gn':
                 dashboardHTML = generateGNDashboard(data);
                 break;
             default:
