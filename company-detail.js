@@ -5,9 +5,9 @@ import wsData from './data/Ws/finance.js';
 
 // Map company data
 const companyData = {
-    'gn': gnData,
-    'sonova': sonovaData,
-    'ws': wsData
+    'Gn': gnData,
+    'Sonova': sonovaData,
+    'Ws': wsData
 };
 
 // Utility functions
