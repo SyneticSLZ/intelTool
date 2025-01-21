@@ -1,7 +1,7 @@
 // Import company data
-import gnData from './data/gn/finance.js';
-import sonovaData from './data/sonova/finance.js';
-import wsData from './data/ws/finance.js';
+import gnData from './data/Gn/finance.js';
+import sonovaData from './data/Sonova/finance.js';
+import wsData from './data/Ws/finance.js';
 
 // Map company data
 const companyData = {
