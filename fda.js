@@ -1286,26 +1286,19 @@ function setupTableSearch() {
         }
     });
 }
-
 function filterTable(tableId, searchTerm, searchFields) {
     const tableBody = document.getElementById(tableId);
     if (!tableBody) return;
     
     searchTerm = searchTerm.toLowerCase();
     
-    // If search is empty, reset the table
+    // Reset table if search is empty
     if (!searchTerm) {
-        // Reset all group headers and contents
         const rows = Array.from(tableBody.getElementsByTagName('tr'));
         rows.forEach(row => {
-            row.style.display = ''; // Show all rows
+            row.style.display = '';
             if (row.id && row.id.includes('-group')) {
-                row.classList.add('hidden'); // Re-hide group contents
-                // Reset visibility of all patent entries
-                const patentEntries = row.querySelectorAll('.flex.justify-between.items-center.py-2');
-                patentEntries.forEach(patent => {
-                    patent.style.display = '';
-                });
+                row.classList.add('hidden');
             }
         });
         return;
@@ -1314,35 +1307,45 @@ function filterTable(tableId, searchTerm, searchFields) {
     const rows = Array.from(tableBody.getElementsByTagName('tr'));
     const groupsWithVisibleChildren = new Set();
     
-    // First pass: check individual patents and mark their groups
     rows.forEach(row => {
-        if (row.id && row.id.includes('-group')) {
-            const patentEntries = row.querySelectorAll('.flex.justify-between.items-center.py-2');
+        if (row.id && (row.id.includes('-group') || 
+                      row.id.includes('-510k') || 
+                      row.id.includes('-reg') || 
+                      row.id.includes('-adverse'))) {
             let hasVisibleChild = false;
+            const entries = row.querySelectorAll('[class*="flex justify-between"]');
             
-            patentEntries.forEach(patent => {
-                const patentText = patent.textContent.toLowerCase();
-                const isVisible = patentText.includes(searchTerm);
-                patent.style.display = isVisible ? '' : 'none';
+            entries.forEach(entry => {
+                const text = entry.textContent.toLowerCase();
+                const isVisible = text.includes(searchTerm);
+                entry.style.display = isVisible ? '' : 'none';
                 if (isVisible) hasVisibleChild = true;
             });
             
             if (hasVisibleChild) {
-                groupsWithVisibleChildren.add(row.id.replace('-group', ''));
+                const groupId = row.id.split('-')[0];
+                groupsWithVisibleChildren.add(groupId);
             }
         }
     });
     
-    // Second pass: show/hide groups based on their children
     rows.forEach(row => {
         if (!row.id) {
-            const groupId = row.querySelector('.flex.justify-between')?.getAttribute('onclick')?.match(/'([^']+)'/)?.[1];
+            const groupId = row.querySelector('[onclick*="toggleDeviceGroup"]')?.
+                getAttribute('onclick')?.
+                match(/'([^']+)/)?.[1]?.
+                split('-')[0];
+                
             if (groupId) {
-                const baseGroupId = groupId.replace('-group', '');
-                const hasVisibleChildren = groupsWithVisibleChildren.has(baseGroupId);
+                const hasVisibleChildren = groupsWithVisibleChildren.has(groupId);
                 row.style.display = hasVisibleChildren ? '' : 'none';
                 
-                const groupContent = document.getElementById(groupId);
+                const groupContent = document.getElementById(groupId + 
+                    (tableId.includes('510k') ? '-510k' : 
+                     tableId.includes('reg') ? '-reg' : 
+                     tableId.includes('adverse') ? '-adverse' : 
+                     '-group'));
+                     
                 if (groupContent) {
                     groupContent.style.display = hasVisibleChildren ? '' : 'none';
                     if (hasVisibleChildren) {
@@ -1353,6 +1356,72 @@ function filterTable(tableId, searchTerm, searchFields) {
         }
     });
 }
+// function filterTable(tableId, searchTerm, searchFields) {
+//     const tableBody = document.getElementById(tableId);
+//     if (!tableBody) return;
+    
+//     searchTerm = searchTerm.toLowerCase();
+    
+//     // If search is empty, reset the table
+//     if (!searchTerm) {
+//         // Reset all group headers and contents
+//         const rows = Array.from(tableBody.getElementsByTagName('tr'));
+//         rows.forEach(row => {
+//             row.style.display = ''; // Show all rows
+//             if (row.id && row.id.includes('-group')) {
+//                 row.classList.add('hidden'); // Re-hide group contents
+//                 // Reset visibility of all patent entries
+//                 const patentEntries = row.querySelectorAll('.flex.justify-between.items-center.py-2');
+//                 patentEntries.forEach(patent => {
+//                     patent.style.display = '';
+//                 });
+//             }
+//         });
+//         return;
+//     }
+    
+//     const rows = Array.from(tableBody.getElementsByTagName('tr'));
+//     const groupsWithVisibleChildren = new Set();
+    
+//     // First pass: check individual patents and mark their groups
+//     rows.forEach(row => {
+//         if (row.id && row.id.includes('-group')) {
+//             const patentEntries = row.querySelectorAll('.flex.justify-between.items-center.py-2');
+//             let hasVisibleChild = false;
+            
+//             patentEntries.forEach(patent => {
+//                 const patentText = patent.textContent.toLowerCase();
+//                 const isVisible = patentText.includes(searchTerm);
+//                 patent.style.display = isVisible ? '' : 'none';
+//                 if (isVisible) hasVisibleChild = true;
+//             });
+            
+//             if (hasVisibleChild) {
+//                 groupsWithVisibleChildren.add(row.id.replace('-group', ''));
+//             }
+//         }
+//     });
+    
+//     // Second pass: show/hide groups based on their children
+//     rows.forEach(row => {
+//         if (!row.id) {
+//             const groupId = row.querySelector('.flex.justify-between')?.getAttribute('onclick')?.match(/'([^']+)'/)?.[1];
+//             if (groupId) {
+//                 const baseGroupId = groupId.replace('-group', '');
+//                 const hasVisibleChildren = groupsWithVisibleChildren.has(baseGroupId);
+//                 row.style.display = hasVisibleChildren ? '' : 'none';
+                
+//                 const groupContent = document.getElementById(groupId);
+//                 if (groupContent) {
+//                     groupContent.style.display = hasVisibleChildren ? '' : 'none';
+//                     if (hasVisibleChildren) {
+//                         groupContent.classList.remove('hidden');
+//                     }
+//                 }
+//             }
+//         }
+//     });
+// }
 
 // Helper function to get nested object values from string path
 function getNestedValue(obj, path) {
