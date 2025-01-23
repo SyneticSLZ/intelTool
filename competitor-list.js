@@ -351,7 +351,48 @@ const mockCompetitors = {
                 marketGrowth: 11.6,
                 innovationScore: 7.8
             }
+        },
+        {
+            id: 4,
+            name: 'Demant',
+            industry: 'Healthcare',
+            keyMetrics: {
+                revenue: 16488.0, // DKK million, as of Q3 2024
+                marketShare: 8.5, // Estimated global market share percentage
+                recentPatents: 12, // Number of recent patents filed
+                filings: 23000 // Approximate number of regulatory filings
+            },
+            marketPosition: {
+                rank: 3,
+                type: 'Challenger',
+                strength: 'High',
+                trend: 'up'
+            },
+            recentActivities: [
+                {
+                    type: 'product',
+                    title: 'Oticon Intent Launch',
+                    date: 'February 2025'
+                },
+                {
+                    type: 'partnership',
+                    title: 'EPOS and Lenovo Strategic Partnership',
+                    date: 'November 7, 2024'
+                },
+                {
+                    type: 'sustainability',
+                    title: 'Joined Net-Zero Future Network',
+                    date: 'December 4, 2024'
+                }
+            ],
+            quickMetrics: {
+                roi: 22.5, // Return on Investment percentage
+                nps: 70, // Net Promoter Score
+                marketGrowth: 10.0, // Market growth percentage
+                innovationScore: 8.5 // Innovation score out of 10
+            }
         }
+        
     ]
 };
 // State Management

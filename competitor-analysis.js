@@ -482,7 +482,7 @@ function getCompanyData() {
             industry: 'Hearing Aids'
         },
         4: { 
-            name: 'Oticon', 
+            name: 'Demant', 
             cik: '0001535929', 
             industry: 'Hearing Aids'
         },

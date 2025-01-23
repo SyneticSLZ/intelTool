@@ -2,12 +2,14 @@
 import gnData from './data/Gn/finance.js';
 import sonovaData from './data/Sonova/finance.js';
 import wsData from './data/Ws/finance.js';
+import DemantData from './data/Demant/finance.js'
 
 // Map company data
 const companyData = {
     'Gn': gnData,
     'Sonova': sonovaData,
-    'Ws': wsData
+    'Ws': wsData,
+    'Demant': DemantData
 };
 
 // Utility functions
@@ -1069,6 +1071,10 @@ async function initializeFinancialDashboard(companyName) {
             case 'Gn':
                 dashboardHTML = generateGNDashboard(data);
                 break;
+            case 'Demant':
+                dashboardHTML = generateGNDashboard(data);
+                break;
+
             default:
                 throw new Error(`Unknown company: ${companyName}`);
         }
