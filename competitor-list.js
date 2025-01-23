@@ -242,10 +242,10 @@ const mockCompetitors = {
             name: 'Sonova',
             industry: 'Healthcare',
             keyMetrics: {
-                revenue: 3700000000,
-                marketShare: 24,
-                recentPatents: 14.2,
-                filings: 17500
+                revenue: 1833.2,
+                marketShare: 50.13,
+                recentPatents: 46,
+                filings: 11185
             },
             marketPosition: {
                 rank: 1,
@@ -282,10 +282,10 @@ const mockCompetitors = {
             name: 'GN ReSound',
             industry: 'Healthcare',
             keyMetrics: {
-                revenue: 3700000000,
-                marketShare: 24,
-                recentPatents: 14.2,
-                filings: 17500
+                revenue: 4164.0,
+                marketShare: 10.07,
+                recentPatents: 8,
+                filings: 22963
             },
             marketPosition: {
                 rank: 2,
@@ -317,10 +317,10 @@ const mockCompetitors = {
             name: 'WS Audiology',
             industry: 'Healthcare',
             keyMetrics: {
-                revenue: 3700000000,
-                marketShare: 24,
-                recentPatents: 14.2,
-                filings: 17500
+                revenue: 2637.0,
+                marketShare: 6.9,
+                recentPatents: 329,
+                filings: 26565
             },
             marketPosition: {
                 rank: 3,
@@ -453,19 +453,26 @@ const components = {
                     <div class="flex items-center">
                         <span class="text-sm text-blue-600 dark:text-blue-400">
                             <i class="fas fa-chart-line mr-1"></i>
-                            Revenue: ${metrics.revenue}%
+                            Revenue: ${metrics.revenue}M
                         </span>
                     </div>
                     <div class="flex items-center">
                         <span class="text-sm text-green-600 dark:text-green-400">
                             <i class="fas fa-users mr-1"></i>
-                            MarketShare: ${metrics.marketShare}
+                            Recent Patents: ${metrics.recentPatents}
+                            
                         </span>
                     </div>
                     <div class="flex items-center">
                         <span class="text-sm text-purple-600 dark:text-purple-400">
                             <i class="fas fa-chart-bar mr-1"></i>
-                            Recent Patents: ${metrics.recentPatents}%
+                            MarketShare: ${metrics.marketShare}%
+                        </span>
+                    </div>
+                    <div class="flex items-center">
+                        <span class="text-sm text-yellow-600 dark:text-yellow-400">
+                            <i class="fas fa-lightbulb mr-1"></i>
+                            FDA Filings: ${metrics.filings}
                         </span>
                     </div>
                 </div>
