@@ -926,6 +926,9 @@ const data = [
   
     const container = document.getElementById('strategic-initiatives-content');
     container.innerHTML = ""
+    while (container.firstChild) {
+      container.removeChild(container.firstChild);
+  }
     container.className = 'p-6';
 
     const overallMetrics = calculateOverallMetrics(data);
