@@ -1,21 +1,251 @@
 // Mock Data Generator
-const mockComcpetitors = {
-    competitors: [
+// const mockComcpetitors = {
+//     competitors: [
         
-    ]
-};
+//     ]
+// };
 
+// const mockCompetitors = {
+//     competitors: [
+//         {
+//             id: 1,
+//             name: 'Sonova',
+//             industry: 'Manufacturing',
+//             keyMetrics: {
+//                 revenue: 35200000000,
+//                 marketShare: 15.3,
+//                 growth: 12.4,
+//                 employees: 95000
+//             },
+//             marketPosition: {
+//                 rank: 1,
+//                 type: 'Market Leader',
+//                 strength: 'High',
+//                 trend: 'up'
+//             },
+//             recentActivities: [
+//                 {
+//                     type: 'patent',
+//                     title: 'Patent Filed: Fluorochemical Composition',
+//                     date: 'December 28, 2024'
+//                 },
+//                 {
+//                     type: 'FDA 510(k) Clearance Received',
+//                     title: 'Scotchbond™ Universal Plus Adhesive',
+//                     date: 'December 15, 2024'
+//                 },
+//                 {
+//                     type: 'Q3 2024 Form 10-Q Filed',
+//                     title: 'Quarterly Report with SEC',
+//                     date: 'November 30, 2024'
+//                 }
+//             ],
+//             strategicImpact: {
+//                 threat: 'High',
+//                 opportunity: 'Medium',
+//                 riskLevel: 'Medium',
+//                 watchPriority: 'High'
+//             }
+//         },
+//         {
+//             id: 2,
+//             name: 'GN ReSound',
+//             industry: 'Healthcare',
+//             keyMetrics: {
+//                 revenue: 28900000000,
+//                 marketShare: 12.8,
+//                 growth: 8.7,
+//                 employees: 84000
+//             },
+//             marketPosition: {
+//                 rank: 2,
+//                 type: 'Challenger',
+//                 strength: 'High',
+//                 trend: 'up'
+//             },
+//             recentActivities: [
+//                 {
+//                     type: 'acquisition',
+//                     title: 'AI Healthcare Startup Acquisition',
+//                     date: '2024-01-12'
+//                 },
+//                 {
+//                     type: 'product',
+//                     title: 'New Medical Device Launch',
+//                     date: '2024-01-08'
+//                 }
+//             ],
+//             strategicImpact: {
+//                 threat: 'High',
+//                 opportunity: 'High',
+//                 riskLevel: 'Medium',
+//                 watchPriority: 'High'
+//             }
+//         },
+//         {
+//             id: 3,
+//             name: 'WS Audiology',
+//             industry: 'Agriculture',
+//             keyMetrics: {
+//                 revenue: 165000000000,
+//                 marketShare: 25.4,
+//                 growth: 6.2,
+//                 employees: 155000
+//             },
+//             marketPosition: {
+//                 rank: 1,
+//                 type: 'Market Leader',
+//                 strength: 'High',
+//                 trend: 'stable'
+//             },
+//             recentActivities: [
+//                 {
+//                     type: 'sustainability',
+//                     title: 'Carbon Reduction Initiative Launch',
+//                     date: 'January 5, 2024'
+//                 },
+//                 {
+//                     type: 'expansion',
+//                     title: 'New Processing Facility in Brazil',
+//                     date: 'December 20, 2024'
+//                 },
+//                 {
+//                     type: 'partnership',
+//                     title: 'Sustainable Agriculture Partnership',
+//                     date: 'December 1, 2024'
+//                 }
+//             ],
+//             strategicImpact: {
+//                 threat: 'High',
+//                 opportunity: 'High',
+//                 riskLevel: 'Low',
+//                 watchPriority: 'High'
+//             }
+//         }
+//         // ,
+//         // {
+//         //     id: 4,
+//         //     name: 'Oticon',
+//         //     industry: 'Financial Services',
+//         //     keyMetrics: {
+//         //         revenue: 12500000000,
+//         //         marketShare: 8.5,
+//         //         growth: 5.8,
+//         //         employees: 6000
+//         //     },
+//         //     marketPosition: {
+//         //         rank: 3,
+//         //         type: 'Challenger',
+//         //         strength: 'Medium',
+//         //         trend: 'up'
+//         //     },
+//         //     recentActivities: [
+//         //         {
+//         //             type: 'acquisition',
+//         //             title: 'Wealth Management Portfolio Acquisition',
+//         //             date: 'January 8, 2024'
+//         //         },
+//         //         {
+//         //             type: 'product',
+//         //             title: 'Launch of ESG Investment Platform',
+//         //             date: 'December 12, 2024'
+//         //         },
+//         //         {
+//         //             type: 'partnership',
+//         //             title: 'Digital Banking Technology Partnership',
+//         //             date: 'November 28, 2024'
+//         //         }
+//         //     ],
+//         //     strategicImpact: {
+//         //         threat: 'Medium',
+//         //         opportunity: 'High',
+//         //         riskLevel: 'Medium',
+//         //         watchPriority: 'Medium'
+//         //     }
+//         // },
+//         // {
+//         //     id: 5,
+//         //     name: 'Starkey',
+//         //     industry: 'Education',
+//         //     keyMetrics: {
+//         //         revenue: 4500000000,
+//         //         marketShare: 18.2,
+//         //         growth: 4.3,
+//         //         employees: 21000
+//         //     },
+//         //     marketPosition: {
+//         //         rank: 1,
+//         //         type: 'Market Leader',
+//         //         strength: 'High',
+//         //         trend: 'stable'
+//         //     },
+//         //     recentActivities: [
+//         //         {
+//         //             type: 'product',
+//         //             title: 'Launch of AI-Powered Learning Platform',
+//         //             date: 'January 15, 2024'
+//         //         },
+//         //         {
+//         //             type: 'partnership',
+//         //             title: 'University Partnership Program Expansion',
+//         //             date: 'December 18, 2024'
+//         //         },
+//         //         {
+//         //             type: 'acquisition',
+//         //             title: 'EdTech Startup Acquisition',
+//         //             date: 'December 5, 2024'
+//         //         }
+//         //     ],
+//         //     strategicImpact: {
+//         //         threat: 'Medium',
+//         //         opportunity: 'High',
+//         //         riskLevel: 'Low',
+//         //         watchPriority: 'Medium'
+//         //     }
+//         // }
+//         // Add more competitors...
+//     ],
+
+//     generateMetricsChart(data) {
+//         return {
+//             type: 'line',
+//             data: {
+//                 labels: ['Q1', 'Q2', 'Q3', 'Q4'],
+//                 datasets: [{
+//                     label: 'Growth',
+//                     data: data,
+//                     borderColor: 'rgb(59, 130, 246)',
+//                     tension: 0.4
+//                 }]
+//             },
+//             options: {
+//                 responsive: true,
+//                 maintainAspectRatio: false,
+//                 plugins: {
+//                     legend: {
+//                         display: false
+//                     }
+//                 },
+//                 scales: {
+//                     y: {
+//                         beginAtZero: true
+//                     }
+//                 }
+//             }
+//         };
+//     }
+// };
 const mockCompetitors = {
     competitors: [
         {
             id: 1,
             name: 'Sonova',
-            industry: 'Manufacturing',
+            industry: 'Healthcare',
             keyMetrics: {
-                revenue: 35200000000,
-                marketShare: 15.3,
-                growth: 12.4,
-                employees: 95000
+                revenue: 3700000000,
+                marketShare: 24,
+                growth: 14.2,
+                employees: 17500
             },
             marketPosition: {
                 rank: 1,
@@ -26,25 +256,25 @@ const mockCompetitors = {
             recentActivities: [
                 {
                     type: 'patent',
-                    title: 'Patent Filed: Fluorochemical Composition',
-                    date: 'December 28, 2024'
+                    title: 'AI-Powered Hearing Aid Algorithm',
+                    date: 'January 15, 2025'
                 },
                 {
-                    type: 'FDA 510(k) Clearance Received',
-                    title: 'Scotchbond™ Universal Plus Adhesive',
-                    date: 'December 15, 2024'
+                    type: 'product',
+                    title: 'Launch of Phonak Lumity Pro',
+                    date: 'January 8, 2025'
                 },
                 {
-                    type: 'Q3 2024 Form 10-Q Filed',
-                    title: 'Quarterly Report with SEC',
-                    date: 'November 30, 2024'
+                    type: 'acquisition',
+                    title: 'Acquisition of AudioTech Solutions',
+                    date: 'December 20, 2024'
                 }
             ],
-            strategicImpact: {
-                threat: 'High',
-                opportunity: 'Medium',
-                riskLevel: 'Medium',
-                watchPriority: 'High'
+            quickMetrics: {
+                roi: 28.4,
+                nps: 72,
+                marketGrowth: 15.2,
+                innovationScore: 8.5
             }
         },
         {
@@ -52,10 +282,10 @@ const mockCompetitors = {
             name: 'GN ReSound',
             industry: 'Healthcare',
             keyMetrics: {
-                revenue: 28900000000,
-                marketShare: 12.8,
-                growth: 8.7,
-                employees: 84000
+                revenue: 2200000000,
+                marketShare: 16,
+                growth: 9.8,
+                employees: 7500
             },
             marketPosition: {
                 rank: 2,
@@ -65,176 +295,65 @@ const mockCompetitors = {
             },
             recentActivities: [
                 {
-                    type: 'acquisition',
-                    title: 'AI Healthcare Startup Acquisition',
-                    date: '2024-01-12'
+                    type: 'product',
+                    title: 'ReSound OMNIA Launch',
+                    date: 'January 18, 2025'
                 },
                 {
-                    type: 'product',
-                    title: 'New Medical Device Launch',
-                    date: '2024-01-08'
+                    type: 'partnership',
+                    title: 'Google Health Partnership',
+                    date: 'January 5, 2025'
                 }
             ],
-            strategicImpact: {
-                threat: 'High',
-                opportunity: 'High',
-                riskLevel: 'Medium',
-                watchPriority: 'High'
+            quickMetrics: {
+                roi: 25.6,
+                nps: 68,
+                marketGrowth: 12.4,
+                innovationScore: 8.2
             }
         },
         {
             id: 3,
             name: 'WS Audiology',
-            industry: 'Agriculture',
+            industry: 'Healthcare',
             keyMetrics: {
-                revenue: 165000000000,
-                marketShare: 25.4,
-                growth: 6.2,
-                employees: 155000
-            },
-            marketPosition: {
-                rank: 1,
-                type: 'Market Leader',
-                strength: 'High',
-                trend: 'stable'
-            },
-            recentActivities: [
-                {
-                    type: 'sustainability',
-                    title: 'Carbon Reduction Initiative Launch',
-                    date: 'January 5, 2024'
-                },
-                {
-                    type: 'expansion',
-                    title: 'New Processing Facility in Brazil',
-                    date: 'December 20, 2024'
-                },
-                {
-                    type: 'partnership',
-                    title: 'Sustainable Agriculture Partnership',
-                    date: 'December 1, 2024'
-                }
-            ],
-            strategicImpact: {
-                threat: 'High',
-                opportunity: 'High',
-                riskLevel: 'Low',
-                watchPriority: 'High'
-            }
-        },
-        {
-            id: 4,
-            name: 'Oticon',
-            industry: 'Financial Services',
-            keyMetrics: {
-                revenue: 12500000000,
-                marketShare: 8.5,
-                growth: 5.8,
-                employees: 6000
+                revenue: 2300000000,
+                marketShare: 14,
+                growth: 7.5,
+                employees: 12000
             },
             marketPosition: {
                 rank: 3,
                 type: 'Challenger',
-                strength: 'Medium',
-                trend: 'up'
-            },
-            recentActivities: [
-                {
-                    type: 'acquisition',
-                    title: 'Wealth Management Portfolio Acquisition',
-                    date: 'January 8, 2024'
-                },
-                {
-                    type: 'product',
-                    title: 'Launch of ESG Investment Platform',
-                    date: 'December 12, 2024'
-                },
-                {
-                    type: 'partnership',
-                    title: 'Digital Banking Technology Partnership',
-                    date: 'November 28, 2024'
-                }
-            ],
-            strategicImpact: {
-                threat: 'Medium',
-                opportunity: 'High',
-                riskLevel: 'Medium',
-                watchPriority: 'Medium'
-            }
-        },
-        {
-            id: 5,
-            name: 'Starkey',
-            industry: 'Education',
-            keyMetrics: {
-                revenue: 4500000000,
-                marketShare: 18.2,
-                growth: 4.3,
-                employees: 21000
-            },
-            marketPosition: {
-                rank: 1,
-                type: 'Market Leader',
                 strength: 'High',
                 trend: 'stable'
             },
             recentActivities: [
                 {
                     type: 'product',
-                    title: 'Launch of AI-Powered Learning Platform',
-                    date: 'January 15, 2024'
+                    title: 'Signia Silk X Launch',
+                    date: 'January 20, 2025'
+                },
+                {
+                    type: 'expansion',
+                    title: 'New R&D Center in Singapore',
+                    date: 'January 10, 2025'
                 },
                 {
                     type: 'partnership',
-                    title: 'University Partnership Program Expansion',
-                    date: 'December 18, 2024'
-                },
-                {
-                    type: 'acquisition',
-                    title: 'EdTech Startup Acquisition',
-                    date: 'December 5, 2024'
+                    title: 'Microsoft AI Partnership',
+                    date: 'December 15, 2024'
                 }
             ],
-            strategicImpact: {
-                threat: 'Medium',
-                opportunity: 'High',
-                riskLevel: 'Low',
-                watchPriority: 'Medium'
+            quickMetrics: {
+                roi: 22.8,
+                nps: 70,
+                marketGrowth: 11.6,
+                innovationScore: 7.8
             }
         }
-        // Add more competitors...
-    ],
-
-    generateMetricsChart(data) {
-        return {
-            type: 'line',
-            data: {
-                labels: ['Q1', 'Q2', 'Q3', 'Q4'],
-                datasets: [{
-                    label: 'Growth',
-                    data: data,
-                    borderColor: 'rgb(59, 130, 246)',
-                    tension: 0.4
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: {
-                        display: false
-                    }
-                },
-                scales: {
-                    y: {
-                        beginAtZero: true
-                    }
-                }
-            }
-        };
-    }
+    ]
 };
-
 // State Management
 const state = {
     competitors: [...mockCompetitors.competitors],
@@ -274,25 +393,25 @@ const components = {
                     </div>
                 </td>
                 <td class="px-6 py-4 whitespace-nowrap">
-                    ${this.renderStrategicImpact(competitor.strategicImpact)}
+                    ${this.renderQuickMetrics(competitor.quickMetrics)}
                 </td>
                 <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                     <button onclick="app.viewCompetitor(${competitor.id})" 
-                        class="text-starkey-blue hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300 mr-3 transition-colors duration-200">
+                        class="text-starkey-blue hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300 mr-3">
                         View
                     </button>
                     <button onclick="app.editCompetitor(${competitor.id})" 
-                        class="text-green-600 hover:text-green-700 dark:text-green-400 dark:hover:text-green-300 mr-3 transition-colors duration-200">
+                        class="text-green-600 hover:text-green-700 dark:text-green-400 dark:hover:text-green-300 mr-3">
                         Edit
                     </button>
                     <button onclick="app.deleteCompetitor(${competitor.id})" 
-                        class="text-red-600 hover:text-red-700 dark:text-red-400 dark:hover:text-red-300 transition-colors duration-200">
+                        class="text-red-600 hover:text-red-700 dark:text-red-400 dark:hover:text-red-300">
                         Delete
                     </button>
                 </td>
             </tr>
         `;
-    },
+        },
 
         renderMarketPosition(position) {
             const colors = {
@@ -300,10 +419,8 @@ const components = {
                 'Challenger': 'bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200',
                 'Follower': 'bg-yellow-100 dark:bg-yellow-900 text-yellow-800 dark:text-yellow-200'
             };
-    
             return `
-                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full transition-colors duration-200
-                    ${colors[position.type] || 'bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200'}">
+                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${colors[position.type] || 'bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200'}">
                     ${position.type}
                 </span>
                 <span class="ml-2 text-sm text-gray-500 dark:text-gray-400">
@@ -312,49 +429,82 @@ const components = {
             `;
         },
 
+
         renderRecentActivities(activities) {
             const icons = {
                 patent: 'fa-lightbulb',
                 executive: 'fa-user-tie',
                 product: 'fa-box',
-                acquisition: 'fa-handshake'
+                acquisition: 'fa-handshake',
+                partnership: 'fa-hands-helping',
+                expansion: 'fa-chart-line'
             };
-
             return activities.map(activity => `
                 <div class="flex items-center text-sm">
-                    <i class="fas ${icons[activity.type]} text-gray-400 dark:text-gray-500 mr-2"></i>
+                    <i class="fas ${icons[activity.type] || 'fa-circle'} text-gray-400 dark:text-gray-500 mr-2"></i>
                     <span class="truncate text-gray-900 dark:text-gray-300">${activity.title}</span>
                 </div>
             `).join('');
-        
         },
 
-        renderStrategicImpact(impact) {
-            const threatColor = impact.threat === 'High' 
-                ? 'text-red-600 dark:text-red-400' 
-                : 'text-yellow-600 dark:text-yellow-400';
-            const opportunityColor = impact.opportunity === 'High' 
-                ? 'text-green-600 dark:text-green-400' 
-                : 'text-blue-600 dark:text-blue-400';
-    
+        renderQuickMetrics(metrics) {
             return `
-                <div class="space-y-1">
+                <div class="grid grid-cols-2 gap-2">
                     <div class="flex items-center">
-                        <span class="text-sm ${threatColor} transition-colors duration-200">
-                            <i class="fas fa-exclamation-triangle mr-1"></i>
-                            ${impact.threat} Threat
+                        <span class="text-sm text-blue-600 dark:text-blue-400">
+                            <i class="fas fa-chart-line mr-1"></i>
+                            ROI: ${metrics.roi}%
                         </span>
                     </div>
                     <div class="flex items-center">
-                        <span class="text-sm ${opportunityColor} transition-colors duration-200">
-                            <i class="fas fa-star mr-1"></i>
-                            ${impact.opportunity} Opportunity
+                        <span class="text-sm text-green-600 dark:text-green-400">
+                            <i class="fas fa-users mr-1"></i>
+                            NPS: ${metrics.nps}
+                        </span>
+                    </div>
+                    <div class="flex items-center">
+                        <span class="text-sm text-purple-600 dark:text-purple-400">
+                            <i class="fas fa-chart-bar mr-1"></i>
+                            Growth: ${metrics.marketGrowth}%
+                        </span>
+                    </div>
+                    <div class="flex items-center">
+                        <span class="text-sm text-yellow-600 dark:text-yellow-400">
+                            <i class="fas fa-lightbulb mr-1"></i>
+                            Innovation: ${metrics.innovationScore}
                         </span>
                     </div>
                 </div>
             `;
         }
     },
+
+    //     renderStrategicImpact(impact) {
+    //         const threatColor = impact.threat === 'High' 
+    //             ? 'text-red-600 dark:text-red-400' 
+    //             : 'text-yellow-600 dark:text-yellow-400';
+    //         const opportunityColor = impact.opportunity === 'High' 
+    //             ? 'text-green-600 dark:text-green-400' 
+    //             : 'text-blue-600 dark:text-blue-400';
+    
+    //         return `
+    //             <div class="space-y-1">
+    //                 <div class="flex items-center">
+    //                     <span class="text-sm ${threatColor} transition-colors duration-200">
+    //                         <i class="fas fa-exclamation-triangle mr-1"></i>
+    //                         ${impact.threat} Threat
+    //                     </span>
+    //                 </div>
+    //                 <div class="flex items-center">
+    //                     <span class="text-sm ${opportunityColor} transition-colors duration-200">
+    //                         <i class="fas fa-star mr-1"></i>
+    //                         ${impact.opportunity} Opportunity
+    //                     </span>
+    //                 </div>
+    //             </div>
+    //         `;
+    //     }
+    // },
 
     quickView: {
         render(competitor) {
@@ -422,9 +572,9 @@ const app = {
         // });
 
         // Add competitor button
-        document.getElementById('add-competitor-btn').addEventListener('click', () => {
-            this.showAddModal();
-        });
+        // document.getElementById('add-competitor-btn').addEventListener('click', () => {
+        //     this.showAddModal();
+        // });
     },
 
     render() {

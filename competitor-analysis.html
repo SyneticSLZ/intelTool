@@ -52,10 +52,10 @@
                            class="bg-starkey-blue text-white px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200">
                             Companies
                         </a>
-                        <a href="./updatedindex.html" 
+                        <!-- <a href="./updatedindex.html" 
                            class="text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200">
                             Industry
-                        </a>
+                        </a> -->
                         <a href="./startups.html" style="display: none;" 
                            class="text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200">
                             Startups
@@ -82,12 +82,15 @@
                 <i class="fas fa-sun dark:hidden"></i>
                 <i class="fas fa-moon hidden dark:inline"></i>
             </div>
-            <div class="relative">
+            <div class="relative" style="display: none;">
+                <div id="search-input" ></div>
+                <div id="view-toggle"></div>
+
                 <input type="text" id="search-input" 
                        class="bg-gray-100 dark:bg-gray-700 dark:text-white rounded-full px-4 py-2 w-64 focus:outline-none focus:ring-2 focus:ring-starkey-blue transition-colors duration-200" 
                        placeholder="Search competitors...">
             </div>
-            <button id="view-toggle" 
+            <button id="view-toggle" style="display: none;"
                     class="px-4 py-2 bg-gray-200 dark:bg-gray-700 dark:text-white hover:bg-gray-300 dark:hover:bg-gray-600 rounded-md flex items-center transition-colors duration-200">
                 <i class="fas fa-table-list mr-2"></i>
                 <span>View Style</span>
@@ -113,7 +116,7 @@
                     </div>
                     <p id="industry" class="mt-2 text-gray-600 dark:text-gray-400">Global manufacturing and technology company</p>
                 </div>
-                <div class="flex space-x-4">
+                <div class="flex space-x-4" style="display: none;">
                     <button class="px-4 py-2 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors duration-200">
                         <i class="fas fa-file-export mr-2"></i>Export Analysis
                     </button>
@@ -190,10 +193,10 @@
 <!-- Market Analysis Content -->
 <div id="market-analysis-content" class="space-y-6">
     <!-- Recent Activity Timeline -->
-    <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-6 transition-colors duration-200">
+    <div  id="activityContainer">
         <div class="p-4">
             <h3 class="text-lg font-semibold mb-4 text-gray-900 dark:text-white">Recent Company Activity</h3>
-            <div class="space-y-4">
+            <div >
                 <div class="flex">
                     <div class="flex flex-col items-center">
                         <div class="w-8 h-8 bg-blue-500 dark:bg-blue-600 rounded-full flex items-center justify-center">
@@ -905,7 +908,7 @@
              
                 
 <!-- FDA Dashboard Tab Content -->
-<div id="product-portfolio-content" class="space-y-6 dark:bg-gray-900" >
+<div id="product-portfolio-content" class="space-y-6 " >
     <!-- Overview Statistics -->
     <div id="stats-skeleton" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 animate-pulse">
         <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-4">
@@ -1712,26 +1715,26 @@
         </div>
     </div> -->
 
-    <div id="technology-patents-content" class="space-y-6 dark:bg-gray-900">
+    <div id="technology-patents-content" class="space-y-6 ">
         <!-- Summary Stats -->
-        <!-- <div class="grid grid-cols-1 lg:grid-cols-4 gap-6 mb-6">
+        <div class="grid grid-cols-1 lg:grid-cols-4 gap-6 mb-6">
             <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-4">
                 <h3 class="text-sm font-medium text-gray-500 dark:text-gray-400">Total Patents</h3>
-                <p id="totalPatents" class="mt-2 text-3xl font-semibold dark:text-white">1,648</p>
+                <p id="totalPatents" class="mt-2 text-3xl font-semibold dark:text-white">-</p>
             </div>
-            <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-4">
+            <!-- <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-4">
                 <h3 class="text-sm font-medium text-gray-500 dark:text-gray-400">Active Patents</h3>
-                <p id="activePatents" class="mt-2 text-3xl font-semibold text-green-600 dark:text-green-400">1,025</p>
+                <p id="activePatents" class="mt-2 text-3xl font-semibold text-green-600 dark:text-green-400">-</p>
             </div>
             <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-4">
                 <h3 class="text-sm font-medium text-gray-500 dark:text-gray-400">Pending Patents</h3>
-                <p id="pendingPatents" class="mt-2 text-3xl font-semibold text-yellow-600 dark:text-yellow-400">71</p>
-            </div>
+                <p id="pendingPatents" class="mt-2 text-3xl font-semibold text-yellow-600 dark:text-yellow-400">-</p>
+            </div> -->
             <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-4">
                 <h3 class="text-sm font-medium text-gray-500 dark:text-gray-400">Recent Applications</h3>
                 <p id="recentApplications" class="mt-2 text-3xl font-semibold text-blue-600 dark:text-blue-400">-</p>
             </div>
-        </div> -->
+        </div>
     
         <!-- Charts Section -->
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
@@ -3160,81 +3163,305 @@ class TabSystem {
 }
 // Mock data for company overview
 const companyOverviewData = {
-    recentActivity: [
-        {
-            type: 'patent',
-            title: 'Advanced Manufacturing Process Technology',
-            description: 'New patent filed for innovative manufacturing process',
-            date: '2024-03-02',
-            icon: 'lightbulb',
-            color: 'blue'
-        },
-        {
-            type: 'fda',
-            title: 'Healthcare Solution B',
-            description: 'FDA Approval received for NDA-123457',
-            date: '2024-02-26',
-            icon: 'file-medical',
-            color: 'green'
-        },
-        {
-            type: 'earnings',
-            title: 'Q1 2024 Results',
-            description: 'Quarterly earnings exceeded expectations',
-            date: '2024-02-15',
-            icon: 'chart-line',
-            color: 'purple'
-        }
-    ],
-    news: [
+    
+};
+
+// function getCD() {
+//     const companyId = new URLSearchParams(window.location.search).get('id');
+//     const id = parseInt(companyId);
+    
+//     if (!id) {
+//         throw new Error('Invalid or missing company ID');
+//     }
+
+    // const companyMap = {
+    //     1: { name: '3M', cik: '0000066740', industry:'Global manufacturing and technology company' },
+    //     2: { name: 'Medtronic Inc', cik: '0000064670', industry: 'Healthcare' }
+    // };
+    const getCompanyData = (id) => {
+    const companyMap = {
+        1: { // Sonova
+            recentActivity: [
                 {
-                    title: '3M to Pay $4.2 Billion in Settlement Over Military Earplug Lawsuits',
+                    type: 'patent',
+                    title: 'Advanced Hearing Aid Technology',
+                    description: 'New patent filed for AI-powered hearing assistance',
+                    date: '2024-03-02',
+                    icon: 'lightbulb',
+                    color: 'blue'
+                },
+                {
+                    type: 'fda',
+                    title: 'Lumity Pro Hearing Aid',
+                    description: 'FDA Approval received for next-gen hearing device',
+                    date: '2024-02-26',
+                    icon: 'file-medical',
+                    color: 'green'
+                },
+                {
+                    type: 'earnings',
+                    title: 'Q1 2024 Results',
+                    description: 'Revenue growth of 15.3% year-over-year',
+                    date: '2024-02-15',
+                    icon: 'chart-line',
+                    color: 'purple'
+                }
+            ],
+            news: [
+                {
+                    title: 'Sonova Acquires Hearing Care Clinic Network in Spain',
                     source: 'Reuters',
                     date: '2024-01-02',
+                    sentiment: 'positive'
+                },
+                {
+                    title: 'Sonova Launches New Pediatric Hearing Solution',
+                    source: 'Bloomberg',
+                    date: '2024-01-08',
+                    sentiment: 'positive'
+                },
+                {
+                    title: 'Sonova Expands R&D Center in Switzerland',
+                    source: 'Financial Times',
+                    date: '2024-01-05',
+                    sentiment: 'positive'
+                }
+            ],
+            marketSentiment: {
+                dates: ['Jan', 'Feb', 'Mar', 'Apr'],
+                values: [85, 88, 92, 90],
+                mentions: [800, 950, 1100, 1000]
+            }
+        },
+        2: { // GN Store Nord
+            recentActivity: [
+                {
+                    type: 'patent',
+                    title: 'Smart Hearing Technology',
+                    description: 'Patent filed for advanced noise cancellation',
+                    date: '2024-03-02',
+                    icon: 'lightbulb',
+                    color: 'blue'
+                },
+                {
+                    type: 'fda',
+                    title: 'Jabra Enhance Pro',
+                    description: 'FDA Clearance for OTC hearing aids',
+                    date: '2024-02-26',
+                    icon: 'file-medical',
+                    color: 'green'
+                },
+                {
+                    type: 'earnings',
+                    title: 'Q1 2024 Results',
+                    description: 'Organic growth of 8% in Hearing Care',
+                    date: '2024-02-15',
+                    icon: 'chart-line',
+                    color: 'purple'
+                }
+            ],
+            news: [
+                {
+                    title: 'GN Audio Launches New Conference Solution',
+                    source: 'Reuters',
+                    date: '2024-01-02',
+                    sentiment: 'positive'
+                },
+                {
+                    title: 'GN Store Nord Updates Financial Outlook',
+                    source: 'Bloomberg',
+                    date: '2024-01-08',
                     sentiment: 'neutral'
                 },
                 {
-                    title: '3M Plans to Cut About 2,000 Jobs Globally in New Round of Layoffs',
-                    source: 'Bloomberg',
-                    date: '2024-01-08',
-                    sentiment: 'negative'
+                    title: 'GN Hearing Expands in Asian Markets',
+                    source: 'Financial Times',
+                    date: '2024-01-05',
+                    sentiment: 'positive'
+                }
+            ],
+            marketSentiment: {
+                dates: ['Jan', 'Feb', 'Mar', 'Apr'],
+                values: [72, 75, 78, 80],
+                mentions: [600, 750, 800, 850]
+            }
+        },
+        3: { // WS Audiology
+            recentActivity: [
+                {
+                    type: 'patent',
+                    title: 'Rechargeable Hearing Aid Technology',
+                    description: 'Patent for extended battery life solution',
+                    date: '2024-03-02',
+                    icon: 'lightbulb',
+                    color: 'blue'
                 },
                 {
-                    title: '3M Completes Healthcare Business Spin-off, Creates Solventum',
+                    type: 'fda',
+                    title: 'Signia Pure Charge&Go',
+                    description: 'FDA Approval for new hearing aid platform',
+                    date: '2024-02-26',
+                    icon: 'file-medical',
+                    color: 'green'
+                },
+                {
+                    type: 'earnings',
+                    title: 'Q1 2024 Results',
+                    description: 'Strong performance in premium segment',
+                    date: '2024-02-15',
+                    icon: 'chart-line',
+                    color: 'purple'
+                }
+            ],
+            news: [
+                {
+                    title: 'WS Audiology Strengthens Direct-to-Consumer Channel',
+                    source: 'Reuters',
+                    date: '2024-01-02',
+                    sentiment: 'positive'
+                },
+                {
+                    title: 'WS Audiology Partners with AI Research Institute',
+                    source: 'Bloomberg',
+                    date: '2024-01-08',
+                    sentiment: 'positive'
+                },
+                {
+                    title: 'WS Audiology Consolidates European Operations',
                     source: 'Financial Times',
                     date: '2024-01-05',
                     sentiment: 'neutral'
                 }
-            
-    ],
-    marketSentiment: {
-        dates: ['Jan', 'Feb', 'Mar', 'Apr'],
-        values: [75, 82, 78, 85],
-        mentions: [1200, 1500, 1350, 1800]
+            ],
+            marketSentiment: {
+                dates: ['Jan', 'Feb', 'Mar', 'Apr'],
+                values: [70, 75, 73, 78],
+                mentions: [500, 600, 550, 700]
+            }
+        }
+    };
+
+    const company = companyMap[id];
+    
+    if (!company) {
+        throw new Error(`No company found with ID: ${id}`);
     }
+
+    return company;
 };
 
-function initializeCompanyOverview() {
-    updateNewsSection();
-    initializeSentimentChart();
+async function initializeCompanyOverview() {
+    try {
+    const companyId = new URLSearchParams(window.location.search).get('id');
+    const id = parseInt(companyId);
+    
+    if (!id) {
+        throw new Error('Invalid or missing company ID');
+    }
+        const companyData = getCompanyData(id);
+        updateNewsSection(companyData.news);
+        updateActivitySection(companyData)
+        initializeSentimentChart(companyData);
+    } catch (error) {
+        console.error('Error initializing company overview:', error);
+    }
 }
 
-function updateNewsSection() {
+// function initializeCompanyOverview(id) {
+//     try {
+//         const companyData = getCompanyData(id);
+//         updateNewsSection(companyData);
+//         initializeSentimentChart(companyData);
+//     } catch (error) {
+//         console.error('Error initializing company overview:', error);
+//     }
+// }
+
+function updateActivitySection(data) {
+    const activityContainer = document.getElementById('activityContainer');
+    if (!activityContainer) return;
+
+    const getIconClass = (type) => ({
+        patent: 'fa-lightbulb',
+        fda: 'fa-file-medical',
+        earnings: 'fa-chart-line'
+    })[type] || 'fa-lightbulb';
+
+    const getColorClass = (type) => ({
+        patent: 'bg-blue-500 dark:bg-blue-600',
+        fda: 'bg-green-500 dark:bg-green-600',
+        earnings: 'bg-purple-500 dark:bg-purple-600'
+    })[type] || 'bg-gray-500';
+
+    const formatDate = (dateString) => {
+        return new Date(dateString).toLocaleDateString('en-US', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+        });
+    };
+
+    const activities = Array.isArray(data) ? data : data.recentActivity || [];
+    
+    const activityHtml = activities.map((activity, index) => `
+        <div class="flex">
+            <div class="flex flex-col items-center">
+                <div class="w-8 h-8 ${getColorClass(activity.type)} rounded-full flex items-center justify-center">
+                    <i class="fas ${getIconClass(activity.type)} text-white"></i>
+                </div>
+                ${index !== activities.length - 1 ? 
+                    '<div class="flex-1 w-px bg-gray-300 dark:bg-gray-600 h-full"></div>' : 
+                    ''}
+            </div>
+            <div class="flex-1 ml-4 mb-6">
+                <div class="font-medium text-gray-900 dark:text-white">${activity.title}</div>
+                <div class="text-sm text-gray-600 dark:text-gray-400">${activity.description}</div>
+                <div class="text-xs text-gray-500 dark:text-gray-500 mt-1">${formatDate(activity.date)}</div>
+            </div>
+        </div>
+    `).join('');
+
+    activityContainer.innerHTML = `
+        <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-6 transition-colors duration-200">
+            <div class="p-4">
+                <h3 class="text-lg font-semibold mb-4 text-gray-900 dark:text-white">Recent Company Activity</h3>
+                <div class="space-y-4">
+                    ${activityHtml}
+                </div>
+            </div>
+        </div>
+    `;
+}
+
+function updateNewsSection(data) {
     const newsContainer = document.getElementById('newsContainer');
     if (!newsContainer) return;
 
-    const newsHtml = companyOverviewData.news.map(news => `
-    <div class="border-l-4 ${getSentimentColor(news.sentiment)} pl-4 transition-colors duration-200">
-        <div class="font-medium text-gray-900 dark:text-white">${news.title}</div>
-        <div class="flex justify-between text-sm text-gray-500 dark:text-gray-400 mt-1">
-            <span>${news.source}</span>
-            <span>${news.date}</span>
-        </div>
-    </div>
-`).join('');
+    const newsItems = Array.isArray(data) ? data : data.news || [];
+    console.log(newsItems)
+    
+    const getSentimentColor = (sentiment) => {
+        const colors = {
+            positive: 'border-green-500',
+            negative: 'border-red-500',
+            neutral: 'border-gray-500'
+        };
+        return colors[sentiment] || colors.neutral;
+    };
 
-newsContainer.innerHTML = newsHtml;
+    const newsHtml = newsItems.map(news => `
+        <div class="border-l-4 ${getSentimentColor(news.sentiment)} pl-4 transition-colors duration-200">
+            <div class="font-medium text-gray-900 dark:text-white">${news.title}</div>
+            <div class="flex justify-between text-sm text-gray-500 dark:text-gray-400 mt-1">
+                <span>${news.source}</span>
+                <span>${news.date}</span>
+            </div>
+        </div>
+    `).join('');
+
+    newsContainer.innerHTML = newsHtml;
 }
+
 
 
 
@@ -3249,18 +3476,18 @@ function getSentimentColor(sentiment) {
 }
 
 
-function initializeSentimentChart() {
+function initializeSentimentChart(data) {
     const ctx = document.getElementById('sentiment-trend-chart');
     if (!ctx) return;
 
     new Chart(ctx, {
         type: 'line',
         data: {
-            labels: companyOverviewData.marketSentiment.dates,
+            labels: data.marketSentiment.dates,
             datasets: [
                 {
                     label: 'Sentiment Score',
-                    data: companyOverviewData.marketSentiment.values,
+                    data: data.marketSentiment.values,
                     borderColor: '#4299E1',
                     tension: 0.4
                 }

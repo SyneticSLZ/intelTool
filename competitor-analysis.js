@@ -1,11 +1,13 @@
 // Enhanced competitor analysis data with detailed metrics
 import UserenderProductvPortfolio from './portfolio-visualization.js';
 import renderFDADashboard from './fda.js';
+import { renderStrategicAnalysis } from './vadata.js';
+
 // import { renderFDAIntelligence, initDashboard } from './portfolio-visualization.js';
 import { renderPatentAnalysis } from './patent-dashboard.js';
 import { VetrenderStrategicInitiatives } from './strategic-analysis.js';
 import {  initializeFinancialDashboard } from './company-detail.js';
-
+// import {initializeMarketDashboard} from './Va.js';
 
 const analysisData = {
     competitor: {
@@ -1049,8 +1051,10 @@ Object.assign(app, {
         // UserenderProductPortfolio(companyName);
         renderFDADashboard(companyName);
     },
-    renderStrategicInitiatives() {
-        VetrenderStrategicInitiatives()
+    async renderStrategicInitiatives() {
+        renderStrategicAnalysis();
+        // const dashboard = await initializeMarketDashboard('strategic-initiatives-content');
+        // VetrenderStrategicInitiatives()
     },
     
     // renderStrategicInitiatives() {

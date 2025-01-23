@@ -1,3 +1,4 @@
+// function patent() {
 // // patent-dashboard.js
 // export class PatentDashboard {
 //     constructor() {
@@ -404,7 +405,7 @@
 
 // // Export the render function directly for convenience
 // export const renderPatentAnalysis = (companyName) => patentDashboard.renderTechnologyAnalysis(companyName);
-
+// }
 export class PatentDashboard {
     constructor() {
         this.charts = {
@@ -588,10 +589,10 @@ groupPatentsByTitle(patents) {
                         ${patent['Display Key']}
                     </a>
                 </td>
-                <td class="px-6 py-4" onclick="showPatentModal(${JSON.stringify(patent).replace(/"/g, '&quot;')})">
+                <td class="px-6 py-4 dark:text-white" onclick="showPatentModal(${JSON.stringify(patent).replace(/"/g, '&quot;')})">
                     ${patent.Title}
                 </td>
-                <td class="px-6 py-4 whitespace-nowrap">
+                <td class="px-6 py-4 whitespace-nowrap dark:text-white">
                     ${patent['Application Date']}
                 </td>
                 <td class="px-6 py-4">
@@ -602,7 +603,7 @@ groupPatentsByTitle(patents) {
                         ${patent['Legal Status']}
                     </span>
                 </td>
-                <td class="px-6 py-4">
+                <td class="px-6 py-4 dark:text-white">
                     ${patent['Cites Patent Count'] + patent['Cited by Patent Count']}
                 </td>
             </tr>
@@ -617,7 +618,7 @@ groupPatentsByTitle(patents) {
                     <div class="flex items-center justify-between">
                         <div class="flex items-center space-x-4">
                             <button onclick="toggleGroup('group-${groupIndex}')" 
-                                    class="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200">
+                                    class="text-gray-500 hover:text-gray-700 dark:text-white dark:hover:text-gray-200">
                                 <svg class="w-5 h-5 transform transition-transform duration-200" 
                                      fill="none" 
                                      stroke="currentColor" 
@@ -629,8 +630,8 @@ groupPatentsByTitle(patents) {
                                 </svg>
                             </button>
                             <div>
-                                <div class="font-medium">${mainPatent.Title}</div>
-                                <div class="text-sm text-gray-500 dark:text-gray-400">
+                                <div class="font-medium dark:text-white">${mainPatent.Title}</div>
+                                <div class="text-sm text-gray-500 dark:text-gray-300">
                                     ${group.patents.length} variations
                                 </div>
                             </div>
@@ -650,7 +651,7 @@ groupPatentsByTitle(patents) {
                                            class="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 hover:underline">
                                             ${patent['Display Key']}
                                         </a>
-                                        <p class="text-sm text-gray-600 dark:text-gray-400 mt-1">
+                                        <p class="text-sm text-gray-600 dark:text-gray-300 mt-1">
                                             Filed: ${patent['Application Date']} | Status: ${patent['Legal Status']}
                                         </p>
                                     </div>
@@ -659,7 +660,7 @@ groupPatentsByTitle(patents) {
                                         View Details
                                     </button>
                                 </div>
-                                <div class="mt-2 text-sm text-gray-600 dark:text-gray-400">
+                                <div class="mt-2 text-sm text-gray-600 dark:text-gray-300">
                                     Citations: ${patent['Cites Patent Count'] + patent['Cited by Patent Count']}
                                 </div>
                             </div>
@@ -692,42 +693,42 @@ groupPatentsByTitle(patents) {
         const content = document.getElementById('patentModalContent');
         
         content.innerHTML = `
-            <div class="space-y-4 text-gray-700 dark:text-gray-300">
-                <h4 class="text-xl font-semibold">${patent.Title}</h4>
+            <div class="space-y-4 text-gray-700 dark:text-white">
+                <h4 class="text-xl font-semibold dark:text-white">${patent.Title}</h4>
                 <div class="grid grid-cols-2 gap-4">
                     <div>
-                        <p class="font-medium">Patent Number:</p>
-                        <p>${patent['Display Key']}</p>
+                        <p class="font-medium dark:text-white">Patent Number:</p>
+                        <p class="dark:text-white">${patent['Display Key']}</p>
                     </div>
                     <div>
-                        <p class="font-medium">Status:</p>
-                        <p>${patent['Legal Status']}</p>
+                        <p class="font-medium dark:text-white">Status:</p>
+                        <p class="dark:text-white">${patent['Legal Status']}</p>
                     </div>
                     <div>
-                        <p class="font-medium">Application Date:</p>
-                        <p>${patent['Application Date']}</p>
+                        <p class="font-medium dark:text-white">Application Date:</p>
+                        <p class="dark:text-white">${patent['Application Date']}</p>
                     </div>
                     <div>
-                        <p class="font-medium">Publication Date:</p>
-                        <p>${patent['Publication Date']}</p>
+                        <p class="font-medium dark:text-white">Publication Date:</p>
+                        <p class="dark:text-white">${patent['Publication Date']}</p>
                     </div>
                     <div>
-                        <p class="font-medium">Applicants:</p>
-                        <p>${patent['Applicants']}</p>
+                        <p class="font-medium dark:text-white">Applicants:</p>
+                        <p class="dark:text-white">${patent['Applicants']}</p>
                     </div>
                     <div>
-                        <p class="font-medium">Inventors:</p>
-                        <p>${patent['Inventors']}</p>
+                        <p class="font-medium dark:text-white">Inventors:</p>
+                        <p class="dark:text-white">${patent['Inventors']}</p>
                     </div>
                 </div>
                 <div>
-                    <p class="font-medium">Abstract:</p>
-                    <p class="mt-1">${patent['Abstract'] || 'Not available'}</p>
+                    <p class="font-medium dark:text-white">Abstract:</p>
+                    <p class="mt-1 dark:text-white">${patent['Abstract'] || 'Not available'}</p>
                 </div>
                 <div>
-                    <p class="font-medium">Citations:</p>
-                    <p>Patent citations: ${patent['Cites Patent Count'] || 0}</p>
-                    <p>Cited by patents: ${patent['Cited by Patent Count'] || 0}</p>
+                    <p class="font-medium dark:text-white">Citations:</p>
+                    <p class="dark:text-white">Patent citations: ${patent['Cites Patent Count'] || 0}</p>
+                    <p class="dark:text-white">Cited by patents: ${patent['Cited by Patent Count'] || 0}</p>
                 </div>
                 <div class="mt-4">
                     <a href="${patent['URL']}" target="_blank" 
@@ -758,6 +759,13 @@ groupPatentsByTitle(patents) {
         const recentPatents = sortedPatents.filter(patent => 
             new Date(patent['Publication Date']) >= oneYearAgo
         );
+
+        console.log(sortedPatents.length)
+        console.log(recentPatents.length)
+        document.getElementById('totalPatents').innerHTML = `${sortedPatents.length}`
+        document.getElementById("recentApplications").innerHTML = `${recentPatents.length}`
+
+        
 
         return {
             allPatents: sortedPatents,
@@ -922,7 +930,7 @@ groupPatentsByTitle(patents) {
                     data: [753, 716, 28, 151]
                 },
                 publications: {
-                    years: Array.from({ length: 27 }, (_, i) => 1997 + i),
+                    years: Array.from({ length: 28 }, (_, i) => 1997 + i),
                     data: [1, 1, 1, 6, 29, 44, 56, 45, 70, 68, 53, 51, 90, 74, 52, 83, 69, 88, 84, 83, 60, 76, 104, 134, 111, 65, 49]
                 },
                 legalStatus: {
@@ -943,9 +951,11 @@ groupPatentsByTitle(patents) {
                     labels: ['Starkey Labs Inc', 'Higgins Sidney A', 'Solum Jeffrey Paul', 'Zhang Tao', 'Giri Ritwik', 'Mustiere Fred', 'Tourtelotte Davi', 'Kroenke Randall A'],
                     data: [1594, 7, 5, 5, 4, 4, 4, 3]
                 },
+                
                 publications: {
-                    years: [1980, 1992, 1994, 1996, 1998, 2000, 2002, 2004, 2007, 2011, 2012, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025],
-                    data: [1, 1, 4, 4, 9, 1, 1, 1, 1, 5, 3, 54, 135, 166, 191, 221, 183, 226, 210, 175, 5]
+                    years: [1980, 1992, 1994, 1996, 1998, 2000, 2002, 2004, 2007, 2011, 2012, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024],
+                    data: [1, 1, 4, 4, 9, 1, 1, 1, 1, 5, 3, 54, 135, 166, 191, 221, 183, 226, 210, 175],
+                    thisYear: [5]
                 },
                 legalStatus: {
                     labels: ['Active', 'Pending', 'Discontinued', 'Inactive', 'Expired'],
@@ -966,8 +976,9 @@ groupPatentsByTitle(patents) {
                     data: [2489, 2292, 46, 39, 22, 22, 17, 16]
                 },
                 publications: {
-                    years: [1991, 1992, 1994, 1995, 1996, 1998, 1999, 2000, 2001, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025],
-                    data: [1, 1, 2, 1, 2, 4, 1, 6, 10, 41, 64, 57, 94, 130, 165, 105, 243, 182, 206, 177, 138, 150, 322, 309, 406, 419, 328, 353, 318, 263, 341, 8]
+                    years: [1991, 1992, 1994, 1995, 1996, 1998, 1999, 2000, 2001, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024],
+                    data: [1, 1, 2, 1, 2, 4, 1, 6, 10, 41, 64, 57, 94, 130, 165, 105, 243, 182, 206, 177, 138, 150, 322, 309, 406, 419, 328, 353, 318, 263, 341],
+                    thisYear: [8]
                 },
                 legalStatus: {
                     labels: ['Active', 'Pending', 'Discontinued', 'Expired', 'Inactive', 'Patented'],
@@ -1014,7 +1025,7 @@ groupPatentsByTitle(patents) {
         const legalStatusCtx = document.getElementById('legalStatusChart');
         const jurisdictionCtx = document.getElementById('jurisdictionChart');
         const documentTypeCtx = document.getElementById('documentTypeChart');
-    
+    const textColor = 'white'
         // Destroy existing charts if they exist
         Object.keys(this.charts).forEach(chartKey => {
             if (this.charts[chartKey]) this.charts[chartKey].destroy();
@@ -1027,7 +1038,7 @@ groupPatentsByTitle(patents) {
                 labels: selectedData.legalStatus.labels,
                 datasets: [{
                     data: selectedData.legalStatus.data,
-                    backgroundColor: ['#10B981', '#F59E0B', '#EF4444', '#6B7280', '#3B82F6']
+                    backgroundColor: ['#10B981', '#F59E0B', '#EF4444', '#6B7280', '#3B82F6','#E07' ]
                 }]
             },
             options: {
@@ -1044,6 +1055,7 @@ groupPatentsByTitle(patents) {
                 labels: selectedData.jurisdictions.labels,
                 datasets: [{
                     label: 'Patents by Jurisdiction',
+                    color: '#ffffff',
                     data: selectedData.jurisdictions.data,
                     backgroundColor: '#3B82F6'
                 }]
@@ -1051,7 +1063,8 @@ groupPatentsByTitle(patents) {
             options: {
                 responsive: true,
                 plugins: {
-                    legend: { display: false }
+                    legend: { display: false },
+                    labels: { color: '#fff' }
                 },
                 scales: {
                     y: { beginAtZero: true }
@@ -1130,7 +1143,7 @@ groupPatentsByTitle(patents) {
         if (!searchTerm) {
             tableBody.innerHTML = `
                 <tr>
-                    <td colspan="5" class="px-6 py-4 text-center text-gray-500 dark:text-gray-400">
+                    <td colspan="5" class="px-6 py-4 text-center text-gray-500 dark:text-white">
                         Enter a search term to find patents
                     </td>
                 </tr>
@@ -1141,7 +1154,7 @@ groupPatentsByTitle(patents) {
         if (searchTerm.length < 3) {
             tableBody.innerHTML = `
                 <tr>
-                    <td colspan="5" class="px-6 py-4 text-center text-gray-500 dark:text-gray-400">
+                    <td colspan="5" class="px-6 py-4 text-center text-gray-500 dark:text-white">
                         Please enter at least 3 characters to search
                     </td>
                 </tr>
@@ -1149,47 +1162,58 @@ groupPatentsByTitle(patents) {
             return;
         }
     
-        if (tableBody) {
-            if (patents.length > 0) {
-                tableBody.innerHTML = patents.map(patent => `
-                    <tr class="hover:bg-gray-50 dark:hover:bg-gray-700 cursor-pointer">
-                        <td class="px-6 py-4 whitespace-nowrap">
-                            <a href="${patent.URL}"
-                               target="_blank"
-                               class="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 hover:underline">
-                                ${patent['Display Key']}
-                            </a>
-                        </td>
-                        <td class="px-6 py-4" onclick="showPatentModal(${JSON.stringify(patent).replace(/"/g, '&quot;')})">
-                            ${patent.Title}
-                        </td>
-                        <td class="px-6 py-4 whitespace-nowrap">
-                            ${patent['Application Date']}
-                        </td>
-                        <td class="px-6 py-4">
-                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full 
-                            ${patent['Legal Status'] === 'Active' ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300' : 
-                              patent['Legal Status'] === 'Pending' ? 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-300' : 
-                              'bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300'}">
-                                ${patent['Legal Status']}
-                            </span>
-                        </td>
-                        <td class="px-6 py-4">
-                            ${patent['Document Type']}
-                        </td>
-                    </tr>
-                `).join('');
-            } else {
-                tableBody.innerHTML = `
-                    <tr>
-                        <td colspan="5" class="px-6 py-4 text-center text-gray-500 dark:text-gray-400">
-                            No patents found matching your search
-                        </td>
-                    </tr>
-                `;
-            }
+        if (patents.length > 0) {
+            tableBody.innerHTML = patents.map(patent => `
+                <tr class="hover:bg-gray-50 dark:hover:bg-gray-700 cursor-pointer">
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <a href="${patent.URL}"
+                           target="_blank"
+                           class="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 hover:underline">
+                            ${patent['Display Key']}
+                        </a>
+                    </td>
+                    <td class="px-6 py-4 dark:text-white" onclick="showPatentModal(${JSON.stringify(patent).replace(/"/g, '&quot;')})">
+                        ${patent.Title}
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap dark:text-white">
+                        ${patent['Application Date']}
+                    </td>
+                    <td class="px-6 py-4">
+                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full 
+                        ${patent['Legal Status'] === 'Active' ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300' : 
+                          patent['Legal Status'] === 'Pending' ? 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-300' : 
+                          'bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-white'}">
+                            ${patent['Legal Status']}
+                        </span>
+                    </td>
+                    <td class="px-6 py-4 dark:text-white">
+                        ${patent['Document Type']}
+                    </td>
+                </tr>
+            `).join('');
+        } else {
+            tableBody.innerHTML = `
+                <tr>
+                    <td colspan="5" class="px-6 py-4 text-center text-gray-500 dark:text-white">
+                        No patents found matching your search
+                    </td>
+                </tr>
+            `;
         }
     }
+
+    showError() {
+        const errorMessage = `
+            <tr>
+                <td colspan="5" class="px-6 py-4 text-center text-red-500 dark:text-red-400">
+                    Error loading patent data. Please try again later.
+                </td>
+            </tr>
+        `;
+        document.getElementById('recentPatentsTable').innerHTML = errorMessage;
+        document.getElementById('allPatentsTable').innerHTML = errorMessage;
+    }
+
 
     updateRecentPatentsTable(patents) {
         const tableBody = document.getElementById('recentPatentsTable');

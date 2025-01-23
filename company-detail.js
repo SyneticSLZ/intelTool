@@ -1733,7 +1733,7 @@ async function initializeFinancialDashboard(companyName) {
 // Sonova Dashboard Implementation
 function generateSonovaDashboard(data) {
     return `
-        <div class="container mx-auto px-4 py-8">
+        <div class="container mx-auto px-4 py-8 dark:text-white">
             <!-- Company Header -->
             <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 mb-6">
                 <div class="flex justify-between items-start">
@@ -1748,7 +1748,7 @@ function generateSonovaDashboard(data) {
             </div>
 
             <!-- Primary KPIs -->
-            <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-6 gap-6 mb-6">
+            <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-6 gap-6 mb-6 dark:text-white">
                 <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
                     <h3 class="text-sm font-medium text-gray-500 dark:text-gray-400">Revenue</h3>
                     <p class="mt-2 text-3xl font-semibold">${formatCurrency(data.current_period.key_financials.revenue.total)}</p>
@@ -1781,7 +1781,7 @@ function generateSonovaDashboard(data) {
             </div>
 
             <!-- Charts Section -->
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6 dark:text-white">
                 <div class="bg-white dark:bg-gray-800 rounded-lg shadow">
                     <div class="p-4 border-b border-gray-200 dark:border-gray-700">
                         <h2 class="text-lg font-medium">Segment Revenue Distribution</h2>
@@ -1809,7 +1809,7 @@ function generateSonovaDashboard(data) {
             </div>
 
             <!-- Detailed Metrics -->
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 dark:text-white">
                 <div class="bg-white dark:bg-gray-800 rounded-lg shadow">
                     <div class="p-4 border-b border-gray-200 dark:border-gray-700">
                         <h2 class="text-lg font-medium">Segment Performance</h2>
@@ -1849,7 +1849,7 @@ function generateSonovaDashboard(data) {
                 </div>
 
                 <!-- Outlook Section -->
-                <div class="bg-white dark:bg-gray-800 rounded-lg shadow">
+                <div class="bg-white dark:bg-gray-800 rounded-lg shadow dark:text-white">
                     <div class="p-4 border-b border-gray-200 dark:border-gray-700">
                         <h2 class="text-lg font-medium">Outlook ${data.outlook_2024_25 ? '2024/25' : ''}</h2>
                     </div>
@@ -1874,7 +1874,7 @@ function generateSonovaDashboard(data) {
 // WS Audiology Dashboard Implementation with expanded metrics
 function generateWSADashboard(data) {
     return `
-        <div class="container mx-auto px-4 py-8">
+        <div class="container mx-auto px-4 py-8 dark:text-white">
             <!-- Company Header -->
             <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 mb-6">
                 <div class="flex justify-between items-start">
@@ -1889,7 +1889,7 @@ function generateWSADashboard(data) {
             </div>
 
             <!-- Primary KPIs -->
-            <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-6 gap-6 mb-6">
+            <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-6 gap-6 mb-6 dark:text-white">
                 <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
                     <h3 class="text-sm font-medium text-gray-500 dark:text-gray-400">Revenue</h3>
                     <p class="mt-2 text-3xl font-semibold">${formatCurrency(data.key_financials.revenue.total)}</p>
@@ -1950,7 +1950,7 @@ function generateWSADashboard(data) {
             </div>
 
             <!-- Detailed Metrics -->
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6 dark:text-white">
                 <!-- Research & Development -->
                 <div class="bg-white dark:bg-gray-800 rounded-lg shadow">
                     <div class="p-4 border-b border-gray-200 dark:border-gray-700">
@@ -1979,7 +1979,7 @@ function generateWSADashboard(data) {
                 </div>
 
                 <!-- Market Data -->
-                <div class="bg-white dark:bg-gray-800 rounded-lg shadow">
+                <div class="bg-white dark:bg-gray-800 rounded-lg shadow dark:text-white">
                     <div class="p-4 border-b border-gray-200 dark:border-gray-700">
                         <h2 class="text-lg font-medium">Market Overview</h2>
                     </div>
@@ -2006,7 +2006,7 @@ function generateWSADashboard(data) {
                 </div>
 
                 <!-- Debt Structure -->
-                <div class="bg-white dark:bg-gray-800 rounded-lg shadow">
+                <div class="bg-white dark:bg-gray-800 rounded-lg shadow dark:text-white">
                     <div class="p-4 border-b border-gray-200 dark:border-gray-700">
                         <h2 class="text-lg font-medium">Debt Structure</h2>
                     </div>
@@ -2037,7 +2037,7 @@ function generateWSADashboard(data) {
             </div>
 
             <!-- Additional Metrics -->
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 dark:text-white">
                 <!-- Employee Metrics -->
                 <div class="bg-white dark:bg-gray-800 rounded-lg shadow">
                     <div class="p-4 border-b border-gray-200 dark:border-gray-700">
@@ -2076,7 +2076,7 @@ function generateWSADashboard(data) {
                 </div>
 
                 <!-- Sustainability -->
-                <div class="bg-white dark:bg-gray-800 rounded-lg shadow">
+                <div class="bg-white dark:bg-gray-800 rounded-lg shadow dark:text-white">
                     <div class="p-4 border-b border-gray-200 dark:border-gray-700">
                         <h2 class="text-lg font-medium">Sustainability Metrics</h2>
                     </div>
@@ -2108,6 +2108,10 @@ function generateWSADashboard(data) {
 
 
 function initializeSonovaCharts(data) {
+    const isDarkMode = document.documentElement.classList.contains('dark');
+    const textColor = isDarkMode ? '#ffffff' : '#666666';
+    const gridColor = isDarkMode ? '#374151' : '#e5e7eb';
+
     // Segment Revenue Distribution
     new Chart(document.getElementById('sonova-segment-revenue').getContext('2d'), {
         type: 'pie',
@@ -2125,30 +2129,54 @@ function initializeSonovaCharts(data) {
         },
         options: {
             responsive: true,
-            maintainAspectRatio: false
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    labels: {
+                        color: textColor
+                    }
+                }
+            }
         }
     });
 
     // Financial Metrics Trend
     new Chart(document.getElementById('sonova-financial-metrics').getContext('2d'), {
-        type: 'line',
+        type: 'bar',
         data: {
             labels: ['HY 2024/25'],
             datasets: [{
                 label: 'Revenue',
                 data: [data.current_period.key_financials.revenue.total],
-                borderColor: '#4299E1'
+                backgroundColor: '#4299E1'
             }, {
-                label: 'EBITA',
+                label: 'EBITA', 
                 data: [data.current_period.key_financials.ebita.adjusted],
-                borderColor: '#48BB78'
+                backgroundColor: '#48BB78'
             }]
         },
         options: {
             responsive: true,
-            maintainAspectRatio: false
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    labels: {
+                        color: textColor
+                    }
+                }
+            },
+            scales: {
+                x: {
+                    ticks: { color: textColor },
+                    grid: { color: gridColor }
+                },
+                y: {
+                    ticks: { color: textColor },
+                    grid: { color: gridColor }
+                }
+            }
         }
-    });
+     });
 
     new Chart(document.getElementById('sonova-growth-metrics').getContext('2d'), {
         type: 'bar',
@@ -2180,13 +2208,19 @@ function initializeSonovaCharts(data) {
                 }
             },
             scales: {
+                x: {
+                    ticks: { color: textColor },
+                    grid: { color: gridColor }
+                },
                 y: {
                     beginAtZero: true,
                     ticks: {
+                        color: textColor,
                         callback: function(value) {
                             return value + '%';
                         }
-                    }
+                    },
+                    grid: { color: gridColor }
                 }
             }
         }
@@ -2194,6 +2228,10 @@ function initializeSonovaCharts(data) {
 }
 
 function initializeWSACharts(data) {
+    const isDarkMode = document.documentElement.classList.contains('dark');
+    const textColor = isDarkMode ? '#ffffff' : '#666666';
+    const gridColor = isDarkMode ? '#374151' : '#e5e7eb';
+
     // Revenue by Region
     new Chart(document.getElementById('wsa-revenue-by-region').getContext('2d'), {
         type: 'doughnut',
@@ -2210,9 +2248,17 @@ function initializeWSACharts(data) {
         },
         options: {
             responsive: true,
-            maintainAspectRatio: false
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    labels: {
+                        color: textColor
+                    }
+                }
+            }
         }
     });
+
     new Chart(document.getElementById('wsa-operational-metrics').getContext('2d'), {
         type: 'bar',
         data: {
@@ -2236,16 +2282,22 @@ function initializeWSACharts(data) {
                 }
             },
             scales: {
+                x: {
+                    ticks: { color: textColor },
+                    grid: { color: gridColor }
+                },
                 y: {
                     beginAtZero: true,
                     ticks: {
+                        color: textColor,
                         callback: function(value) {
                             if (value >= 1000) {
                                 return value / 1000 + 'k';
                             }
                             return value;
                         }
-                    }
+                    },
+                    grid: { color: gridColor }
                 }
             }
         }
@@ -2281,14 +2333,20 @@ function initializeWSACharts(data) {
                 }
             },
             scales: {
+                x: {
+                    ticks: { color: textColor },
+                    grid: { color: gridColor }
+                },
                 y: {
                     beginAtZero: true,
                     max: 100,
                     ticks: {
+                        color: textColor,
                         callback: function(value) {
                             return value + '%';
                         }
-                    }
+                    },
+                    grid: { color: gridColor }
                 }
             }
         }
@@ -2296,6 +2354,9 @@ function initializeWSACharts(data) {
 }
 
 function initializeGNCharts(data) {
+    const isDarkMode = document.documentElement.classList.contains('dark');
+    const textColor = isDarkMode ? '#ffffff' : '#666666';
+
     // Revenue Distribution
     new Chart(document.getElementById('gn-revenue-distribution').getContext('2d'), {
         type: 'pie',
@@ -2312,15 +2373,21 @@ function initializeGNCharts(data) {
         },
         options: {
             responsive: true,
-            maintainAspectRatio: false
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    labels: {
+                        color: textColor
+                    }
+                }
+            }
         }
     });
 }
-
 // GN Dashboard Implementation
 function generateGNDashboard(data) {
     return `
-        <div class="container mx-auto px-4 py-8">
+        <div class="container mx-auto px-4 py-8 dark:text-white">
             <!-- Company Header -->
             <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 mb-6">
                 <div class="flex justify-between items-start">
@@ -2335,7 +2402,7 @@ function generateGNDashboard(data) {
             </div>
 
             <!-- Primary KPIs -->
-            <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-6 gap-6 mb-6">
+            <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-6 gap-6 mb-6 dark:text-white">
                 <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
                     <h3 class="text-sm font-medium text-gray-500 dark:text-gray-400">Revenue</h3>
                     <p class="mt-2 text-3xl font-semibold">${formatCurrency(data.financial_highlights.revenue.total)}</p>
@@ -2368,7 +2435,7 @@ function generateGNDashboard(data) {
             </div>
 
             <!-- Charts Section -->
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6 dark:text-white">
                 <div class="bg-white dark:bg-gray-800 rounded-lg shadow">
                     <div class="p-4 border-b border-gray-200 dark:border-gray-700">
                         <h2 class="text-lg font-medium">Revenue Distribution</h2>
@@ -2399,7 +2466,7 @@ function generateGNDashboard(data) {
                         </div>
                     </div>
                 </div>
-                <div class="bg-white dark:bg-gray-800 rounded-lg shadow">
+                <div class="bg-white dark:bg-gray-800 rounded-lg shadow dark:text-white">
                     <div class="p-4 border-b border-gray-200 dark:border-gray-700">
                         <h2 class="text-lg font-medium">Geographic Distribution</h2>
                     </div>
@@ -2417,7 +2484,7 @@ function generateGNDashboard(data) {
             </div>
 
             <!-- Additional Metrics -->
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 dark:text-white">
                 <div class="bg-white dark:bg-gray-800 rounded-lg shadow">
                     <div class="p-4 border-b border-gray-200 dark:border-gray-700">
                         <h2 class="text-lg font-medium">Operational Metrics</h2>
@@ -2440,7 +2507,7 @@ function generateGNDashboard(data) {
                     </div>
                 </div>
 
-                <div class="bg-white dark:bg-gray-800 rounded-lg shadow">
+                <div class="bg-white dark:bg-gray-800 rounded-lg shadow dark:text-white">
                     <div class="p-4 border-b border-gray-200 dark:border-gray-700">
                         <h2 class="text-lg font-medium">2024 Guidance</h2>
                     </div>

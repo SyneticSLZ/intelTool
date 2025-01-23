@@ -1,3 +1,13 @@
+let activeCharts = []
+function destroyCharts() {
+    activeCharts.forEach(chart => {
+        if (chart) {
+            chart.destroy();
+        }
+    });
+    activeCharts = [];
+}
+
 async function renderFDADashboard(companyName) {
     try {
         // Initialize page state with safe defaults
@@ -24,7 +34,7 @@ async function renderFDADashboard(companyName) {
             adverse: { results: [] },
             ...data
         };
-
+destroyCharts()
         // Initialize components
         setupModal();
         updateOverviewStats(data);
@@ -146,135 +156,150 @@ function getMonthName(month) {
 
 
 function initializeCharts(data) {
-    // Initialize device safety timeline
-    const safetyCtx = document.getElementById('fda_safety_timeline_chart_101');
-    if (safetyCtx) {
-        // Combine 510k approvals and adverse events on timeline
-        // const approvals = data.k510.results.map(item => ({
-        //     date: new Date(item.decision_date),
-        //     type: 'approval',
-        //     device: item.device_name,
-        //     details: item.decision_description
-        // }));
-        
-        // const adverse = data.adverse.results.map(item => ({
-        //     date: new Date(item.date_received),
-        //     type: 'adverse',
-        //     device: item.device?.[0]?.brand_name,
-        //     details: item.event_type
-        // }));
-
-        // Combine and sort events
-        // const allEvents = [...approvals, ...adverse].sort((a, b) => a.date - b.date);
-                // Process events by month/year
-                const events = processTimelineEvents(data);
-        
-                new Chart(safetyCtx, {
-                    type: 'bar',
-                    data: {
-                        labels: events.labels,
-                        datasets: [
-                            {
-                                label: '510(k) Approvals',
-                                data: events.approvals,
-                                backgroundColor: '#10B981',
-                                yAxisID: 'y-approvals'
-                            },
-                            {
-                                label: 'Adverse Events',
-                                data: events.adverse,
-                                backgroundColor: '#EF4444',
-                                yAxisID: 'y-adverse'
-                            }
-                        ]
+        // 1. Safety Timeline (510k Approvals Only)
+        const safetyCtx = document.getElementById('fda_safety_timeline_chart_101');
+        if (safetyCtx) {
+            const approvalEvents = process510kTimelineEvents(data.k510.results);
+            
+            const safetyChart = new Chart(safetyCtx, {
+                type: 'line',
+                data: {
+                    labels: approvalEvents.labels,
+                    datasets: [{
+                        label: '510(k) Approvals',
+                        data: approvalEvents.approvals,
+                        borderColor: '#10B981',
+                        backgroundColor: '#10B98133',
+                        fill: true,
+                        tension: 0.4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    interaction: {
+                        mode: 'index',
+                        intersect: false
                     },
-                    options: {
-                        responsive: true,
-                        plugins: {
-                            legend: {
-                                position: 'top',
-                                labels: {
-                                    color: document.documentElement.classList.contains('dark') ? '#fff' : '#000'
-                                }
-                            },
-                            tooltip: {
-                                callbacks: {
-                                    label: (context) => {
-                                        const value = context.raw;
-                                        return `${context.dataset.label}: ${value}`;
-                                    }
+                    plugins: {
+                        tooltip: {
+                            callbacks: {
+                                title: (context) => {
+                                    return context[0].label;
+                                },
+                                label: (context) => {
+                                    return `New Approvals: ${context.raw}`;
+                                },
+                                afterBody: (context) => {
+                                    const monthData = approvalEvents.details[context[0].dataIndex];
+                                    return [
+                                        '',
+                                        'Notable Approvals:',
+                                        ...monthData.devices.slice(0, 3).map(device => 
+                                            `• ${device.name} (${device.decision_description})`
+                                        )
+                                    ];
                                 }
                             }
                         },
-                        scales: {
-                            x: {
-                                grid: {
-                                    color: document.documentElement.classList.contains('dark') ? '#374151' : '#E5E7EB'
-                                },
-                                ticks: {
-                                    color: document.documentElement.classList.contains('dark') ? '#9CA3AF' : '#4B5563'
-                                }
+                        legend: {
+                            position: 'top'
+                        }
+                    },
+                    scales: {
+                        x: {
+                            grid: {
+                                display: false
                             },
-                            'y-approvals': {
-                                type: 'linear',
-                                position: 'left',
-                                title: {
-                                    display: true,
-                                    text: 'Approvals',
-                                    color: document.documentElement.classList.contains('dark') ? '#fff' : '#000'
-                                },
-                                grid: {
-                                    color: document.documentElement.classList.contains('dark') ? '#374151' : '#E5E7EB'
-                                },
-                                ticks: {
-                                    color: document.documentElement.classList.contains('dark') ? '#9CA3AF' : '#4B5563'
-                                }
+                            title: {
+                                display: true,
+                                text: 'Timeline'
+                            }
+                        },
+                        y: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'New Device Approvals'
                             },
-                            'y-adverse': {
-                                type: 'linear',
-                                position: 'right',
-                                title: {
-                                    display: true,
-                                    text: 'Adverse Events',
-                                    color: document.documentElement.classList.contains('dark') ? '#fff' : '#000'
+                            grid: {
+                                borderDash: [5, 5]
+                            }
+                        }
+                    }
+                }
+            });
+            activeCharts.push(safetyChart);
+        }
+    
+        // 2. Device Classification Sunburst
+        const classCtx = document.getElementById('fda_classification_chart_103');
+        if (classCtx) {
+            const deviceHierarchy = processDeviceHierarchy(data.udi.results);
+            
+            const classChart = new Chart(classCtx, {
+                type: 'pie',
+                data: {
+                    labels: deviceHierarchy.labels,
+                    datasets: [{
+                        data: deviceHierarchy.data,
+                        backgroundColor: deviceHierarchy.colors
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        tooltip: {
+                            callbacks: {
+                                label: (context) => {
+                                    const label = context.label;
+                                    const value = context.raw;
+                                    const percentage = ((value / deviceHierarchy.total) * 100).toFixed(1);
+                                    return `${label}: ${value} devices (${percentage}%)`;
                                 },
-                                grid: {
-                                    display: false
-                                },
-                                ticks: {
-                                    color: document.documentElement.classList.contains('dark') ? '#9CA3AF' : '#4B5563'
+                                afterBody: (tooltipItems) => {
+                                    const item = tooltipItems[0];
+                                    const details = deviceHierarchy.details[item.dataIndex];
+                                    return [
+                                        '',
+                                        'Common Use Cases:',
+                                        ...details.useCases
+                                    ];
+                                }
+                            }
+                        },
+                        legend: {
+                            position: 'right',
+                            labels: {
+                                generateLabels: (chart) => {
+                                    const data = chart.data;
+                                    return data.labels.map((label, i) => ({
+                                        text: `${label} (${data.datasets[0].data[i]})`,
+                                        fillStyle: data.datasets[0].backgroundColor[i],
+                                        hidden: false,
+                                        index: i
+                                    }));
                                 }
                             }
                         }
                     }
-                });
-            }
+                }
+            });
+            activeCharts.push(classChart);
+        }
     
-
-    // Geographic Distribution Chart
-    // function updateGeographicChart(data) {
+        // 3. Geographic Distribution with Enhanced Tooltips
         const geoCtx = document.getElementById('fda_geographic_chart_102');
         if (geoCtx) {
-            // Count facilities by country
-            const locations = data.registrations.results.reduce((acc, reg) => {
-                const country = reg.registration?.iso_country_code || 'Unknown';
-                acc[country] = (acc[country] || 0) + 1;
-                return acc;
-            }, {});
-    
-            // Sort by count for better visualization
-            const sortedEntries = Object.entries(locations)
-                .sort((a, b) => b[1] - a[1]);
-    
-            new Chart(geoCtx, {
+            const geoData = processGeographicData(data.registrations.results);
+            
+            const geoChart = new Chart(geoCtx, {
                 type: 'bar',
                 data: {
-                    labels: sortedEntries.map(([country]) => country),
+                    labels: geoData.labels,
                     datasets: [{
                         label: 'Manufacturing Facilities',
-                        data: sortedEntries.map(([, count]) => count),
-                        backgroundColor: '#6366F1',
-                        borderColor: document.documentElement.classList.contains('dark') ? '#4F46E5' : '#4338CA',
+                        data: geoData.data,
+                        backgroundColor: geoData.colors,
                         borderWidth: 1
                     }]
                 },
@@ -282,128 +307,665 @@ function initializeCharts(data) {
                     indexAxis: 'y',
                     responsive: true,
                     plugins: {
-                        legend: {
-                            labels: {
-                                color: document.documentElement.classList.contains('dark') ? '#fff' : '#000'
+                        tooltip: {
+                            callbacks: {
+                                afterBody: (tooltipItems) => {
+                                    const index = tooltipItems[0].dataIndex;
+                                    const details = geoData.details[index];
+                                    return [
+                                        '',
+                                        `Full Name: ${details.fullName}`,
+                                        `Active Facilities: ${details.activeFacilities}`,
+                                        `Primary Products: ${details.primaryProducts.join(', ')}`,
+                                        '',
+                                        'Facility Types:',
+                                        ...details.facilityTypes.map(type => `• ${type}`)
+                                    ];
+                                }
                             }
                         }
                     },
                     scales: {
                         x: {
-                            beginAtZero: true,
-                            grid: {
-                                color: document.documentElement.classList.contains('dark') ? '#374151' : '#E5E7EB'
-                            },
-                            ticks: {
-                                color: document.documentElement.classList.contains('dark') ? '#9CA3AF' : '#4B5563'
+                            title: {
+                                display: true,
+                                text: 'Number of Facilities'
                             }
                         },
                         y: {
-                            grid: {
-                                color: document.documentElement.classList.contains('dark') ? '#374151' : '#E5E7EB'
-                            },
-                            ticks: {
-                                color: document.documentElement.classList.contains('dark') ? '#9CA3AF' : '#4B5563'
+                            title: {
+                                display: true,
+                                text: 'Country'
                             }
                         }
                     }
                 }
             });
+            activeCharts.push(geoChart);
         }
     
-
-    // Product Classification Analysis
-    const classCtx = document.getElementById('fda_classification_chart_103');
-    if (classCtx) {
-        // Analyze device classes over time
-        const deviceClasses = data.udi.results.reduce((acc, device) => {
-            const year = new Date(device.publish_date).getFullYear();
-            const deviceClass = device.product_codes?.[0]?.openfda?.device_class || 'Unknown';
+        // 4. Enhanced Portfolio Evolution
+        const portfolioCtx = document.getElementById('fda_portfolio_chart_104');
+        if (portfolioCtx) {
+            const portfolioData = processPortfolioEvolution(data.udi.results);
             
-            if (!acc[year]) acc[year] = { I: 0, II: 0, III: 0, Unknown: 0 };
-            acc[year][deviceClass] = (acc[year][deviceClass] || 0) + 1;
-            
-            return acc;
-        }, {});
-
-        const years = Object.keys(deviceClasses).sort();
-
-        new Chart(classCtx, {
-            type: 'bar',
-            data: {
-                labels: years,
-                datasets: [
-                    {
-                        label: 'Class I',
-                        data: years.map(year => deviceClasses[year].I),
-                        backgroundColor: '#10B981'
+            const portfolioChart = new Chart(portfolioCtx, {
+                type: 'line',
+                data: {
+                    labels: portfolioData.labels,
+                    datasets: portfolioData.datasets
+                },
+                options: {
+                    responsive: true,
+                    interaction: {
+                        mode: 'nearest',
+                        axis: 'x',
+                        intersect: false
                     },
-                    {
-                        label: 'Class II',
-                        data: years.map(year => deviceClasses[year].II),
-                        backgroundColor: '#F59E0B'
+                    plugins: {
+                        tooltip: {
+                            callbacks: {
+                                title: (context) => `Year: ${context[0].label}`,
+                                label: (context) => {
+                                    const label = context.dataset.label;
+                                    const value = context.raw;
+                                    return `${label}: ${value} devices`;
+                                },
+                                afterBody: (context) => {
+                                    const yearData = portfolioData.details[context[0].dataIndex];
+                                    return [
+                                        '',
+                                        'Top Devices:',
+                                        ...yearData.topDevices.map(device => 
+                                            `• ${device.name} (${device.type})`
+                                        )
+                                    ];
+                                }
+                            }
+                        },
+                        legend: {
+                            position: 'right',
+                            labels: {
+                                boxWidth: 12,
+                                padding: 15
+                            }
+                        }
                     },
-                    {
-                        label: 'Class III',
-                        data: years.map(year => deviceClasses[year].III),
-                        backgroundColor: '#EF4444'
-                    }
-                ]
-            },
-            options: {
-                responsive: true,
-                scales: {
-                    x: {
-                        stacked: true
-                    },
-                    y: {
-                        stacked: true
+                    scales: {
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Year'
+                            }
+                        },
+                        y: {
+                            title: {
+                                display: true,
+                                text: 'Number of Devices'
+                            },
+                            stacked: true
+                        }
                     }
                 }
-            }
-        });
+            });
+            activeCharts.push(portfolioChart);
+        }
     }
 
-    // Device Portfolio Evolution
-    const portfolioCtx = document.getElementById('fda_portfolio_chart_104');
-    if (portfolioCtx) {
-        // Analyze device categories over time
-        const portfolio = data.udi.results.reduce((acc, device) => {
-            const year = new Date(device.publish_date).getFullYear();
-            const category = device.product_codes?.[0]?.openfda?.medical_specialty_description || 'Other';
+    function process510kTimelineEvents(submissions) {
+        const monthlyData = submissions.reduce((acc, submission) => {
+            const date = new Date(submission.decision_date);
+            const key = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}`;
             
-            if (!acc[year]) acc[year] = {};
-            acc[year][category] = (acc[year][category] || 0) + 1;
+            if (!acc[key]) {
+                acc[key] = {
+                    count: 0,
+                    devices: []
+                };
+            }
+            
+            acc[key].count++;
+            acc[key].devices.push({
+                name: submission.device_name,
+                decision_description: submission.decision_description
+            });
             
             return acc;
         }, {});
-
-        const years = Object.keys(portfolio).sort();
-        const categories = [...new Set(data.udi.results.map(
+    
+        const sortedDates = Object.keys(monthlyData).sort();
+        
+        return {
+            labels: sortedDates.map(date => {
+                const [year, month] = date.split('-');
+                return `${getMonthName(parseInt(month))} ${year}`;
+            }),
+            approvals: sortedDates.map(date => monthlyData[date].count),
+            details: sortedDates.map(date => monthlyData[date])
+        };
+    }
+    
+    function processPortfolioEvolution(devices) {
+        // Group devices by year and medical specialty
+        const yearlyData = devices.reduce((acc, device) => {
+            const year = new Date(device.publish_date).getFullYear();
+            const specialty = device.product_codes?.[0]?.openfda?.medical_specialty_description || 'Other';
+            
+            if (!acc[year]) {
+                acc[year] = {
+                    specialties: {},
+                    devices: []
+                };
+            }
+            
+            if (!acc[year].specialties[specialty]) {
+                acc[year].specialties[specialty] = 0;
+            }
+            
+            acc[year].specialties[specialty]++;
+            acc[year].devices.push({
+                name: device.brand_name,
+                type: specialty
+            });
+            
+            return acc;
+        }, {});
+    
+        // Process for visualization
+        const years = Object.keys(yearlyData).sort();
+        const allSpecialties = [...new Set(devices.map(
             d => d.product_codes?.[0]?.openfda?.medical_specialty_description || 'Other'
         ))];
-
-        new Chart(portfolioCtx, {
-            type: 'line',
-            data: {
-                labels: years,
-                datasets: categories.map(category => ({
-                    label: category,
-                    data: years.map(year => portfolio[year][category] || 0),
-                    fill: true
-                }))
-            },
-            options: {
-                responsive: true,
-                interaction: {
-                    mode: 'nearest',
-                    axis: 'x',
-                    intersect: false
-                }
-            }
-        });
+    
+        // Generate color palette
+        const colorPalette = generateColorPalette(allSpecialties.length);
+    
+        const datasets = allSpecialties.map((specialty, index) => ({
+            label: specialty,
+            data: years.map(year => yearlyData[year].specialties[specialty] || 0),
+            borderColor: colorPalette[index],
+            backgroundColor: `${colorPalette[index]}33`,
+            fill: true
+        }));
+    
+        return {
+            labels: years,
+            datasets: datasets,
+            details: years.map(year => ({
+                topDevices: yearlyData[year].devices
+                    .sort((a, b) => b.type.localeCompare(a.type))
+                    .slice(0, 3)
+            }))
+        };
     }
+
+    function generateColorPalette(count) {
+        const baseColors = [
+            '#3B82F6', '#10B981', '#F59E0B', '#EF4444', 
+            '#8B5CF6', '#EC4899', '#6366F1', '#14B8A6',
+            '#F97316', '#A855F7'
+        ];
+        
+        const palette = [];
+        for (let i = 0; i < count; i++) {
+            palette.push(baseColors[i % baseColors.length]);
+        }
+        return palette;
+    }
+//     const safetyCtx = document.getElementById('fda_safety_timeline_chart_101');
+//     if (safetyCtx) {
+//         const events = processTimelineEvents(data);
+        
+//         new Chart(safetyCtx, {
+//             type: 'line',
+//             data: {
+//                 labels: events.labels,
+//                 datasets: [
+//                     {
+//                         label: '510(k) Approvals',
+//                         data: events.approvals,
+//                         borderColor: '#10B981',
+//                         backgroundColor: '#10B98133',
+//                         fill: true,
+//                         yAxisID: 'y-approvals',
+//                         tension: 0.4
+//                     },
+//                     {
+//                         label: 'Adverse Events',
+//                         data: events.adverse,
+//                         borderColor: '#EF4444',
+//                         backgroundColor: '#EF444433',
+//                         fill: true,
+//                         yAxisID: 'y-adverse',
+//                         tension: 0.4
+//                     }
+//                 ]
+//             },
+//             options: {
+//                 responsive: true,
+//                 interaction: {
+//                     mode: 'nearest',
+//                     axis: 'x',
+//                     intersect: false
+//                 },
+//                 plugins: {
+//                     tooltip: {
+//                         callbacks: {
+//                             title: (context) => {
+//                                 return context[0].label;
+//                             },
+//                             label: (context) => {
+//                                 const label = context.dataset.label;
+//                                 const value = context.raw;
+//                                 if (label === '510(k) Approvals') {
+//                                     return `New Approvals: ${value}`;
+//                                 }
+//                                 return `Reported Events: ${value}`;
+//                             },
+//                             afterBody: (context) => {
+//                                 return ['Click for detailed breakdown'];
+//                             }
+//                         }
+//                     },
+//                     legend: {
+//                         position: 'top'
+//                     }
+//                 },
+//                 scales: {
+//                     x: {
+//                         grid: {
+//                             display: false
+//                         },
+//                         title: {
+//                             display: true,
+//                             text: 'Timeline'
+//                         }
+//                     },
+//                     'y-approvals': {
+//                         position: 'left',
+//                         title: {
+//                             display: true,
+//                             text: 'New Device Approvals'
+//                         },
+//                         grid: {
+//                             borderDash: [5, 5]
+//                         }
+//                     },
+//                     'y-adverse': {
+//                         position: 'right',
+//                         title: {
+//                             display: true,
+//                             text: 'Adverse Events'
+//                         },
+//                         grid: {
+//                             display: false
+//                         }
+//                     }
+//                 }
+//             }
+//         });
+//     }
+
+//     // Initialize device safety timeline
+//     // const safetyCtx = document.getElementById('fda_safety_timeline_chart_101');
+//     // if (safetyCtx) {
+//         // Combine 510k approvals and adverse events on timeline
+//         // const approvals = data.k510.results.map(item => ({
+//         //     date: new Date(item.decision_date),
+//         //     type: 'approval',
+//         //     device: item.device_name,
+//         //     details: item.decision_description
+//         // }));
+        
+//         // const adverse = data.adverse.results.map(item => ({
+//         //     date: new Date(item.date_received),
+//         //     type: 'adverse',
+//         //     device: item.device?.[0]?.brand_name,
+//         //     details: item.event_type
+//         // }));
+
+//         // Combine and sort events
+//         // const allEvents = [...approvals, ...adverse].sort((a, b) => a.date - b.date);
+//                 // Process events by month/year
+//                 // const events = processTimelineEvents(data);
+        
+//                 // new Chart(safetyCtx, {
+//                 //     type: 'bar',
+//                 //     data: {
+//                 //         labels: events.labels,
+//                 //         datasets: [
+//                 //             {
+//                 //                 label: '510(k) Approvals',
+//                 //                 data: events.approvals,
+//                 //                 backgroundColor: '#10B981',
+//                 //                 yAxisID: 'y-approvals'
+//                 //             },
+//                 //             {
+//                 //                 label: 'Adverse Events',
+//                 //                 data: events.adverse,
+//                 //                 backgroundColor: '#EF4444',
+//                 //                 yAxisID: 'y-adverse'
+//                 //             }
+//                 //         ]
+//                 //     },
+//                 //     options: {
+//                 //         responsive: true,
+//                 //         plugins: {
+//                 //             legend: {
+//                 //                 position: 'top',
+//                 //                 labels: {
+//                 //                     color: document.documentElement.classList.contains('dark') ? '#fff' : '#000'
+//                 //                 }
+//                 //             },
+//                 //             tooltip: {
+//                 //                 callbacks: {
+//                 //                     label: (context) => {
+//                 //                         const value = context.raw;
+//                 //                         return `${context.dataset.label}: ${value}`;
+//                 //                     }
+//                 //                 }
+//                 //             }
+//                 //         },
+//                 //         scales: {
+//                 //             x: {
+//                 //                 grid: {
+//                 //                     color: document.documentElement.classList.contains('dark') ? '#374151' : '#E5E7EB'
+//                 //                 },
+//                 //                 ticks: {
+//                 //                     color: document.documentElement.classList.contains('dark') ? '#9CA3AF' : '#4B5563'
+//                 //                 }
+//                 //             },
+//                 //             'y-approvals': {
+//                 //                 type: 'linear',
+//                 //                 position: 'left',
+//                 //                 title: {
+//                 //                     display: true,
+//                 //                     text: 'Approvals',
+//                 //                     color: document.documentElement.classList.contains('dark') ? '#fff' : '#000'
+//                 //                 },
+//                 //                 grid: {
+//                 //                     color: document.documentElement.classList.contains('dark') ? '#374151' : '#E5E7EB'
+//                 //                 },
+//                 //                 ticks: {
+//                 //                     color: document.documentElement.classList.contains('dark') ? '#9CA3AF' : '#4B5563'
+//                 //                 }
+//                 //             },
+//                 //             'y-adverse': {
+//                 //                 type: 'linear',
+//                 //                 position: 'right',
+//                 //                 title: {
+//                 //                     display: true,
+//                 //                     text: 'Adverse Events',
+//                 //                     color: document.documentElement.classList.contains('dark') ? '#fff' : '#000'
+//                 //                 },
+//                 //                 grid: {
+//                 //                     display: false
+//                 //                 },
+//                 //                 ticks: {
+//                 //                     color: document.documentElement.classList.contains('dark') ? '#9CA3AF' : '#4B5563'
+//                 //                 }
+//                 //             }
+//                 //         }
+//             //         }
+//             //     });
+//             // }
+    
+
+//     // Geographic Distribution Chart
+//     // function updateGeographicChart(data) {
+//         const geoCtx = document.getElementById('fda_geographic_chart_102');
+//         if (geoCtx) {
+//             const geoData = processGeographicData(data.registrations.results);
+            
+//             new Chart(geoCtx, {
+//                 type: 'bar',
+//                 data: {
+//                     labels: geoData.labels,
+//                     datasets: [{
+//                         label: 'Manufacturing Facilities',
+//                         data: geoData.data,
+//                         backgroundColor: geoData.colors,
+//                         borderWidth: 1
+//                     }]
+//                 },
+//                 options: {
+//                     indexAxis: 'y',
+//                     responsive: true,
+//                     plugins: {
+//                         tooltip: {
+//                             callbacks: {
+//                                 afterBody: (tooltipItems) => {
+//                                     const index = tooltipItems[0].dataIndex;
+//                                     const details = geoData.details[index];
+//                                     return [
+//                                         '',
+//                                         `Full Name: ${details.fullName}`,
+//                                         `Active Facilities: ${details.activeFacilities}`,
+//                                         `Primary Products: ${details.primaryProducts.join(', ')}`
+//                                     ];
+//                                 }
+//                             }
+//                         }
+//                     },
+//                     scales: {
+//                         x: {
+//                             title: {
+//                                 display: true,
+//                                 text: 'Number of Facilities'
+//                             }
+//                         },
+//                         y: {
+//                             title: {
+//                                 display: true,
+//                                 text: 'Country'
+//                             }
+//                         }
+//                     }
+//                 }
+//             });
+//         }
+    
+
+//     // Product Classification Analysis
+//     // 2. Device Classification Sunburst (Replacement for stacked bar)
+//     const classCtx = document.getElementById('fda_classification_chart_103');
+//     if (classCtx) {
+//         const deviceHierarchy = processDeviceHierarchy(data.udi.results);
+        
+//         new Chart(classCtx, {
+//             type: 'pie',
+//             data: {
+//                 labels: deviceHierarchy.labels,
+//                 datasets: [{
+//                     data: deviceHierarchy.data,
+//                     backgroundColor: deviceHierarchy.colors
+//                 }]
+//             },
+//             options: {
+//                 responsive: true,
+//                 plugins: {
+//                     tooltip: {
+//                         callbacks: {
+//                             label: (context) => {
+//                                 const label = context.label;
+//                                 const value = context.raw;
+//                                 const percentage = ((value / deviceHierarchy.total) * 100).toFixed(1);
+//                                 return `${label}: ${value} devices (${percentage}%)`;
+//                             },
+//                             afterBody: (tooltipItems) => {
+//                                 const item = tooltipItems[0];
+//                                 const details = deviceHierarchy.details[item.dataIndex];
+//                                 return [
+//                                     '',
+//                                     'Common Use Cases:',
+//                                     ...details.useCases
+//                                 ];
+//                             }
+//                         }
+//                     },
+//                     legend: {
+//                         position: 'right',
+//                         labels: {
+//                             generateLabels: (chart) => {
+//                                 const data = chart.data;
+//                                 return data.labels.map((label, i) => ({
+//                                     text: `${label} (${data.datasets[0].data[i]})`,
+//                                     fillStyle: data.datasets[0].backgroundColor[i],
+//                                     hidden: false,
+//                                     index: i
+//                                 }));
+//                             }
+//                         }
+//                     }
+//                 }
+//             }
+//         });
+//     }
+
+//     // Device Portfolio Evolution
+//     const portfolioCtx = document.getElementById('fda_portfolio_chart_104');
+//     if (portfolioCtx) {
+//         // Analyze device categories over time
+//         const portfolio = data.udi.results.reduce((acc, device) => {
+//             const year = new Date(device.publish_date).getFullYear();
+//             const category = device.product_codes?.[0]?.openfda?.medical_specialty_description || 'Other';
+            
+//             if (!acc[year]) acc[year] = {};
+//             acc[year][category] = (acc[year][category] || 0) + 1;
+            
+//             return acc;
+//         }, {});
+
+//         const years = Object.keys(portfolio).sort();
+//         const categories = [...new Set(data.udi.results.map(
+//             d => d.product_codes?.[0]?.openfda?.medical_specialty_description || 'Other'
+//         ))];
+
+//         new Chart(portfolioCtx, {
+//             type: 'line',
+//             data: {
+//                 labels: years,
+//                 datasets: categories.map(category => ({
+//                     label: category,
+//                     data: years.map(year => portfolio[year][category] || 0),
+//                     fill: true
+//                 }))
+//             },
+//             options: {
+//                 responsive: true,
+//                 interaction: {
+//                     mode: 'nearest',
+//                     axis: 'x',
+//                     intersect: false
+//                 }
+//             }
+//         });
+//     }
+// }
+
+// Helper Functions
+function processDeviceHierarchy(devices) {
+    const classGroups = devices.reduce((acc, device) => {
+        const deviceClass = device.product_codes?.[0]?.openfda?.device_class || 'Unknown';
+        const specialty = device.product_codes?.[0]?.openfda?.medical_specialty_description || 'Other';
+        
+        if (!acc[deviceClass]) {
+            acc[deviceClass] = {};
+        }
+        if (!acc[deviceClass][specialty]) {
+            acc[deviceClass][specialty] = [];
+        }
+        acc[deviceClass][specialty].push(device);
+        return acc;
+    }, {});
+
+    // Process for visualization
+    const labels = [];
+    const data = [];
+    const colors = [];
+    const details = [];
+    let total = 0;
+
+    const classColors = {
+        '1': '#10B981', // Green
+        '2': '#F59E0B', // Yellow
+        '3': '#EF4444', // Red
+        'Unknown': '#6B7280' // Gray
+    };
+
+    Object.entries(classGroups).forEach(([className, specialties]) => {
+        Object.entries(specialties).forEach(([specialty, devices]) => {
+            labels.push(`Class ${className} - ${specialty}`);
+            data.push(devices.length);
+            colors.push(classColors[className]);
+            total += devices.length;
+            
+            // Generate common use cases based on device names
+            const useCases = [...new Set(devices.slice(0, 3).map(d => d.brand_name))];
+            details.push({
+                useCases: useCases
+            });
+        });
+    });
+
+    return { labels, data, colors, details, total };
 }
+
+function processGeographicData(registrations) {
+    const countryData = registrations.reduce((acc, reg) => {
+        const country = reg.registration?.iso_country_code || 'Unknown';
+        if (!acc[country]) {
+            acc[country] = {
+                count: 0,
+                active: 0,
+                products: new Set(),
+                facilityTypes: new Set(),
+                fullName: getCountryName(country)
+            };
+        }
+        acc[country].count++;
+        if (reg.registration?.status_code === "1") {
+            acc[country].active++;
+        }
+        reg.proprietary_name?.forEach(name => acc[country].products.add(name));
+        reg.establishment_type?.forEach(type => acc[country].facilityTypes.add(type));
+        return acc;
+    }, {});
+
+    const sortedData = Object.entries(countryData)
+        .sort((a, b) => b[1].count - a[1].count);
+
+    return {
+        labels: sortedData.map(([code]) => code),
+        data: sortedData.map(([, data]) => data.count),
+        colors: sortedData.map(() => '#6366F1'),
+        details: sortedData.map(([, data]) => ({
+            fullName: data.fullName,
+            activeFacilities: data.active,
+            primaryProducts: Array.from(data.products).slice(0, 3),
+            facilityTypes: Array.from(data.facilityTypes)
+        }))
+    };
+}
+
+// Country code to full name mapping (abbreviated list)
+function getCountryName(code) {
+    const countries = {
+        'USA': 'United States of America',
+        'GBR': 'United Kingdom',
+        'DEU': 'Germany',
+        'FRA': 'France',
+        'ITA': 'Italy',
+        'ESP': 'Spain',
+        'CHN': 'China',
+        'JPN': 'Japan',
+        'KOR': 'South Korea',
+        'CAN': 'Canada',
+        // Add more as needed
+    };
+    return countries[code] || code;
+}
+
 
 // Function to toggle variant groups
 function toggleVariants(groupId) {
@@ -728,31 +1290,65 @@ function setupTableSearch() {
 function filterTable(tableId, searchTerm, searchFields) {
     const tableBody = document.getElementById(tableId);
     if (!tableBody) return;
-
-    const rows = tableBody.getElementsByTagName('tr');
-    Array.from(rows).forEach(row => {
-        if (row.classList.contains('group-header')) return; // Skip group headers
-
-        let found = false;
-        // Search through specified fields in the row's dataset
-        searchFields.forEach(field => {
-            const value = getNestedValue(row.dataset, field);
-            if (value && value.toLowerCase().includes(searchTerm)) {
-                found = true;
+    
+    searchTerm = searchTerm.toLowerCase();
+    
+    // If search is empty, reset the table
+    if (!searchTerm) {
+        // Reset all group headers and contents
+        const rows = Array.from(tableBody.getElementsByTagName('tr'));
+        rows.forEach(row => {
+            row.style.display = ''; // Show all rows
+            if (row.id && row.id.includes('-group')) {
+                row.classList.add('hidden'); // Re-hide group contents
+                // Reset visibility of all patent entries
+                const patentEntries = row.querySelectorAll('.flex.justify-between.items-center.py-2');
+                patentEntries.forEach(patent => {
+                    patent.style.display = '';
+                });
             }
         });
-
-        // Show/hide based on search
-        row.style.display = found ? '' : 'none';
-        
-        // Handle group visibility
-        const groupId = row.dataset.groupId;
-        if (groupId) {
-            const groupRows = document.querySelectorAll(`[data-group-id="${groupId}"]`);
-            const anyVisible = Array.from(groupRows).some(r => r.style.display !== 'none');
-            const groupHeader = document.querySelector(`[data-group-header="${groupId}"]`);
-            if (groupHeader) {
-                groupHeader.style.display = anyVisible ? '' : 'none';
+        return;
+    }
+    
+    const rows = Array.from(tableBody.getElementsByTagName('tr'));
+    const groupsWithVisibleChildren = new Set();
+    
+    // First pass: check individual patents and mark their groups
+    rows.forEach(row => {
+        if (row.id && row.id.includes('-group')) {
+            const patentEntries = row.querySelectorAll('.flex.justify-between.items-center.py-2');
+            let hasVisibleChild = false;
+            
+            patentEntries.forEach(patent => {
+                const patentText = patent.textContent.toLowerCase();
+                const isVisible = patentText.includes(searchTerm);
+                patent.style.display = isVisible ? '' : 'none';
+                if (isVisible) hasVisibleChild = true;
+            });
+            
+            if (hasVisibleChild) {
+                groupsWithVisibleChildren.add(row.id.replace('-group', ''));
+            }
+        }
+    });
+    
+    // Second pass: show/hide groups based on their children
+    rows.forEach(row => {
+        if (!row.id) {
+            const groupId = row.querySelector('.flex.justify-between')?.getAttribute('onclick')?.match(/'([^']+)'/)?.[1];
+            if (groupId) {
+                const baseGroupId = groupId.replace('-group', '');
+                const hasVisibleChildren = groupsWithVisibleChildren.has(baseGroupId);
+                row.style.display = hasVisibleChildren ? '' : 'none';
+                
+                const groupContent = document.getElementById(groupId);
+                if (groupContent) {
+                    groupContent.style.display = hasVisibleChildren ? '' : 'none';
+                    if (hasVisibleChildren) {
+                        groupContent.classList.remove('hidden');
+                    }
+                }
             }
         }
     });
