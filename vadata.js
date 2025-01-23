@@ -924,6 +924,9 @@ const data = [
     }
   }]
   
+
+  // const metrics = aggregateCompanyData(data);
+  // exportCompanyData(data)
     const container = document.getElementById('strategic-initiatives-content');
     container.innerHTML = ""
     while (container.firstChild) {
@@ -1330,5 +1333,134 @@ function updateCharts(group, selectedMonth, groupIndex) {
     }
   });
 }
+function aggregateCompanyData(data) {
+  const companyMetrics = {};
+  let totalOverallSales = 0;
+  let totalOverallUnits = 0;
+
+  // First pass to get total sales for market share calculation
+  data.forEach(group => {
+    if (group.totals && group.totals.sales) {
+      Object.entries(group.totals.sales).forEach(([company, sales]) => {
+        if (company !== 'total') {
+          totalOverallSales += sales;
+        }
+      });
+    }
+  });
+
+  // Second pass to aggregate all metrics
+  data.forEach(group => {
+    if (group.totals) {
+      // Process sales
+      if (group.totals.sales) {
+        Object.entries(group.totals.sales).forEach(([company, sales]) => {
+          if (company !== 'total') {
+            if (!companyMetrics[company]) {
+              companyMetrics[company] = {
+                totalSales: 0,
+                totalUnits: 0,
+                totalMarketShare: 0,
+                averageCost: 0,
+                productCategories: new Set(),
+                monthlyTrends: {}
+              };
+            }
+            companyMetrics[company].totalSales += sales;
+            companyMetrics[company].totalMarketShare = 
+              (companyMetrics[company].totalSales / totalOverallSales) * 100;
+          }
+        });
+      }
+
+      // Process units
+      if (group.totals.units_sold) {
+        Object.entries(group.totals.units_sold).forEach(([company, units]) => {
+          if (company !== 'total') {
+            companyMetrics[company].totalUnits += units;
+          }
+        });
+      }
+
+      // Track product categories
+      Object.entries(companyMetrics).forEach(([company]) => {
+        companyMetrics[company].productCategories.add(group.title);
+      });
+    }
+
+    // Process monthly trends
+    if (group.monthly_data) {
+      Object.entries(group.monthly_data).forEach(([month, monthData]) => {
+        Object.entries(monthData.sales || {}).forEach(([company, sales]) => {
+          if (!companyMetrics[company].monthlyTrends[month]) {
+            companyMetrics[company].monthlyTrends[month] = {
+              sales: 0,
+              units: 0,
+              marketShare: 0
+            };
+          }
+          companyMetrics[company].monthlyTrends[month].sales += sales;
+          companyMetrics[company].monthlyTrends[month].units += 
+            monthData.units_sold?.[company] || 0;
+          companyMetrics[company].monthlyTrends[month].marketShare = 
+            monthData.sales_percentage?.[company] || 0;
+        });
+      });
+    }
+  });
+
+  // Calculate average costs
+  Object.entries(companyMetrics).forEach(([company, metrics]) => {
+    metrics.averageCost = metrics.totalSales / metrics.totalUnits;
+    metrics.productCategories = Array.from(metrics.productCategories);
+  });
+
+  return companyMetrics;
+}
+
+function convertToCSV(metrics) {
+  const headers = ['Company', 'Total Sales', 'Total Units', 'Market Share', 'Average Cost', 'Product Categories'];
+  const rows = Object.entries(metrics).map(([company, data]) => [
+    company,
+    data.totalSales.toFixed(2),
+    data.totalUnits,
+    data.totalMarketShare.toFixed(2) + '%',
+    data.averageCost.toFixed(2),
+    data.productCategories.join('; ')
+  ]);
+  
+  return [headers, ...rows]
+    .map(row => row.join(','))
+    .join('\n');
+}
+
+function exportCompanyData(data, format = 'json') {
+  const metrics = aggregateCompanyData(data);
+  let exportData = '';
+  let filename = '';
+  let mimeType = '';
+
+  if (format === 'json') {
+    exportData = JSON.stringify(metrics, null, 2);
+    filename = 'company_metrics.json';
+    mimeType = 'application/json';
+  } else if (format === 'csv') {
+    exportData = convertToCSV(metrics);
+    filename = 'company_metrics.csv';
+    mimeType = 'text/csv';
+  }
+
+  const blob = new Blob([exportData], { type: mimeType });
+  const url = window.URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = filename;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  window.URL.revokeObjectURL(url);
+}
+
+export { aggregateCompanyData, exportCompanyData };
 
 export { renderStrategicAnalysis };

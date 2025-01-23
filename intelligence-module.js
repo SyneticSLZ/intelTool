@@ -1,812 +1,601 @@
-// Intelligence Module Demo Data
+// Intelligence Module Data
+// Update FDA metrics to use separate scales
+function normalizeMetric(value, maxValue) {
+    return (value / maxValue) * 100;
+}
 
-const intelligenceData = {
-    companies: [
-        { id: 1, name: '3M', industry: 'Manufacturing' },
-        { id: 2, name: 'Medtronic', industry: 'Healthcare' },
-        { id: 3, name: 'Cargill', industry: 'Agriculture' },
-        { id: 4, name: 'NAPSA', industry: 'Technology' },
-        { id: 5, name: 'Pentair', industry: 'Manufacturing' }
-    ],
+const marketData = {
+    companies: ['Sonova/Phonak', 'WS Audiology', 'GN Resound', 'Starkey'],
     
-    metrics: [
-        { id: 'revenue', name: 'Revenue', category: 'Financial' },
-        { id: 'marketShare', name: 'Market Share', category: 'Market' },
-        { id: 'patents', name: 'Patents', category: 'Technology' },
-        { id: 'sentiment', name: 'Brand Sentiment', category: 'Market' },
-        { id: 'rnd', name: 'R&D Investment', category: 'Technology' }
-    ],
-    
-    generateCompetitiveData() {
-        return this.companies.map(company => ({
-            name: company.name,
-            marketShare: Math.random() * 30 + 10,
-            growth: Math.random() * 20 - 5,
-            innovation: Math.random() * 100,
-            brandStrength: Math.random() * 100
-        }));
-    },
-    
-    generateTechnologyData() {
-        return this.companies.map(company => ({
-            name: company.name,
-            patents: Math.floor(Math.random() * 1000),
-            rndSpend: Math.floor(Math.random() * 500),
-            innovationScore: Math.random() * 100,
-            techAdoption: Math.random() * 100
-        }));
-    },
-    
-    generateMarketShareData() {
-        const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'];
-        return this.companies.map(company => ({
-            name: company.name,
-            data: months.map(() => Math.random() * 30 + 10)
-        }));
-    },
-    
-    generateGrowthData() {
-        const quarters = ['Q1 2023', 'Q2 2023', 'Q3 2023', 'Q4 2023', 'Q1 2024', 'Q2 2024'];
-        return this.companies.map(company => ({
-            name: company.name,
-            data: quarters.map(() => Math.random() * 20 - 5)
-        }));
-    },
-    
-    generateAIInsights() {
-        return [
-            {
-                title: 'Competitive Advantage',
-                insight: '3M shows strong patent growth in sustainable materials, indicating potential market leadership in eco-friendly products.',
-                confidence: 89,
-                type: 'opportunity'
-            },
-            {
-                title: 'Market Threat',
-                insight: 'New entrants in medical devices showing aggressive R&D investment, potentially challenging Medtronic\'s market position.',
-                confidence: 75,
-                type: 'threat'
-            },
-            {
-                title: 'Growth Opportunity',
-                insight: 'Cargill\'s digital agriculture initiatives align with emerging market trends in precision farming.',
-                confidence: 92,
-                type: 'opportunity'
-            },
-            {
-                title: 'Technology Trend',
-                insight: 'NAPSA\'s patent portfolio shows increasing focus on AI/ML applications, suggesting strategic pivot.',
-                confidence: 85,
-                type: 'insight'
-            }
-        ];
-    }
-};
-
-// Intelligence Module Components
-const intelligenceComponents = {
-    companySelector: {
-        render() {
-        //     const container = document.getElementById('company-selector');
-        //     container.innerHTML = intelligenceData.companies.map(company => `
-        //         <div class="flex items-center">
-        //             <input type="checkbox" 
-        //                    id="company-${company.id}" 
-        //                    value="${company.id}"
-        //                    class="h-4 w-4 text-blue-600 rounded border-gray-300"
-        //                    checked>
-        //             <label for="company-${company.id}" class="ml-2 text-sm text-gray-700">
-        //                 ${company.name}
-        //                 <span class="text-xs text-gray-500">(${company.industry})</span>
-        //             </label>
-        //         </div>
-        //     `).join('');
-        }
-    },
-    
-    metricSelector: {
-        render() {
-        //     const container = document.getElementById('metric-selector');
-        //     const groupedMetrics = intelligenceData.metrics.reduce((acc, metric) => {
-        //         (acc[metric.category] = acc[metric.category] || []).push(metric);
-        //         return acc;
-        //     }, {});
-            
-        //     container.innerHTML = Object.entries(groupedMetrics).map(([category, metrics]) => `
-        //         <div class="mb-4">
-        //             <h4 class="text-sm font-medium text-gray-700 mb-2">${category}</h4>
-        //             ${metrics.map(metric => `
-        //                 <div class="flex items-center ml-2">
-        //                     </label>
-        //                 </div>
-        //             `).join('')}
-        //         </div>
-        //     `).join('');
-        }
-    },
-
-    competitivePosition: {
-        render() {
-            const data = intelligenceData.generateCompetitiveData();
-            const ctx = document.getElementById('competitive-position-chart').getContext('2d');
-            
-            new Chart(ctx, {
-                type: 'scatter',
-                data: {
-                    datasets: [{
-                        label: 'Competitive Position',
-                        data: data.map(company => ({
-                            x: company.marketShare,
-                            y: company.growth,
-                            r: company.innovation / 10
-                        })),
-                        backgroundColor: 'rgba(59, 130, 246, 0.5)'
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: true,
-                    plugins: {
-                        tooltip: {
-                            callbacks: {
-                                label: (context) => {
-                                    return `${data[context.dataIndex].name}: Market Share: ${context.raw.x.toFixed(1)}%, Growth: ${context.raw.y.toFixed(1)}%`;
-                                }
-                            }
-                        }
-                    },
-                    scales: {
-                        x: {
-                            title: {
-                                display: true,
-                                text: 'Market Share (%)'
-                            }
-                        },
-                        y: {
-                            title: {
-                                display: true,
-                                text: 'Growth Rate (%)'
-                            }
-                        }
-                    }
-                }
-            });
-        }
-    },
-
-    technologyLandscape: {
-        render() {
-            const data = intelligenceData.generateTechnologyData();
-            const ctx = document.getElementById('technology-landscape-chart').getContext('2d');
-            
-            new Chart(ctx, {
-                type: 'radar',
-                data: {
-                    labels: ['Patents', 'R&D Spend', 'Innovation Score', 'Tech Adoption'],
-                    datasets: data.map(company => ({
-                        label: company.name,
-                        data: [
-                            company.patents / 10,
-                            company.rndSpend / 5,
-                            company.innovationScore,
-                            company.techAdoption
-                        ],
-                        fill: true,
-                        backgroundColor: `rgba(${Math.random() * 255}, ${Math.random() * 255}, ${Math.random() * 255}, 0.2)`,
-                        borderColor: `rgba(${Math.random() * 255}, ${Math.random() * 255}, ${Math.random() * 255}, 1)`
-                    }))
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: true
-                }
-            });
-        }
-    },
-
-    marketShare: {
-        render() {
-            const data = intelligenceData.generateMarketShareData();
-            const ctx = document.getElementById('market-share-chart').getContext('2d');
-            
-            new Chart(ctx, {
-                type: 'line',
-                data: {
-                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
-                    datasets: data.map(company => ({
-                        label: company.name,
-                        data: company.data,
-                        borderColor: `hsl(${Math.random() * 360}, 70%, 50%)`,
-                        tension: 0.4
-                    }))
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: true,
-                    plugins: {
-                        title: {
-                            display: true,
-                            text: 'Market Share Trends'
-                        }
-                    },
-                    scales: {
-                        y: {
-                            title: {
-                                display: true,
-                                text: 'Market Share (%)'
-                            }
-                        }
-                    }
-                }
-            });
-        }
-    },
-
-    growthTrajectory: {
-        render() {
-            const data = intelligenceData.generateGrowthData();
-            const ctx = document.getElementById('growth-trajectory-chart').getContext('2d');
-            
-            new Chart(ctx, {
-                type: 'bar',
-                data: {
-                    labels: ['Q1 2023', 'Q2 2023', 'Q3 2023', 'Q4 2023', 'Q1 2024', 'Q2 2024'],
-                    datasets: data.map(company => ({
-                        label: company.name,
-                        data: company.data,
-                        backgroundColor: `hsla(${Math.random() * 360}, 70%, 50%, 0.7)`
-                    }))
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: true,
-                    plugins: {
-                        title: {
-                            display: true,
-                            text: 'Quarterly Growth Rates'
-                        }
-                    },
-                    scales: {
-                        y: {
-                            title: {
-                                display: true,
-                                text: 'Growth Rate (%)'
-                            }
-                        }
-                    }
-                }
-            });
-        }
-    },
-
-    aiInsights: {
-        render() {
-            const insights = intelligenceData.generateAIInsights();
-            const container = document.getElementById('ai-insights');
-            
-            container.innerHTML = insights.map(insight => `
-                <div class="bg-gray-50 p-4 rounded-lg border-l-4 ${this.getInsightColor(insight.type)}">
-                    <div class="flex justify-between items-start mb-2">
-                        <h4 class="text-lg font-semibold">${insight.title}</h4>
-                        <span class="px-2 py-1 text-sm rounded-full ${this.getConfidenceColor(insight.confidence)}">
-                            ${insight.confidence}% confidence
-                        </span>
-                    </div>
-                    <p class="text-gray-700">${insight.insight}</p>
-                </div>
-            `).join('');
+    salesData: {
+        'Sonova/Phonak': {
+            totalSales: 38722437.51,
+            totalUnits: 88228,
+            marketShare: 50.13,
+            averageCost: 438.89
         },
-        
-        getInsightColor(type) {
-            const colors = {
-                opportunity: 'border-green-500',
-                threat: 'border-red-500',
-                insight: 'border-blue-500'
-            };
-            return colors[type] || 'border-gray-500';
+        'WS Audiology': {
+            totalSales: 5330292.09,
+            totalUnits: 13323,
+            marketShare: 6.90,
+            averageCost: 400.08
         },
-        
-        getConfidenceColor(confidence) {
-            if (confidence >= 90) return 'bg-green-100 text-green-800';
-            if (confidence >= 70) return 'bg-blue-100 text-blue-800';
-            return 'bg-yellow-100 text-yellow-800';
+        'GN Resound': {
+            totalSales: 7784005.99,
+            totalUnits: 18859,
+            marketShare: 10.08,
+            averageCost: 412.75
+        },
+        'Starkey': {
+            totalSales: 11204120.92,
+            totalUnits: 29345,
+            marketShare: 14.51,
+            averageCost: 381.81
+        }
+    },
+
+    fdaData: {
+        'Sonova/Phonak': {
+            udiDevices: 10990,
+            k510Clearances: 112,
+            activeRegistrations: 19,
+            adverseEvents: 64
+        },
+        'WS Audiology': {
+            udiDevices: 16804,
+            k510Clearances: 58,
+            activeRegistrations: 108,
+            adverseEvents: 9595
+        },
+        'GN Resound': {
+            udiDevices: 18001,
+            k510Clearances: 162,
+            activeRegistrations: 168,
+            adverseEvents: 4632
+        },
+        'Starkey': {
+            udiDevices: 4168,
+            k510Clearances: 80,
+            activeRegistrations: 19,
+            adverseEvents: 16
+        }
+    },
+
+    patentData: {
+        'Sonova/Phonak': {
+            totalPatents: 1649,
+            recentApplications: 46
+        },
+        'WS Audiology': {
+            totalPatents: 4791,
+            recentApplications: 329
+        },
+        'GN Resound': {
+            totalPatents: 1514,
+            recentApplications: 8
+        },
+        'Starkey': {
+            totalPatents: 1595,
+            recentApplications: 169
         }
     }
 };
+// Store chart instances to destroy before redrawing
+const chartInstances = {};
 
-// Initialize Intelligence Module
 document.addEventListener('DOMContentLoaded', () => {
-    // Render all components
-    intelligenceComponents.companySelector.render();
-    intelligenceComponents.metricSelector.render();
-    intelligenceComponents.competitivePosition.render();
-    intelligenceComponents.technologyLandscape.render();
-    intelligenceComponents.marketShare.render();
-    intelligenceComponents.growthTrajectory.render();
-    intelligenceComponents.aiInsights.render();
-    
-    // Setup event listeners for interactivity
-    setupEventListeners();
+    renderAllCharts();
+    renderMarketOverview();
+    renderCompetitiveMap();
 });
 
-function setupEventListeners() {
-    // Company selection changes
-    document.querySelectorAll('#company-selector input[type="checkbox"]').forEach(checkbox => {
-        checkbox.addEventListener('change', updateCharts);
-    });
-    
-    // Metric selection changes
-    document.querySelectorAll('#metric-selector input[type="checkbox"]').forEach(checkbox => {
-        checkbox.addEventListener('change', updateCharts);
-    });
-    
-    // Date range changes
-    document.querySelectorAll('input[type="date"]').forEach(input => {
-        input.addEventListener('change', updateCharts);
-    });
+function renderAllCharts() {
+    renderQuickStats();
+    renderMarketShareChart();
+    renderPatentsChart();
+    renderFDAMetricsChart();
+    renderFinancialRadar();
+    // renderKeyMetrics();
+    renderCompetitiveMap();
+    renderCompetitiveAnalysis();
 }
-
-// Advanced filtering and real-time updates
-const filters = {
-    activeCompanies: new Set(intelligenceData.companies.map(c => c.id)),
-    activeMetrics: new Set(intelligenceData.metrics.map(m => m.id)),
-    dateRange: {
-        start: null,
-        end: null
-    },
+function renderCompetitiveAnalysis() {
+    const container = document.getElementById('competitive-insights');
     
-    updateFilters() {
-        // Update company filters
-        this.activeCompanies = new Set(
-            Array.from(document.querySelectorAll('#company-selector input:checked'))
-                .map(input => parseInt(input.value))
-        );
-        
-        // Update metric filters
-        this.activeMetrics = new Set(
-            Array.from(document.querySelectorAll('#metric-selector input:checked'))
-                .map(input => input.value)
-        );
-        
-        // Update date range
-        const startDate = document.querySelector('input[type="date"]:first-of-type').value;
-        const endDate = document.querySelector('input[type="date"]:last-of-type').value;
-        this.dateRange = { start: startDate, end: endDate };
-    }
-};
-
-// Real-time data simulation
-const realTimeUpdates = {
-    interval: null,
-    
-    start() {
-        this.interval = setInterval(() => {
-            // Simulate real-time data updates
-            const updates = this.generateUpdates();
-            this.applyUpdates(updates);
-        }, 5000); // Update every 5 seconds
-    },
-    
-    stop() {
-        if (this.interval) {
-            clearInterval(this.interval);
-            this.interval = null;
+    const insights = [
+        {
+            title: 'Market Leadership',
+            insight: `Sonova/Phonak dominates with 50.13% market share and $38.7B in sales, maintaining premium positioning with average unit cost of $438.89. The top 3 players control 81.3% of market value.`,
+            type: 'critical',
+            icon: 'crown'
+        },
+        {
+            title: 'Innovation Dynamics',
+            insight: `WS Audiology leads R&D with ${wsData.operational_metrics.research_development.as_percent_of_sales}% investment ratio and 4,791 patents. Recent patent activity shows focus on AI/ML integration and miniaturization.`,
+            type: 'strength',
+            icon: 'lightbulb'
+        },
+        {
+            title: 'Regulatory Landscape',
+            insight: `GN Resound leads in FDA clearances (162), while Starkey shows best safety profile with only 16 adverse events. Industry transitioning to more stringent quality controls.`,
+            type: 'warning',
+            icon: 'shield-check'
+        },
+        {
+            title: 'Growth Opportunities',
+            insight: `Emerging markets show 15% YoY growth potential. OTC hearing aid regulations opening new market segments. Direct-to-consumer channels expanding rapidly.`,
+            type: 'opportunity',
+            icon: 'chart-line'
         }
-    },
-    
-    generateUpdates() {
-        // Simulate random updates for demo
-        return {
-            marketShare: Math.random() * 2 - 1, // -1 to +1 change
-            patents: Math.floor(Math.random() * 5), // 0 to 5 new patents
-            sentiment: Math.random() * 10 - 5 // -5 to +5 sentiment change
-        };
-    },
-    
-    applyUpdates(updates) {
-        // Apply updates to the data and refresh visualizations
-        intelligenceData.companies.forEach(company => {
-            const companyData = intelligenceData.generateCompetitiveData().find(d => d.name === company.name);
-            if (companyData) {
-                companyData.marketShare += updates.marketShare;
-                // Ensure values stay within reasonable bounds
-                companyData.marketShare = Math.max(0, Math.min(100, companyData.marketShare));
-            }
-        });
-        
-        // Trigger visualization updates
-        updateCharts();
-    }
-};
+    ];
 
-function updateCharts() {
-    // Get current filter state
-    filters.updateFilters();
-    
-    // Apply filters to data
-    const filteredData = {
-        companies: intelligenceData.companies.filter(c => filters.activeCompanies.has(c.id)),
-        metrics: intelligenceData.metrics.filter(m => filters.activeMetrics.has(m.id))
-    };
-    
-    // Update visualizations with filtered data
-    intelligenceComponents.competitivePosition.render(filteredData);
-    intelligenceComponents.technologyLandscape.render(filteredData);
-    intelligenceComponents.marketShare.render(filteredData);
-    intelligenceComponents.growthTrajectory.render(filteredData);
-    intelligenceComponents.aiInsights.render(filteredData);
-    
-    // Update AI insights based on changes
-    updateAIInsights(filteredData);
-}
-
-function updateAIInsights(filteredData) {
-    const insights = [];
-    
-    // Generate dynamic insights based on data changes
-    filteredData.companies.forEach(company => {
-        const compData = intelligenceData.generateCompetitiveData().find(d => d.name === company.name);
-        if (compData) {
-            if (compData.growth > 15) {
-                insights.push({
-                    title: 'High Growth Alert',
-                    insight: `${company.name} shows exceptional growth rate of ${compData.growth.toFixed(1)}%`,
-                    confidence: 95,
-                    type: 'opportunity'
-                });
-            }
-            
-            if (compData.marketShare < 10) {
-                insights.push({
-                    title: 'Market Share Warning',
-                    insight: `${company.name}'s market share has dropped below 10%`,
-                    confidence: 85,
-                    type: 'threat'
-                });
-            }
-        }
-    });
-    
-    // Update insights display
-    const container = document.getElementById('ai-insights');
-    if (container && insights.length > 0) {
-        container.innerHTML = insights.map(insight => `
-            <div class="bg-gray-50 p-4 rounded-lg border-l-4 ${intelligenceComponents.aiInsights.getInsightColor(insight.type)}">
-                <div class="flex justify-between items-start mb-2">
-                    <h4 class="text-lg font-semibold">${insight.title}</h4>
-                    <span class="px-2 py-1 text-sm rounded-full ${intelligenceComponents.aiInsights.getConfidenceColor(insight.confidence)}">
-                        ${insight.confidence}% confidence
-                    </span>
+    container.innerHTML = insights.map(insight => `
+        <div class="bg-white dark:bg-gray-700 p-6 rounded-lg shadow-sm border-l-4 ${getInsightTypeColor(insight.type)}">
+            <div class="flex items-start justify-between mb-4">
+                <div class="flex items-center">
+                    <div class="p-2 rounded-full ${getInsightIconBg(insight.type)}">
+                        <i class="fas fa-${insight.icon} ${getInsightIconColor(insight.type)}"></i>
+                    </div>
+                    <h4 class="ml-3 text-lg font-semibold text-gray-900 dark:text-white">${insight.title}</h4>
                 </div>
-                <p class="text-gray-700">${insight.insight}</p>
+                <span class="px-2 py-1 text-sm rounded-full ${getInsightBadgeColor(insight.type)}">
+                    ${insight.type.charAt(0).toUpperCase() + insight.type.slice(1)}
+                </span>
             </div>
-        `).join('');
-    }
+            <p class="text-gray-600 dark:text-gray-300">${insight.insight}</p>
+        </div>
+    `).join('');
 }
-// Demo data generation utilities
-const demoData = {
-    companies: [
-        { id: 1, name: '3M', industry: 'Manufacturing' },
-        { id: 2, name: 'Medtronic', industry: 'Healthcare' },
-        { id: 3, name: 'Cargill', industry: 'Agriculture' },
-        { id: 4, name: 'NAPSA', industry: 'Technology' },
-        { id: 5, name: 'Pentair', industry: 'Manufacturing' }
-    ],
+
+function getInsightTypeColor(type) {
+    const colors = {
+        critical: 'border-blue-500',
+        strength: 'border-green-500',
+        warning: 'border-yellow-500',
+        opportunity: 'border-purple-500'
+    };
+    return colors[type] || 'border-gray-500';
+}
+
+function getInsightIconBg(type) {
+    const colors = {
+        critical: 'bg-blue-100 dark:bg-blue-900/50',
+        strength: 'bg-green-100 dark:bg-green-900/50',
+        warning: 'bg-yellow-100 dark:bg-yellow-900/50',
+        opportunity: 'bg-purple-100 dark:bg-purple-900/50'
+    };
+    return colors[type] || 'bg-gray-100 dark:bg-gray-900/50';
+}
+
+function getInsightIconColor(type) {
+    const colors = {
+        critical: 'text-blue-600 dark:text-blue-400',
+        strength: 'text-green-600 dark:text-green-400',
+        warning: 'text-yellow-600 dark:text-yellow-400',
+        opportunity: 'text-purple-600 dark:text-purple-400'
+    };
+    return colors[type] || 'text-gray-600 dark:text-gray-400';
+}
+
+function getInsightBadgeColor(type) {
+    const colors = {
+        critical: 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200',
+        strength: 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200',
+        warning: 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200',
+        opportunity: 'bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-200'
+    };
+    return colors[type] || 'bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-200';
+}
+
+function renderQuickStats() {
+    const container = document.getElementById('quick-stats');
     
-    generateTimeSeriesData(points = 12) {
-        return Array.from({ length: points }, (_, i) => ({
-            date: new Date(2024, i, 1).toISOString().split('T')[0],
-            value: Math.floor(Math.random() * 100) + 50
-        }));
-    },
+    // Calculate key metrics
+    const totalMarket = marketData.companies.reduce((sum, company) => 
+        sum + marketData.salesData[company].totalSales, 0) / 1000000;
+    const totalPatents = marketData.companies.reduce((sum, company) => 
+        sum + marketData.patentData[company].totalPatents, 0);
+    const avgUnitPrice = marketData.companies.reduce((sum, company) => 
+        sum + marketData.salesData[company].averageCost, 0) / marketData.companies.length;
+    const totalUnits = marketData.companies.reduce((sum, company) => 
+        sum + marketData.salesData[company].totalUnits, 0);
 
-    generatePatentData() {
-        return this.companies.map(company => ({
-            company: company.name,
-            patents: Math.floor(Math.random() * 1000),
-            growthRate: (Math.random() * 30 - 15).toFixed(1)
-        }));
-    },
-
-    generateNewsUpdates() {
-        const updates = [
-            '3M announces new sustainable manufacturing initiative',
-            'Medtronic receives FDA approval for new device',
-            'Cargill expands agricultural technology investments',
-            'NAPSA launches innovative software solution',
-            'Pentair reports strong quarterly earnings'
-        ];
-        return updates.map(update => ({
-            text: update,
-            timestamp: new Date(Date.now() - Math.random() * 86400000 * 7).toISOString(),
-            sentiment: Math.random() > 0.7 ? 'positive' : Math.random() > 0.3 ? 'neutral' : 'negative'
-        }));
-    },
-
-    generateFinancialMetrics() {
-        return this.companies.map(company => ({
-            name: company.name,
-            revenue: Math.floor(Math.random() * 10000) + 5000,
-            growth: (Math.random() * 20 - 5).toFixed(1),
-            marketShare: (Math.random() * 30 + 5).toFixed(1)
-        }));
-    }
-};
-
-// Application state
-const state = {
-    loading: true,
-    charts: {},
-    data: {
-        marketIntelligence: null,
-        patentAnalytics: null,
-        newsSentiment: null,
-        financialMetrics: null,
-        competitorUpdates: null
-    }
-};
-
-// UI Components
-const components = {
-    loadingOverlay: {
-        show() {
-            document.getElementById('loading-overlay').classList.remove('hidden');
+    const stats = [
+        { 
+            label: 'Market Size', 
+            value: `$${totalMarket.toFixed(1)}M`,
+            trend: '+5.4% YoY',
+            icon: 'chart-pie',
+            color: 'blue'
         },
-        hide() {
-            document.getElementById('loading-overlay').classList.add('hidden');
+        { 
+            label: 'Unit Sales', 
+            value: totalUnits.toLocaleString(),
+            trend: '+3.2% QoQ',
+            icon: 'box',
+            color: 'green'
+        },
+        { 
+            label: 'Avg. Price', 
+            value: `$${avgUnitPrice.toFixed(2)}`,
+            trend: '+1.8% YoY',
+            icon: 'tag',
+            color: 'yellow'
+        },
+        { 
+            label: 'Patents', 
+            value: totalPatents.toLocaleString(),
+            trend: '+12.5% YoY',
+            icon: 'lightbulb',
+            color: 'purple'
         }
-    },
+    ];
 
-    quickStats: {
-        render(data) {
-            const container = document.getElementById('quick-stats');
-            const stats = [
-                { label: 'Companies Tracked', value: data.companies.length, icon: 'building' },
-                { label: 'Patent Applications', value: '1,247', icon: 'file-alt' },
-                { label: 'Market Share', value: '23.5%', icon: 'chart-pie' },
-                { label: 'Competitor Updates', value: '12 New', icon: 'bell' }
-            ];
+    container.innerHTML = stats.map(stat => `
+        <div class="bg-${stat.color}-50 dark:bg-${stat.color}-900/20 rounded-lg p-4">
+            <div class="flex justify-between items-start">
+                <div>
+                    <p class="text-sm text-gray-600 dark:text-gray-400">${stat.label}</p>
+                    <p class="text-2xl font-bold text-gray-900 dark:text-white">${stat.value}</p>
+                    <p class="text-sm text-${stat.color}-600 dark:text-${stat.color}-400">${stat.trend}</p>
+                </div>
+                <div class="p-3 bg-${stat.color}-100 dark:bg-${stat.color}-900 rounded-full">
+                    <i class="fas fa-${stat.icon} text-${stat.color}-600 dark:text-${stat.color}-300"></i>
+                </div>
+            </div>
+        </div>
+    `).join('');
+}
 
-            container.innerHTML = stats.map(stat => `
-                <div class="bg-white rounded-lg shadow p-6 fade-in">
-                    <div class="flex items-center">
-                        <div class="p-3 rounded-full bg-blue-100 text-blue-600">
-                            <i class="fas fa-${stat.icon} fa-lg"></i>
-                        </div>
-                        <div class="ml-4">
-                            <p class="text-sm text-gray-600">${stat.label}</p>
-                            <p class="text-2xl font-semibold text-gray-900">${stat.value}</p>
-                        </div>
+function renderMarketOverview() {
+    const container = document.getElementById('market-overview');
+    const marketSize = marketData.companies.reduce((sum, company) => 
+        sum + marketData.salesData[company].totalSales, 0) / 1000000;
+    const totalUnits = marketData.companies.reduce((sum, company) => 
+        sum + marketData.salesData[company].totalUnits, 0);
+    const avgPrice = marketData.companies.reduce((sum, company) => 
+        sum + marketData.salesData[company].averageCost, 0) / marketData.companies.length;
+    
+    container.innerHTML = `
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div class="bg-white dark:bg-gray-800 p-4 rounded-lg shadow">
+                <div class="flex justify-between items-center">
+                    <div>
+                        <p class="text-sm text-gray-600 dark:text-gray-400">Global Market Size</p>
+                        <p class="text-2xl font-bold text-gray-900 dark:text-white">$${marketSize.toFixed(2)}M</p>
+                        <p class="text-sm text-green-600 dark:text-green-400">↑ 5.4% YoY</p>
+                    </div>
+                    <div class="p-3 bg-blue-100 dark:bg-blue-900 rounded-full">
+                        <i class="fas fa-globe text-blue-600 dark:text-blue-300"></i>
                     </div>
                 </div>
-            `).join('');
-        }
-    },
-
-    marketIntelligence: {
-        render(data) {
-            if (state.charts.marketChart) {
-                state.charts.marketChart.destroy();
-            }
-
-            const ctx = document.getElementById('market-chart').getContext('2d');
-            state.charts.marketChart = new Chart(ctx, {
-                type: 'line',
-                data: {
-                    labels: data.map(d => d.date),
-                    datasets: [{
-                        label: 'Market Trend',
-                        data: data.map(d => d.value),
-                        borderColor: 'rgb(59, 130, 246)',
-                        tension: 0.4
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: true,
-                    plugins: {
-                        legend: {
-                            position: 'top',
-                        },
-                        title: {
-                            display: true,
-                            text: 'Market Intelligence Trends'
-                        }
-                    }
-                }
-            });
-        }
-    },
-
-    competitorUpdates: {
-        render(updates) {
-            const container = document.getElementById('competitor-updates');
-            container.innerHTML = updates.map(update => `
-                <div class="mb-4 p-4 border-l-4 ${this.getSentimentColor(update.sentiment)} bg-gray-50 fade-in">
-                    <p class="text-sm text-gray-900">${update.text}</p>
-                    <p class="text-xs text-gray-600 mt-1">
-                        ${new Date(update.timestamp).toLocaleDateString()}
-                    </p>
+            </div>
+            <div class="bg-white dark:bg-gray-800 p-4 rounded-lg shadow">
+                <div class="flex justify-between items-center">
+                    <div>
+                        <p class="text-sm text-gray-600 dark:text-gray-400">Total Units Sold</p>
+                        <p class="text-2xl font-bold text-gray-900 dark:text-white">${totalUnits.toLocaleString()}</p>
+                        <p class="text-sm text-green-600 dark:text-green-400">↑ 3.2% QoQ</p>
+                    </div>
+                    <div class="p-3 bg-green-100 dark:bg-green-900 rounded-full">
+                        <i class="fas fa-box text-green-600 dark:text-green-300"></i>
+                    </div>
                 </div>
-            `).join('');
+            </div>
+            <div class="bg-white dark:bg-gray-800 p-4 rounded-lg shadow">
+                <div class="flex justify-between items-center">
+                    <div>
+                        <p class="text-sm text-gray-600 dark:text-gray-400">Average Unit Price</p>
+                        <p class="text-2xl font-bold text-gray-900 dark:text-white">$${avgPrice.toFixed(2)}</p>
+                        <p class="text-sm text-yellow-600 dark:text-yellow-400">↑ 1.8% QoQ</p>
+                    </div>
+                    <div class="p-3 bg-yellow-100 dark:bg-yellow-900 rounded-full">
+                        <i class="fas fa-tag text-yellow-600 dark:text-yellow-300"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `;
+}
+
+function renderCompetitiveMap() {
+    const container = document.getElementById('competitive-map');
+    
+    const marketLeader = marketData.companies.reduce((a, b) => 
+        marketData.salesData[a].marketShare > marketData.salesData[b].marketShare ? a : b);
+    const innovationLeader = marketData.companies.reduce((a, b) => 
+        marketData.patentData[a].totalPatents > marketData.patentData[b].totalPatents ? a : b);
+    
+    container.innerHTML = `
+        <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow">
+            <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">Market Overview</h3>
+            <div class="space-y-4">
+                <div class="flex items-center justify-between">
+                    <span class="text-gray-600 dark:text-gray-400">Market Concentration</span>
+                    <span class="font-medium text-gray-900 dark:text-white">High (HHI: 2,945)</span>
+                </div>
+                <div class="flex items-center justify-between">
+                    <span class="text-gray-600 dark:text-gray-400">Market Leader</span>
+                    <span class="font-medium text-green-600">${marketLeader} (${marketData.salesData[marketLeader].marketShare.toFixed(1)}%)</span>
+                </div>
+                <div class="flex items-center justify-between">
+                    <span class="text-gray-600 dark:text-gray-400">Innovation Leader</span>
+                    <span class="font-medium text-blue-600">${innovationLeader} (${marketData.patentData[innovationLeader].totalPatents} patents)</span>
+                </div>
+                <div class="flex items-center justify-between">
+                    <span class="text-gray-600 dark:text-gray-400">Industry Stage</span>
+                    <span class="font-medium text-purple-600">Mature/Consolidating</span>
+                </div>
+                <div class="flex items-center justify-between">
+                    <span class="text-gray-600 dark:text-gray-400">Growth Rate</span>
+                    <span class="font-medium text-green-600">5.4% YoY</span>
+                </div>
+            </div>
+        </div>
+    `;
+}
+
+function destroyChart(chartId) {
+    if (chartInstances[chartId]) {
+        chartInstances[chartId].destroy();
+    }
+}
+
+function renderMarketShareChart() {
+    destroyChart('market-share');
+    const ctx = document.getElementById('market-share-chart').getContext('2d');
+    
+    chartInstances['market-share'] = new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+            labels: marketData.companies,
+            datasets: [{
+                data: marketData.companies.map(company => marketData.salesData[company].marketShare),
+                backgroundColor: marketData.companies.map((_, i) => getDatasetColor(i, 0.8))
+            }]
         },
-        getSentimentColor(sentiment) {
-            const colors = {
-                positive: 'border-green-500',
-                neutral: 'border-gray-500',
-                negative: 'border-red-500'
-            };
-            return colors[sentiment] || colors.neutral;
-        }
-    },
-
-    patentAnalytics: {
-        render(data) {
-            const ctx = document.getElementById('patent-chart').getContext('2d');
-            new Chart(ctx, {
-                type: 'bar',
-                data: {
-                    labels: data.map(d => d.company),
-                    datasets: [{
-                        label: 'Patent Applications',
-                        data: data.map(d => d.patents),
-                        backgroundColor: 'rgba(59, 130, 246, 0.5)'
-                    }]
+        options: {
+            responsive: true,
+            plugins: {
+                title: {
+                    display: true,
+                    text: 'Market Share Distribution',
+                    color: getTextColor()
                 },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: true
+                legend: {
+                    position: 'bottom',
+                    labels: { color: getTextColor() }
                 }
-            });
-        }
-    },
-
-    sentimentAnalysis: {
-        render(updates) {
-            const sentiments = updates.reduce((acc, update) => {
-                acc[update.sentiment] = (acc[update.sentiment] || 0) + 1;
-                return acc;
-            }, {});
-
-            const ctx = document.getElementById('sentiment-chart').getContext('2d');
-            new Chart(ctx, {
-                type: 'doughnut',
-                data: {
-                    labels: Object.keys(sentiments),
-                    datasets: [{
-                        data: Object.values(sentiments),
-                        backgroundColor: [
-                            'rgba(34, 197, 94, 0.5)',
-                            'rgba(107, 114, 128, 0.5)',
-                            'rgba(239, 68, 68, 0.5)'
-                        ]
-                    }],
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: true,
-                    plugins: {
-                        legend: {
-                            position: 'bottom'
-                        }
-                    }
-                }
-            });
-        }
-    },
-
-    financialMetrics: {
-        render(data) {
-            const ctx = document.getElementById('financial-chart').getContext('2d');
-            new Chart(ctx, {
-                type: 'radar',
-                data: {
-                    labels: data.map(d => d.name),
-                    datasets: [{
-                        label: 'Market Share %',
-                        data: data.map(d => d.marketShare),
-                        borderColor: 'rgba(59, 130, 246, 1)',
-                        backgroundColor: 'rgba(59, 130, 246, 0.2)'
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: true,
-                    scales: {
-                        r: {
-                            beginAtZero: true,
-                            max: 40
-                        }
-                    }
-                }
-            });
-        }
-    },
-    
-};
-
-// API Simulation
-const api = {
-    async fetchData() {
-        // Simulate API latency
-        await new Promise(resolve => setTimeout(resolve, 1500));
-        
-        return {
-            marketIntelligence: demoData.generateTimeSeriesData(24),
-            patentAnalytics: demoData.generatePatentData(),
-            competitorUpdates: demoData.generateNewsUpdates(),
-            financialMetrics: demoData.generateFinancialMetrics()
-        };
-    }
-};
-
-// Application Logic
-const app = {
-    async init() {
-        components.loadingOverlay.show();
-        
-        try {
-            // Fetch initial data
-            const data = await api.fetchData();
-            
-            // Update state
-            state.data = data;
-            state.loading = false;
-            
-            // Render components
-            this.render();
-            
-            // Setup real-time updates
-            this.setupUpdates();
-            
-        } catch (error) {
-            console.error('Failed to initialize application:', error);
-            // Show error state
-        } finally {
-            components.loadingOverlay.hide();
-        }
-    },
-    
-    render() {
-        // components.quickStats.render(demoData);
-        // components.marketIntelligence.render(state.data.marketIntelligence);
-        // components.competitorUpdates.render(state.data.competitorUpdates);
-        // components.patentAnalytics.render(state.data.patentAnalytics);
-        // components.sentimentAnalysis.render(state.data.competitorUpdates);
-        // components.financialMetrics.render(state.data.financialMetrics);
-    },
-    
-    setupUpdates() {
-        // Simulate real-time updates every 30 seconds
-        setInterval(async () => {
-            try {
-                const newData = await api.fetchData();
-                state.data = newData;
-                this.render();
-            } catch (error) {
-                console.error('Failed to fetch updates:', error);
             }
-        }, 30000);
-    }
-};
+        }
+    });
+}
 
-// Initialize application
-// Initialize Intelligence Module
-document.addEventListener('DOMContentLoaded', () => {
-    // cleanupCharts()
-    // Render all components
-    intelligenceComponents.companySelector.render();
-    intelligenceComponents.metricSelector.render();
-    intelligenceComponents.competitivePosition.render();
-    intelligenceComponents.technologyLandscape.render();
-    intelligenceComponents.marketShare.render();
-    intelligenceComponents.growthTrajectory.render();
-    intelligenceComponents.aiInsights.render();
-    app.init()
+function renderFDAMetricsChart() {
+    destroyChart('fda-metrics');
+    const ctx = document.getElementById('fda-metrics-chart').getContext('2d');
     
-    // Setup event listeners for interactivity
-    setupEventListeners();
+    const datasets = [
+        {
+            label: 'UDI Devices',
+            data: marketData.companies.map(company => marketData.fdaData[company].udiDevices),
+            backgroundColor: getDatasetColor(0, 0.7),
+            yAxisID: 'y-udi'
+        },
+        {
+            label: '510(k) Clearances',
+            data: marketData.companies.map(company => marketData.fdaData[company].k510Clearances),
+            backgroundColor: getDatasetColor(1, 0.7),
+            yAxisID: 'y-clearances'
+        },
+        {
+            label: 'Adverse Events',
+            data: marketData.companies.map(company => marketData.fdaData[company].adverseEvents),
+            backgroundColor: getDatasetColor(2, 0.7),
+            yAxisID: 'y-adverse'
+        }
+    ];
+
+    chartInstances['fda-metrics'] = new Chart(ctx, {
+        type: 'bar',
+        data: { labels: marketData.companies, datasets },
+        options: {
+            responsive: true,
+            interaction: { mode: 'index', intersect: false },
+            scales: {
+                x: {
+                    ticks: { color: getTextColor() },
+                    grid: { color: getGridColor() }
+                },
+                'y-udi': {
+                    type: 'linear',
+                    position: 'left',
+                    title: { 
+                        display: true,
+                        text: 'UDI Devices',
+                        color: getTextColor()
+                    },
+                    ticks: { color: getTextColor() },
+                    grid: { color: getGridColor() }
+                },
+                'y-clearances': {
+                    type: 'linear',
+                    position: 'right',
+                    title: {
+                        display: true,
+                        text: '510(k) Clearances',
+                        color: getTextColor()
+                    },
+                    ticks: { color: getTextColor() },
+                    grid: { display: false }
+                },
+                'y-adverse': {
+                    type: 'logarithmic',
+                    position: 'right',
+                    title: {
+                        display: true,
+                        text: 'Adverse Events (log)',
+                        color: getTextColor()
+                    },
+                    ticks: { color: getTextColor() },
+                    grid: { display: false },
+                    offset: true
+                }
+            },
+            plugins: {
+                title: {
+                    display: true,
+                    text: 'FDA Metrics Analysis',
+                    color: getTextColor()
+                },
+                legend: {
+                    position: 'top',
+                    labels: { color: getTextColor() }
+                }
+            }
+        }
+    });
+}
+
+function renderFinancialRadar() {
+    destroyChart('financial-radar');
+    const ctx = document.getElementById('financial-radar-chart').getContext('2d');
     
-    // Start real-time updates
-    realTimeUpdates.start();
-});
+    const metrics = {
+        'Revenue Growth (%)': {
+            'Sonova/Phonak': sonovaData.current_period.key_financials.revenue.growth.local_currency,
+            'WS Audiology': wsData.key_financials.revenue.organic_growth,
+            'GN Resound': gnData.financial_highlights.revenue.by_division.hearing.organic_growth,
+            'Starkey': 5.0
+        },
+        'EBITA/EBITDA Margin (%)': {
+            'Sonova/Phonak': sonovaData.current_period.key_financials.ebita.margin_adjusted,
+            'WS Audiology': wsData.key_financials.profitability.EBITDA.margin,
+            'GN Resound': gnData.financial_highlights.profitability.ebita.margin,
+            'Starkey': 15.0
+        },
+        'Market Share (%)': {
+            'Sonova/Phonak': marketData.salesData['Sonova/Phonak'].marketShare,
+            'WS Audiology': marketData.salesData['WS Audiology'].marketShare,
+            'GN Resound': marketData.salesData['GN Resound'].marketShare,
+            'Starkey': marketData.salesData['Starkey'].marketShare
+        },
+        'R&D Investment (%)': {
+            'Sonova/Phonak': (sonovaData.prior_year.costs.research_and_development / sonovaData.prior_year.key_financials.sales) * 100,
+            'WS Audiology': wsData.operational_metrics.research_development.as_percent_of_sales,
+            'GN Resound': gnData.operational_metrics.development_costs.rd_intensity,
+            'Starkey': 6.5
+        }
+    };
+
+    chartInstances['financial-radar'] = new Chart(ctx, {
+        type: 'radar',
+        data: {
+            labels: Object.keys(metrics),
+            datasets: marketData.companies.map((company, index) => ({
+                label: company,
+                data: Object.keys(metrics).map(metric => metrics[metric][company] || 0),
+                borderColor: getDatasetColor(index),
+                backgroundColor: getDatasetColor(index, 0.2)
+            }))
+        },
+        options: {
+            responsive: true,
+            scales: {
+                r: {
+                    angleLines: { color: getGridColor() },
+                    grid: { color: getGridColor() },
+                    pointLabels: { 
+                        color: getTextColor(),
+                        font: { size: 12 }
+                    },
+                    ticks: { 
+                        color: getTextColor(),
+                        backdropColor: 'transparent'
+                    }
+                }
+            },
+            plugins: {
+                title: {
+                    display: true,
+                    text: 'Financial Performance Analysis',
+                    color: getTextColor()
+                },
+                legend: {
+                    labels: { color: getTextColor() }
+                }
+            }
+        }
+    });
+}
+
+function renderPatentsChart() {
+    destroyChart('patents');
+    const ctx = document.getElementById('patents-chart').getContext('2d');
+    
+    chartInstances['patents'] = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: marketData.companies,
+            datasets: [
+                {
+                    label: 'Total Patents',
+                    data: marketData.companies.map(company => marketData.patentData[company].totalPatents),
+                    backgroundColor: getDatasetColor(0, 0.8)
+                },
+                {
+                    label: 'Recent Applications',
+                    data: marketData.companies.map(company => marketData.patentData[company].recentApplications),
+                    backgroundColor: getDatasetColor(1, 0.8)
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    ticks: { color: getTextColor() },
+                    grid: { color: getGridColor() }
+                },
+                x: {
+                    ticks: { color: getTextColor() },
+                    grid: { color: getGridColor() }
+                }
+            },
+            plugins: {
+                title: {
+                    display: true,
+                    text: 'Patent Portfolio Analysis',
+                    color: getTextColor()
+                },
+                legend: {
+                    labels: { color: getTextColor() }
+                }
+            }
+        }
+    });
+}
+
+function getTextColor() {
+    return document.documentElement.classList.contains('dark') ? '#fff' : '#1f2937';
+}
+
+function getGridColor() {
+    return document.documentElement.classList.contains('dark') ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)';
+}
+
+function getDatasetColor(index, alpha = 1) {
+    const colors = [
+        `rgba(59, 130, 246, ${alpha})`,   // blue
+        `rgba(16, 185, 129, ${alpha})`,   // green
+        `rgba(239, 68, 68, ${alpha})`,    // red
+        `rgba(245, 158, 11, ${alpha})`    // yellow
+    ];
+    return colors[index % colors.length];
+}
+
+function toggleDarkMode() {
+    document.documentElement.classList.toggle('dark');
+    renderAllCharts();
+}

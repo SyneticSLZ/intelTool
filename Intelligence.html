@@ -1,122 +1,106 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Intelligence Module - Enterprise Platform</title>
+    <title>Hearing Aid Market Intelligence</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        'starkey-blue': '#0066CC'
+                    }
+                }
+            }
+        }
+    </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 </head>
-<body class="bg-gray-100">
-    <!-- Navigation (same as main app) -->
-    <nav class="bg-white shadow-lg">
+<body class="bg-gray-100 dark:bg-gray-900 transition-colors duration-200">
+    <nav class="bg-white dark:bg-gray-800 shadow-lg">
         <div class="max-w-7xl mx-auto px-4">
             <div class="flex justify-between items-center h-16">
                 <div class="flex items-center">
                     <div class="flex-shrink-0">
-                        <img src="./starkey-seeklogo.svg"   width="120" height="70 "alt="">
+                        <img src="./starkey-seeklogo.svg" width="120" height="70" alt="Logo" class="dark:invert">
                     </div>
                     <div class="hidden md:block">
                         <div class="ml-10 flex items-baseline space-x-4">
-                            <a href="./indexold.html" class="text-gray-600 hover:bg-gray-100 px-3 py-2 rounded-md text-sm font-medium" >Dashboard</a>
-                            <a href="./index.html" class="text-gray-600 hover:bg-gray-100 px-3 py-2 rounded-md text-sm font-medium">Companies</a>
-                            <a href="./startups.html"  style="display: none;" class="text-gray-600 hover:bg-gray-100 px-3 py-2 rounded-md text-sm font-medium">Startups</a>
+                            <!-- <a href="./indexold.html" class="text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 px-3 py-2 rounded-md text-sm font-medium">Dashboard</a> -->
+                            <a href="./index.html" class="text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 px-3 py-2 rounded-md text-sm font-medium">Companies</a>
                             <a href="#" class="bg-blue-500 text-white px-3 py-2 rounded-md text-sm font-medium">Intelligence</a>
-                            <a href="./reports.html"  style="display: none;" class="text-gray-600 hover:bg-gray-100 px-3 py-2 rounded-md text-sm font-medium">Reports</a>
-                            <a href="./settings.html"  style="display: none;" class="text-gray-600 hover:bg-gray-100 px-3 py-2 rounded-md text-sm font-medium">Settings</a>
                         </div>
-                        <!-- <div class="ml-10 flex items-baseline space-x-4">
-                            <a href="./indexold.html" style="display: none;" class="text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200">Dashboard</a>
-                            <a href="./index.html" class="text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200">Companies</a>
-                            <a href="./updatedindex.html" class="text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200">Industry</a>
-                            <a href="./startups.html" style="display: none;" class="text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200">Startups</a>
-                            <a href="./Intelligence.html" class="bg-starkey-blue text-white px-3 py-2 rounded-md text-sm font-medium" >Intelligence</a>
-                            <a href="./reports.html" style="display: none;" class="text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200">Reports</a>
-                            <a href="./settings.html"  style="display: none;"class="text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200">Settings</a>
-                        </div> -->
                     </div>
                 </div>
                 <div class="flex items-center">
-                    <div class="relative">
-                        <input type="text" class="bg-gray-100 rounded-full px-4 py-2 w-64 focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Search companies, patents, news...">
-                    </div>
-                    <div class="ml-4 flex items-center">
-                        <button class="p-2 rounded-full text-gray-600 hover:bg-gray-100">
-                            <i class="fas fa-bell"></i>
-                        </button>
-                        <button class="ml-2 p-2 rounded-full text-gray-600 hover:bg-gray-100">
-                            <i class="fas fa-user-circle"></i>
-                        </button>
-                    </div>
+                    <button onclick="toggleDarkMode()" class="p-2 rounded-full text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700">
+                        <i class="fas fa-moon"></i>
+                    </button>
                 </div>
             </div>
         </div>
     </nav>
     
-    <!-- Intelligence Module Content -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <!-- Module Header -->
-        <div class="flex justify-between items-center mb-8">
-            <div>
-                <h1 class="text-3xl font-bold text-gray-900">Intelligence Module</h1>
-                <p class="mt-2 text-gray-600">Deep dive analysis and insights</p>
-            </div>
-            <!-- <div class="flex space-x-4">
-                <button class="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600">
-                    <i class="fas fa-file-export mr-2"></i>Export Report
-                </button>
-                <button class="px-4 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600">
-                    <i class="fas fa-cog mr-2"></i>Configure
-                </button>
-            </div> -->
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8" id="quick-stats">
-                <!-- Stats will be inserted here by JavaScript -->
-            </div>
+        <div class="mb-8">
+            <h1 class="text-3xl font-bold text-gray-900 dark:text-white mb-2">Market Intelligence Dashboard</h1>
+            <p class="text-gray-600 dark:text-gray-400">Comprehensive analysis of the hearing aid industry</p>
         </div>
 
 
+        <!-- Market Overview -->
+        <div id="market-overview" class="mb-8"></div>
 
-        <!-- Analysis Results -->
+        <!-- Competitive Map -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+            <div id="competitive-map" class="md:col-span-1"></div>
+            <div class="md:col-span-2 bg-white dark:bg-gray-800 rounded-lg shadow p-6">
+                <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">Quick Stats</h3>
+                <div id="quick-stats" class="grid grid-cols-2 md:grid-cols-4 gap-4"></div>
+            </div>
+        </div>
+
+        <!-- Charts Grid -->
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            <!-- Competitive Position -->
-            <div class="bg-white rounded-lg shadow p-6">
-                <h3 class="text-lg font-semibold mb-4">Competitive Position</h3>
-                <canvas class="h-96" id="competitive-position-chart"></canvas>
+            <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
+                <h3 class="text-lg font-semibold mb-4 text-gray-900 dark:text-white">Market Share Distribution</h3>
+                <canvas id="market-share-chart"></canvas>
             </div>
 
-            <!-- Technology Landscape -->
-            <div class="bg-white rounded-lg shadow p-6">
-                <h3 class="text-lg font-semibold mb-4">Technology Landscape</h3>
-                <canvas class="h-96" id="technology-landscape-chart"></canvas>
+            <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
+                <h3 class="text-lg font-semibold mb-4 text-gray-900 dark:text-white">Financial Performance Radar</h3>
+                <canvas id="financial-radar-chart"></canvas>
             </div>
 
-            <!-- Market Share Analysis -->
-            <div class="bg-white rounded-lg shadow p-6">
-                <h3 class="text-lg font-semibold mb-4">Market Share Analysis</h3>
-                <canvas class="h-96" id="market-share-chart"></canvas>
+            <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
+                <h3 class="text-lg font-semibold mb-4 text-gray-900 dark:text-white">FDA Metrics Analysis</h3>
+                <canvas id="fda-metrics-chart"></canvas>
             </div>
 
-            <!-- Growth Trajectory -->
-            <div class="bg-white rounded-lg shadow p-6">
-                <h3 class="text-lg font-semibold mb-4">Growth Trajectory</h3>
-                <canvas class="h-96" id="growth-trajectory-chart"></canvas>
+            <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
+                <h3 class="text-lg font-semibold mb-4 text-gray-900 dark:text-white">Patent Portfolio Analysis</h3>
+                <canvas id="patents-chart"></canvas>
             </div>
-
-
         </div>
 
-        <!-- AI Insights -->
+        <!-- Competitive Insights -->
         <div class="mt-8">
-            <div class="bg-white rounded-lg shadow p-6">
-                <h3 class="text-lg font-semibold mb-4">AI Insights</h3>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6" id="ai-insights">
-                    <!-- AI insights will be inserted here -->
-                </div>
+            <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
+                <h3 class="text-lg font-semibold mb-4 text-gray-900 dark:text-white">Market Insights</h3>
+                <div id="competitive-insights" class="grid grid-cols-1 md:grid-cols-2 gap-6"></div>
             </div>
         </div>
     </div>
 
+    <!-- Scripts -->
+    <!-- <script src="marketData.js"></script> -->
+    <script src="sonovaData.js"></script>
+    <script src="gnData.js"></script>
+    <script src="wsData.js"></script>
     <script src="intelligence-module.js"></script>
 </body>
 </html>

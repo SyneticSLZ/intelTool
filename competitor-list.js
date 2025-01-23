@@ -244,8 +244,8 @@ const mockCompetitors = {
             keyMetrics: {
                 revenue: 3700000000,
                 marketShare: 24,
-                growth: 14.2,
-                employees: 17500
+                recentPatents: 14.2,
+                filings: 17500
             },
             marketPosition: {
                 rank: 1,
@@ -282,10 +282,10 @@ const mockCompetitors = {
             name: 'GN ReSound',
             industry: 'Healthcare',
             keyMetrics: {
-                revenue: 2200000000,
-                marketShare: 16,
-                growth: 9.8,
-                employees: 7500
+                revenue: 3700000000,
+                marketShare: 24,
+                recentPatents: 14.2,
+                filings: 17500
             },
             marketPosition: {
                 rank: 2,
@@ -317,10 +317,10 @@ const mockCompetitors = {
             name: 'WS Audiology',
             industry: 'Healthcare',
             keyMetrics: {
-                revenue: 2300000000,
-                marketShare: 14,
-                growth: 7.5,
-                employees: 12000
+                revenue: 3700000000,
+                marketShare: 24,
+                recentPatents: 14.2,
+                filings: 17500
             },
             marketPosition: {
                 rank: 3,
@@ -393,7 +393,7 @@ const components = {
                     </div>
                 </td>
                 <td class="px-6 py-4 whitespace-nowrap">
-                    ${this.renderQuickMetrics(competitor.quickMetrics)}
+                    ${this.renderQuickMetrics(competitor.keyMetrics)}
                 </td>
                 <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                     <button onclick="app.viewCompetitor(${competitor.id})" 
@@ -453,25 +453,19 @@ const components = {
                     <div class="flex items-center">
                         <span class="text-sm text-blue-600 dark:text-blue-400">
                             <i class="fas fa-chart-line mr-1"></i>
-                            ROI: ${metrics.roi}%
+                            Revenue: ${metrics.revenue}%
                         </span>
                     </div>
                     <div class="flex items-center">
                         <span class="text-sm text-green-600 dark:text-green-400">
                             <i class="fas fa-users mr-1"></i>
-                            NPS: ${metrics.nps}
+                            MarketShare: ${metrics.marketShare}
                         </span>
                     </div>
                     <div class="flex items-center">
                         <span class="text-sm text-purple-600 dark:text-purple-400">
                             <i class="fas fa-chart-bar mr-1"></i>
-                            Growth: ${metrics.marketGrowth}%
-                        </span>
-                    </div>
-                    <div class="flex items-center">
-                        <span class="text-sm text-yellow-600 dark:text-yellow-400">
-                            <i class="fas fa-lightbulb mr-1"></i>
-                            Innovation: ${metrics.innovationScore}
+                            Recent Patents: ${metrics.recentPatents}%
                         </span>
                     </div>
                 </div>
