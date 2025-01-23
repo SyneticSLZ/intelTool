@@ -689,6 +689,7 @@ groupPatentsByTitle(patents) {
     }
 
     showPatentModal(patent) {
+        console.log(patent)
         const modal = document.getElementById('patentModal');
         const content = document.getElementById('patentModalContent');
         
