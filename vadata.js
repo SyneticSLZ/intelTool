@@ -1235,6 +1235,11 @@ function getChangeIndicator(current, previous) {
 
 
 function createChart(canvas, group, config) {
+
+    const existingChart = Chart.getChart(canvas);
+    if (existingChart) {
+      existingChart.destroy();
+    }
     
   const months = Object.keys(group.monthly_data || {});
   const recentMonth = months[months.length - 1];
