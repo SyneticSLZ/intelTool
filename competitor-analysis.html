@@ -193,6 +193,90 @@
 <!-- Market Analysis Content -->
 <div id="market-analysis-content" class="space-y-6">
     <!-- Recent Activity Timeline -->
+     <!-- Strategic Focus Areas -->
+      <!-- Quick Metrics Component -->
+<!-- <div class="min-h-screen bg-gray-100 dark:bg-gray-900 py-6 transition-colors duration-200"> -->
+    <div class="max-w-7xl mx-auto px-4">
+      <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
+        <h3 class="text-lg font-semibold mb-6 text-gray-900 dark:text-white">Company Quick Metrics</h3>
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+          <!-- Revenue -->
+          <div class="bg-amber-50 dark:bg-amber-900/30 rounded-lg p-4">
+            <div class="flex items-center justify-between mb-2">
+              <h4 class="font-medium text-gray-900 dark:text-white">Revenue (M)</h4>
+            </div>
+            <p id="revenue-metric" class="text-2xl font-bold text-amber-600 dark:text-amber-400">-</p>
+          </div>
+          <!-- FDA Filings -->
+          <div class="bg-blue-50 dark:bg-blue-900/30 rounded-lg p-4">
+            <div class="flex items-center justify-between mb-2">
+              <h4 class="font-medium text-gray-900 dark:text-white">FDA Filings</h4>
+            </div>
+            <p id="filings-metric" class="text-2xl font-bold text-blue-600 dark:text-blue-400">-</p>
+          </div>
+          <!-- Patents -->
+          <div class="bg-green-50 dark:bg-green-900/30 rounded-lg p-4">
+            <div class="flex items-center justify-between mb-2">
+              <h4 class="font-medium text-gray-900 dark:text-white">Recent Patents</h4>
+            </div>
+            <p id="patents-metric" class="text-2xl font-bold text-green-600 dark:text-green-400">-</p>
+          </div>
+          <!-- Market Share -->
+          <div class="bg-purple-50 dark:bg-purple-900/30 rounded-lg p-4">
+            <div class="flex items-center justify-between mb-2">
+              <h4 class="font-medium text-gray-900 dark:text-white">Market Share (%)</h4>
+            </div>
+            <p id="market-metric" class="text-2xl font-bold text-purple-600 dark:text-purple-400">-</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  <!-- </div> -->
+    <!-- <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-6 transition-colors duration-200">
+        <h3 class="text-lg font-semibold mb-4 text-gray-900 dark:text-white">Strategic Focus Areas</h3>
+        <div class="grid grid-cols-3 gap-6">
+            <div class="bg-blue-50 dark:bg-blue-900/30 rounded-lg p-4 transition-colors duration-200">
+                <div class="flex items-center mb-2">
+                    <i class="fas fa-microscope text-blue-600 dark:text-blue-400 mr-2"></i>
+                    <h4 class="font-medium text-gray-900 dark:text-white">R&D Initiatives</h4>
+                </div>
+                <div class="text-sm text-gray-600 dark:text-gray-400">
+                    <ul class="space-y-2">
+                        <li>Advanced Materials Research</li>
+                        <li>AI-Driven Manufacturing</li>
+                        <li>Sustainable Technologies</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="bg-green-50 dark:bg-green-900/30 rounded-lg p-4 transition-colors duration-200">
+                <div class="flex items-center mb-2">
+                    <i class="fas fa-globe text-green-600 dark:text-green-400 mr-2"></i>
+                    <h4 class="font-medium text-gray-900 dark:text-white">Market Expansion</h4>
+                </div>
+                <div class="text-sm text-gray-600 dark:text-gray-400">
+                    <ul class="space-y-2">
+                        <li>Southeast Asia Growth</li>
+                        <li>European Market Entry</li>
+                        <li>Digital Channel Development</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="bg-purple-50 dark:bg-purple-900/30 rounded-lg p-4 transition-colors duration-200">
+                <div class="flex items-center mb-2">
+                    <i class="fas fa-chart-pie text-purple-600 dark:text-purple-400 mr-2"></i>
+                    <h4 class="font-medium text-gray-900 dark:text-white">Business Development</h4>
+                </div>
+                <div class="text-sm text-gray-600 dark:text-gray-400">
+                    <ul class="space-y-2">
+                        <li>Strategic Acquisitions</li>
+                        <li>Partnership Programs</li>
+                        <li>Innovation Hub Launch</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+     -->
     <div  id="activityContainer">
         <div class="p-4">
             <h3 class="text-lg font-semibold mb-4 text-gray-900 dark:text-white">Recent Company Activity</h3>
@@ -251,7 +335,7 @@
         </div>
     </div>
 
-    <!-- Strategic Focus Areas -->
+    <!-- Strategic Focus Areas
     <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-6 transition-colors duration-200">
         <h3 class="text-lg font-semibold mb-4 text-gray-900 dark:text-white">Strategic Focus Areas</h3>
         <div class="grid grid-cols-3 gap-6">
@@ -295,8 +379,8 @@
                 </div>
             </div>
         </div>
-    </div>
-</div>
+    </div> -->
+</div> 
                     <!-- Product Portfolio Analysis -->
                      <!-- Product Portfolio Analysis -->
 <!-- <div id="product-portfolio-content" class="hidden space-y-6">
@@ -3086,8 +3170,21 @@ document.addEventListener('DOMContentLoaded', () => {
     if (document.getElementById('digital-presence-content')) {
         const digitalPresence = new DigitalPresenceAnalytics();
     }
+    
 });
-
+function loadCompanyMetrics(company) {
+//   const urlParams = new URLSearchParams(window.location.search);
+//   const companyId = urlParams.get('company');
+  
+//   const company = mockCompetitors.competitors.find(c => c.id === parseInt(companyId));
+  console.log(company)
+  if (company) {
+    document.getElementById('revenue-metric').textContent = company.revenue.toLocaleString();
+    document.getElementById('filings-metric').textContent = company.filings.toLocaleString();
+    document.getElementById('patents-metric').textContent = company.recentPatents.toLocaleString();
+    document.getElementById('market-metric').textContent = company.marketShare.toFixed(1);
+  }
+}
 
         // Tab system implementation
 class TabSystem {
@@ -3162,8 +3259,165 @@ class TabSystem {
     }
 }
 // Mock data for company overview
-const companyOverviewData = {
-    
+const mockCompetitors = {
+    competitors: [
+        {
+            id: 1,
+            name: 'Sonova',
+            industry: 'Healthcare',
+            keyMetrics: {
+                revenue: 1833.2,
+                marketShare: 50.13,
+                recentPatents: 46,
+                filings: 11185
+            },
+            marketPosition: {
+                rank: 1,
+                type: 'Market Leader',
+                strength: 'High',
+                trend: 'up'
+            },
+            recentActivities: [
+                {
+                    type: 'patent',
+                    title: 'AI-Powered Hearing Aid Algorithm',
+                    date: 'January 15, 2025'
+                },
+                {
+                    type: 'product',
+                    title: 'Launch of Phonak Lumity Pro',
+                    date: 'January 8, 2025'
+                },
+                {
+                    type: 'acquisition',
+                    title: 'Acquisition of AudioTech Solutions',
+                    date: 'December 20, 2024'
+                }
+            ],
+            quickMetrics: {
+                roi: 28.4,
+                nps: 72,
+                marketGrowth: 15.2,
+                innovationScore: 8.5
+            }
+        },
+        {
+            id: 2,
+            name: 'GN ReSound',
+            industry: 'Healthcare',
+            keyMetrics: {
+                revenue: 4164.0,
+                marketShare: 10.07,
+                recentPatents: 8,
+                filings: 22963
+            },
+            marketPosition: {
+                rank: 3,
+                type: 'Challenger',
+                strength: 'High',
+                trend: 'up'
+            },
+            recentActivities: [
+                {
+                    type: 'product',
+                    title: 'ReSound OMNIA Launch',
+                    date: 'January 18, 2025'
+                },
+                {
+                    type: 'partnership',
+                    title: 'Google Health Partnership',
+                    date: 'January 5, 2025'
+                }
+            ],
+            quickMetrics: {
+                roi: 25.6,
+                nps: 68,
+                marketGrowth: 12.4,
+                innovationScore: 8.2
+            }
+        },
+        {
+            id: 3,
+            name: 'WS Audiology',
+            industry: 'Healthcare',
+            keyMetrics: {
+                revenue: 2637.0,
+                marketShare: 6.9,
+                recentPatents: 329,
+                filings: 26565
+            },
+            marketPosition: {
+                rank: 4,
+                type: 'Challenger',
+                strength: 'High',
+                trend: 'stable'
+            },
+            recentActivities: [
+                {
+                    type: 'product',
+                    title: 'Signia Silk X Launch',
+                    date: 'January 20, 2025'
+                },
+                {
+                    type: 'expansion',
+                    title: 'New R&D Center in Singapore',
+                    date: 'January 10, 2025'
+                },
+                {
+                    type: 'partnership',
+                    title: 'Microsoft AI Partnership',
+                    date: 'December 15, 2024'
+                }
+            ],
+            quickMetrics: {
+                roi: 22.8,
+                nps: 70,
+                marketGrowth: 11.6,
+                innovationScore: 7.8
+            }
+        },
+        {
+            id: 4,
+            name: 'Demant',
+            industry: 'Healthcare',
+            keyMetrics: {
+                revenue: 16488.0, // DKK million, as of Q3 2024
+                marketShare: 8.5, // Estimated global market share percentage
+                recentPatents: 12, // Number of recent patents filed
+                filings: 23000 // Approximate number of regulatory filings
+            },
+            marketPosition: {
+                rank: 2,
+                type: 'Challenger',
+                strength: 'High',
+                trend: 'up'
+            },
+            recentActivities: [
+                {
+                    type: 'product',
+                    title: 'Oticon Intent Launch',
+                    date: 'February 2025'
+                },
+                {
+                    type: 'partnership',
+                    title: 'EPOS and Lenovo Strategic Partnership',
+                    date: 'November 7, 2024'
+                },
+                {
+                    type: 'sustainability',
+                    title: 'Joined Net-Zero Future Network',
+                    date: 'December 4, 2024'
+                }
+            ],
+            quickMetrics: {
+                roi: 22.5, // Return on Investment percentage
+                nps: 70, // Net Promoter Score
+                marketGrowth: 10.0, // Market growth percentage
+                innovationScore: 8.5 // Innovation score out of 10
+            }
+        }
+        
+    ]
 };
 
 // function getCD() {
@@ -3181,6 +3435,12 @@ const companyOverviewData = {
     const getCompanyData = (id) => {
     const companyMap = {
         1: { // Sonova
+            keyMetrics: {
+                revenue: 1833.2,
+                marketShare: 50.13,
+                recentPatents: 46,
+                filings: 11185
+            },
             recentActivity: [
             {
                     type: 'patent',
@@ -3235,6 +3495,12 @@ const companyOverviewData = {
             }
         },
         2: { // GN Store Nord
+            keyMetrics: {
+                revenue: 4164.0,
+                marketShare: 10.07,
+                recentPatents: 8,
+                filings: 22963
+            },
             recentActivity: [
                 {
                     type: 'patent',
@@ -3288,6 +3554,12 @@ const companyOverviewData = {
             }
         },
         3: { // WS Audiology
+            keyMetrics: {
+                revenue: 2637.0,
+                marketShare: 6.9,
+                recentPatents: 329,
+                filings: 26565
+            },
             recentActivity: [
             {
                     type: 'fda',
@@ -3343,6 +3615,12 @@ const companyOverviewData = {
        4: {
     name: 'Demant',
     industry: 'Healthcare',
+    keyMetrics: {
+                revenue: 16488.0, // DKK million, as of Q3 2024
+                marketShare: 8.5, // Estimated global market share percentage
+                recentPatents: 12, // Number of recent patents filed
+                filings: 23000 // Approximate number of regulatory filings
+            },
     recentActivity: [
         {
             type: 'fda',
@@ -3416,6 +3694,7 @@ async function initializeCompanyOverview() {
         throw new Error('Invalid or missing company ID');
     }
         const companyData = getCompanyData(id);
+        loadCompanyMetrics(companyData.keyMetrics)
         updateNewsSection(companyData.news);
         updateActivitySection(companyData)
         initializeSentimentChart(companyData);
