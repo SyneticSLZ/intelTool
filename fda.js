@@ -1037,10 +1037,15 @@ function populateUDIDevices(data, page = 1) {
                             ${variants[0].company_name} • ${variants.length} variant${variants.length > 1 ? 's' : ''}
                         </div>
                     </div>
-                    <svg class="w-5 h-5 transform transition-transform duration-200" 
-                         fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
-                    </svg>
+<svg class="w-5 h-5 transform transition-transform duration-200 dark:stroke-white" 
+     fill="none" 
+     stroke="currentColor" 
+     viewBox="0 0 24 24">
+    <path stroke-linecap="round" 
+          stroke-linejoin="round" 
+          stroke-width="2" 
+          d="M19 9l-7 7-7-7"/>
+</svg>
                 </div>
             </td>
         </tr>
@@ -1584,10 +1589,15 @@ function populate510k(data, page = 1) {
                             ${submissions[0].applicant} • ${submissions.length} submission${submissions.length > 1 ? 's' : ''}
                         </div>
                     </div>
-                    <svg class="w-5 h-5 transform transition-transform duration-200" 
-                         fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
-                    </svg>
+<svg class="w-5 h-5 transform transition-transform duration-200 dark:stroke-white" 
+     fill="none" 
+     stroke="currentColor" 
+     viewBox="0 0 24 24">
+    <path stroke-linecap="round" 
+          stroke-linejoin="round" 
+          stroke-width="2" 
+          d="M19 9l-7 7-7-7"/>
+</svg>
                 </div>
             </td>
         </tr>
@@ -1656,10 +1666,15 @@ function populateRegistrations(data, page = 1) {
                             ${facilities.length} facilit${facilities.length > 1 ? 'ies' : 'y'}
                         </div>
                     </div>
-                    <svg class="w-5 h-5 transform transition-transform duration-200" 
-                         fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
-                    </svg>
+<svg class="w-5 h-5 transform transition-transform duration-200 dark:stroke-white" 
+     fill="none" 
+     stroke="currentColor" 
+     viewBox="0 0 24 24">
+    <path stroke-linecap="round" 
+          stroke-linejoin="round" 
+          stroke-width="2" 
+          d="M19 9l-7 7-7-7"/>
+</svg>
                 </div>
             </td>
         </tr>
@@ -1719,10 +1734,15 @@ function populateAdverseEvents(data, page = 1) {
                             ${events.length} event${events.length > 1 ? 's' : ''}
                         </div>
                     </div>
-                    <svg class="w-5 h-5 transform transition-transform duration-200" 
-                         fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
-                    </svg>
+<svg class="w-5 h-5 transform transition-transform duration-200 dark:stroke-white" 
+     fill="none" 
+     stroke="currentColor" 
+     viewBox="0 0 24 24">
+    <path stroke-linecap="round" 
+          stroke-linejoin="round" 
+          stroke-width="2" 
+          d="M19 9l-7 7-7-7"/>
+</svg>
                 </div>
             </td>
         </tr>
