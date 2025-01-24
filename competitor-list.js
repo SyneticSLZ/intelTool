@@ -436,20 +436,21 @@ const components = {
                 <td class="px-6 py-4 whitespace-nowrap">
                     ${this.renderQuickMetrics(competitor.keyMetrics)}
                 </td>
-                <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                    <button onclick="app.viewCompetitor(${competitor.id})" 
-                        class="text-starkey-blue hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300 mr-3">
-                        View Data
-                    </button>
-                    <button style="display: none;" onclick="app.editCompetitor(${competitor.id})" 
-                        class="text-green-600 hover:text-green-700 dark:text-green-400 dark:hover:text-green-300 mr-3">
-                        Edit
-                    </button>
-                    <button style="display: none;" onclick="app.deleteCompetitor(${competitor.id})" 
-                        class="text-red-600 hover:text-red-700 dark:text-red-400 dark:hover:text-red-300">
-                        Delete
-                    </button>
-                </td>
+<td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+   <button onclick="app.viewCompetitor(${competitor.id})" 
+       class="inline-flex items-center px-4 py-2 bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-md hover:from-blue-600 hover:to-blue-700 mr-3">
+       <i class="fas fa-eye mr-2"></i>
+       View Data
+   </button>
+   <button style="display: none;" onclick="app.editCompetitor(${competitor.id})"
+       class="text-green-600 hover:text-green-700 dark:text-green-400 dark:hover:text-green-300 mr-3">
+       Edit
+   </button>
+   <button style="display: none;" onclick="app.deleteCompetitor(${competitor.id})"
+       class="text-red-600 hover:text-red-700 dark:text-red-400 dark:hover:text-red-300">
+       Delete
+   </button>
+</td>
             </tr>
         `;
         },

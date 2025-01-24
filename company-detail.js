@@ -1072,7 +1072,7 @@ async function initializeFinancialDashboard(companyName) {
                 dashboardHTML = generateGNDashboard(data);
                 break;
             case 'Demant':
-                dashboardHTML = generateGNDashboard(data);
+                dashboardHTML = generateDemantDashboard(data);
                 break;
 
             default:
@@ -1094,6 +1094,9 @@ async function initializeFinancialDashboard(companyName) {
             case 'Gn':
                 initializeGNCharts(data);
                 break;
+             case 'Demant':
+                    initializeDemantCharts(data)
+                    break;
         }
 
         console.log('Dashboard initialized successfully');
@@ -2537,6 +2540,582 @@ function generateGNDashboard(data) {
             </div>
         </div>
     `;
+}
+
+function generateDemantDashboard(data) {
+    return `
+        <div class="container mx-auto px-4 py-8 dark:text-white">
+            <!-- Company Header -->
+            <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 mb-6">
+                <div class="flex justify-between items-start">
+                    <div>
+                        <h1 class="text-3xl font-bold mb-2">Demant A/S</h1>
+                        <p class="text-gray-600 dark:text-gray-400">Fiscal Period ${data.fiscal_period}</p>
+                    </div>
+                    <div class="text-right">
+                        <p class="text-sm text-gray-600 dark:text-gray-400">Last Updated: ${new Date().toLocaleString()}</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Key Performance Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+                ${generateMetricCard("Total Revenue", data.key_financials.revenue.total, "M DKK", 
+                    `Organic Growth: ${data.key_financials.revenue.organic_growth}%`)}
+                ${generateMetricCard("EBIT", data.key_financials.profitability.EBIT.reported, "M DKK", 
+                    `Margin: ${data.key_financials.profitability.EBIT.margin}%`)}
+                ${generateMetricCard("Net Profit", data.key_financials.profitability.profit_after_tax.total, "M DKK")}
+                ${generateMetricCard("Free Cash Flow", data.key_financials.cash_flow.free_cash_flow, "M DKK")}
+            </div>
+
+            <!-- Charts Grid -->
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+    <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
+        <h3 class="text-lg font-semibold mb-4">Revenue by Region</h3>
+        <div class="h-[400px]">
+            <canvas id="demant-revenue-region"></canvas>
+        </div>
+    </div>
+    <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
+        <h3 class="text-lg font-semibold mb-4">Profitability Metrics</h3>
+        <div class="h-[400px]">
+            <canvas id="demant-profitability"></canvas>
+        </div>
+    </div>
+    <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
+        <h3 class="text-lg font-semibold mb-4">Revenue Breakdown</h3>
+        <div class="h-[400px]">
+            <canvas id="demant-revenue-details"></canvas>
+        </div>
+    </div>
+    <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
+        <h3 class="text-lg font-semibold mb-4">Organic Growth Analysis</h3>
+        <div class="h-[400px]">
+            <canvas id="demant-organic-growth"></canvas>
+        </div>
+    </div>
+    </div>
+    <!-- R&D and Financial Analysis -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
+    <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-6 col-span-1">
+        <h3 class="text-lg font-semibold mb-6">R&D Investment Analysis</h3>
+        <div class="h-[350px] w-full">
+            <canvas id="demant-rnd-analysis"></canvas>
+        </div>
+    </div>
+    <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-6 col-span-1">
+        <h3 class="text-lg font-semibold mb-6">Balance Sheet Composition</h3>
+        <div class="h-[350px] w-full">
+            <canvas id="demant-balance-sheet"></canvas>
+        </div>
+    </div>
+    <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-6 col-span-1">
+        <h3 class="text-lg font-semibold mb-6">Cash Flow Analysis</h3>
+        <div class="h-[350px] w-full">
+            <canvas id="demant-cash-flow"></canvas>
+        </div>
+    </div>
+</div>
+
+
+            <!-- Detailed Metrics Section -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
+                ${generateDetailCard("Financial Health", [
+                    ["Gross Margin", data.key_financials.profitability.gross_margin + "%"],
+                    ["EBITDA Margin", data.key_financials.profitability.EBIT.margin + "%"],
+                    ["Net Debt", data.key_financials.balance_sheet.net_interest_bearing_debt + "M DKK"],
+                    ["Gearing Multiple", data.key_financials.balance_sheet.gearing_multiple]
+                ])}
+                
+                ${generateDetailCard("Operational Metrics", [
+                    ["Total Employees", data.operational_metrics.employees.total],
+                    ["R&D Costs", data.operational_metrics.rnd.costs + "M DKK"],
+                    ["R&D Growth", data.operational_metrics.rnd.growth + "%"],
+                    ["R&D % of Revenue", data.operational_metrics.rnd.percent_of_revenue + "%"]
+                ])}
+                
+                ${generateDetailCard("Sustainability", [
+                    ["Scope 1&2 Emissions", data.sustainability_metrics.emissions.scope_1_2_market_based + " tCO2e"],
+                    ["Renewable Energy", data.sustainability_metrics.renewable_electricity_share + "%"],
+                    ["Women in Management", data.sustainability_metrics.diversity.all_managers_gender_ratio.women + "%"],
+                    ["Board Diversity", data.sustainability_metrics.diversity.board_gender_ratio.women + "%"]
+                ])}
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
+    <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
+        <h3 class="text-lg font-semibold mb-4">R&D Overview</h3>
+        <div class="space-y-3">
+            <div class="flex justify-between items-center">
+                <span class="text-gray-600 dark:text-gray-400">R&D Investment</span>
+                <span class="font-medium">${data.key_financials.profitability.rd_costs.total.toLocaleString()} M DKK</span>
+            </div>
+            <div class="flex justify-between items-center">
+                <span class="text-gray-600 dark:text-gray-400">% of Revenue</span>
+                <span class="font-medium">${data.key_financials.profitability.rd_costs.percent_of_revenue}%</span>
+            </div>
+            <div class="flex justify-between items-center">
+                <span class="text-gray-600 dark:text-gray-400">Growth Rate</span>
+                <span class="font-medium">${data.key_financials.profitability.rd_costs.growth}%</span>
+            </div>
+        </div>
+    </div>
+    <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
+        <h3 class="text-lg font-semibold mb-4">Balance Sheet Highlights</h3>
+        <div class="space-y-3">
+            <div class="flex justify-between items-center">
+                <span class="text-gray-600 dark:text-gray-400">Total Assets</span>
+                <span class="font-medium">${data.key_financials.balance_sheet.total_assets.toLocaleString()} M DKK</span>
+            </div>
+            <div class="flex justify-between items-center">
+                <span class="text-gray-600 dark:text-gray-400">Net Working Capital</span>
+                <span class="font-medium">${data.key_financials.balance_sheet.working_capital.toLocaleString()} M DKK</span>
+            </div>
+            <div class="flex justify-between items-center">
+                <span class="text-gray-600 dark:text-gray-400">Net Debt</span>
+                <span class="font-medium">${data.key_financials.balance_sheet.net_interest_bearing_debt.toLocaleString()} M DKK</span>
+            </div>
+        </div>
+    </div>
+    <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
+        <h3 class="text-lg font-semibold mb-4">Cash Flow Metrics</h3>
+        <div class="space-y-3">
+            <div class="flex justify-between items-center">
+                <span class="text-gray-600 dark:text-gray-400">Operating Cash Flow</span>
+                <span class="font-medium">${data.key_financials.cash_flow.operating.toLocaleString()} M DKK</span>
+            </div>
+            <div class="flex justify-between items-center">
+                <span class="text-gray-600 dark:text-gray-400">Free Cash Flow</span>
+                <span class="font-medium">${data.key_financials.cash_flow.free_cash_flow.toLocaleString()} M DKK</span>
+            </div>
+            <div class="flex justify-between items-center">
+                <span class="text-gray-600 dark:text-gray-400">Net Investments</span>
+                <span class="font-medium">${data.key_financials.cash_flow.net_investments.toLocaleString()} M DKK</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+            <!-- Segment Details Table -->
+            <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-6 mb-6">
+                <h3 class="text-lg font-semibold mb-4">Segment Analysis</h3>
+                <div class="overflow-x-auto">
+                    <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+                        <thead>
+                            <tr>
+                                <th class="px-6 py-3 bg-gray-50 dark:bg-gray-900 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Segment</th>
+                                <th class="px-6 py-3 bg-gray-50 dark:bg-gray-900 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Revenue</th>
+                                <th class="px-6 py-3 bg-gray-50 dark:bg-gray-900 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Organic Growth</th>
+                                <th class="px-6 py-3 bg-gray-50 dark:bg-gray-900 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Q2 Revenue</th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
+                            ${generateSegmentTableRows(data.key_financials.revenue.by_segment)}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    `;
+}
+
+function generateMetricCard(title, value, unit = "", subtitle = "") {
+    return `
+        <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
+            <h3 class="text-sm font-medium text-gray-500 dark:text-gray-400">${title}</h3>
+            <p class="mt-2 text-3xl font-semibold">${value.toLocaleString()} ${unit}</p>
+            ${subtitle ? `<p class="text-sm text-gray-600 dark:text-gray-400">${subtitle}</p>` : ''}
+        </div>
+    `;
+}
+
+function generateDetailCard(title, items) {
+    return `
+        <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
+            <h3 class="text-lg font-semibold mb-4">${title}</h3>
+            <div class="space-y-3">
+                ${items.map(([label, value]) => `
+                    <div class="flex justify-between items-center">
+                        <span class="text-gray-600 dark:text-gray-400">${label}</span>
+                        <span class="font-medium">${value}</span>
+                    </div>
+                `).join('')}
+            </div>
+        </div>
+    `;
+}
+
+function generateSegmentTableRows(segments) {
+    return Object.entries(segments).map(([name, data]) => `
+        <tr>
+            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">${name.replace(/_/g, ' ').toUpperCase()}</td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm">${data.total.toLocaleString()} M DKK</td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm">${data.organic_growth}%</td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm">${data.q2_revenue.toLocaleString()} M DKK</td>
+        </tr>
+    `).join('');
+}
+
+function initializeDemantCharts(data) {
+    const isDarkMode = document.documentElement.classList.contains('dark');
+    const textColor = isDarkMode ? '#ffffff' : '#666666';
+    const gridColor = isDarkMode ? '#374151' : '#e5e7eb';
+
+    // Revenue by Region Chart
+    new Chart(document.getElementById('demant-revenue-region').getContext('2d'), {
+        type: 'doughnut',
+        data: {
+            labels: Object.keys(data.key_financials.revenue.by_region)
+                .map(region => region.charAt(0) + region.slice(1).toLowerCase()),
+            datasets: [{
+                data: Object.values(data.key_financials.revenue.by_region)
+                    .map(region => region.revenue),
+                backgroundColor: ['#4299E1', '#48BB78', '#F6AD55', '#FC8181', '#B794F4']
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: true,
+            layout: {
+                padding: {
+                    left: 10,
+                    right: 20,
+                    top: 10,
+                    bottom: 10
+                }
+            },
+            plugins: {
+                legend: {
+                    position: 'right',
+                    labels: { color: textColor }
+                },
+                tooltip: {
+                    callbacks: {
+                        label: (context) => `${context.label}: ${context.raw.toLocaleString()} M DKK (${
+                            data.key_financials.revenue.by_region[context.label.toUpperCase()].organic_growth
+                        }% organic growth)`
+                    }
+                }
+            }
+        }
+    });
+
+
+  // R&D Analysis Chart
+new Chart(document.getElementById('demant-rnd-analysis').getContext('2d'), {
+    type: 'bar',
+    data: {
+        labels: ['R&D Costs', 'Distribution Costs', 'Admin Expenses'],
+        datasets: [{
+            label: 'Amount (M DKK)',
+            data: [
+                data.key_financials.profitability.rd_costs.total,
+                data.key_financials.profitability.distribution_costs.total,
+                data.key_financials.profitability.administrative_expenses.total
+            ],
+            backgroundColor: ['#4299E1', '#48BB78', '#F6AD55']
+        }, {
+            label: 'Growth %',
+            data: [
+                data.key_financials.profitability.rd_costs.growth,
+                data.key_financials.profitability.distribution_costs.growth,
+                data.key_financials.profitability.administrative_expenses.growth
+            ],
+            type: 'line',
+            borderColor: '#9F7AEA',
+            backgroundColor: '#9F7AEA'
+        }]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: true,
+        layout: {
+            padding: {
+                left: 15,
+                right: 15,
+                top: 10,
+                bottom: 15
+            }
+        },
+        scales: {
+            y: {
+                type: 'linear',
+                position: 'left',
+                ticks: {
+                    callback: (value) => value.toLocaleString() + ' M DKK'
+                }
+            },
+            y1: {
+                type: 'linear',
+                position: 'right',
+                ticks: {
+                    callback: (value) => value + '%'
+                },
+                grid: {
+                    drawOnChartArea: false
+                }
+            }
+        }
+    }
+});
+
+// Balance Sheet Composition Chart
+new Chart(document.getElementById('demant-balance-sheet').getContext('2d'), {
+    type: 'doughnut',
+    data: {
+        labels: [
+            'Goodwill',
+            'Other Assets',
+            'Working Capital',
+            'Trade Receivables',
+            'Cash'
+        ],
+        datasets: [{
+            data: [
+                data.key_financials.balance_sheet.goodwill,
+                data.key_financials.balance_sheet.total_assets - 
+                    (data.key_financials.balance_sheet.goodwill + 
+                     data.key_financials.balance_sheet.working_capital +
+                     data.key_financials.balance_sheet.trade_receivables +
+                     data.key_financials.balance_sheet.cash),
+                data.key_financials.balance_sheet.working_capital,
+                data.key_financials.balance_sheet.trade_receivables,
+                data.key_financials.balance_sheet.cash
+            ],
+            backgroundColor: ['#4299E1', '#48BB78', '#F6AD55', '#FC8181', '#9F7AEA']
+        }]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: true,
+        layout: {
+            padding: {
+                left: 15,
+                right: 15,
+                top: 10,
+                bottom: 15
+            }
+        },
+        plugins: {
+            tooltip: {
+                callbacks: {
+                    label: (context) => `${context.label}: ${context.raw.toLocaleString()} M DKK (${
+                        ((context.raw / data.key_financials.balance_sheet.total_assets) * 100).toFixed(1)
+                    }%)`
+                }
+            }
+        }
+    }
+});
+
+// Replace the Cash Flow Analysis Chart with this version
+new Chart(document.getElementById('demant-cash-flow').getContext('2d'), {
+    type: 'bar',
+    data: {
+        labels: ['Operating', 'Investing', 'Free Cash Flow', 'Financing', 'Net Change'],
+        datasets: [{
+            label: 'Cash Flow',
+            data: [
+                data.key_financials.cash_flow.operating,
+                data.key_financials.cash_flow.investing,
+                data.key_financials.cash_flow.free_cash_flow,
+                data.key_financials.cash_flow.financing,
+                data.key_financials.cash_flow.operating + 
+                data.key_financials.cash_flow.investing + 
+                data.key_financials.cash_flow.financing
+            ],
+            backgroundColor: (context) => {
+                const value = context.dataset.data[context.dataIndex];
+                return value >= 0 ? '#48BB78' : '#FC8181';
+            }
+        }]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        layout: {
+            padding: {
+                left: 15,
+                right: 15,
+                top: 10,
+                bottom: 15
+            }
+        },
+        scales: {
+            y: {
+                beginAtZero: true,
+                ticks: {
+                    callback: (value) => value.toLocaleString() + ' M DKK'
+                }
+            }
+        },
+        plugins: {
+            tooltip: {
+                callbacks: {
+                    label: (context) => `${context.dataset.label}: ${context.raw.toLocaleString()} M DKK`
+                }
+            },
+            legend: {
+                display: false
+            }
+        }
+    }
+});
+
+    new Chart(document.getElementById('demant-revenue-details').getContext('2d'), {
+        type: 'bar',
+        data: {
+            labels: ['Total Revenue', 'External Sales', 'Internal Sales'],
+            datasets: [{
+                label: 'Revenue (M DKK)',
+                data: [
+                    data.key_financials.revenue.total,
+                    data.key_financials.revenue.by_segment.hearing_aids.external_sales,
+                    data.key_financials.revenue.by_segment.hearing_aids.internal_sales
+                ],
+                backgroundColor: ['#4299E1', '#48BB78', '#F6AD55']
+            }]
+        },
+        options: {
+            // responsive: true,
+            maintainAspectRatio: true,
+            plugins: {
+                legend: {
+                    display: false
+                },
+                tooltip: {
+                    callbacks: {
+                        label: (context) => `${context.raw.toLocaleString()} M DKK`
+                    }
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    ticks: {
+                        callback: (value) => value.toLocaleString() + ' M DKK'
+                    }
+                }
+            }
+        }
+    });
+    
+    // Organic Growth Comparison Chart
+    new Chart(document.getElementById('demant-organic-growth').getContext('2d'), {
+        type: 'radar',
+        data: {
+            labels: ['Hearing Aids', 'Hearing Care', 'Diagnostics', 'Overall'],
+            datasets: [{
+                label: 'Organic Growth %',
+                data: [
+                    data.key_financials.revenue.by_segment.hearing_aids.organic_growth,
+                    data.key_financials.revenue.by_segment.hearing_care.organic_growth,
+                    data.key_financials.revenue.by_segment.diagnostics.organic_growth,
+                    data.key_financials.revenue.organic_growth
+                ],
+                backgroundColor: 'rgba(66, 153, 225, 0.2)',
+                borderColor: '#4299E1',
+                pointBackgroundColor: '#4299E1',
+                pointBorderColor: '#fff',
+                pointHoverBackgroundColor: '#fff',
+                pointHoverBorderColor: '#4299E1'
+            }, {
+                label: 'Q2 Organic Growth %',
+                data: [
+                    data.key_financials.revenue.by_segment.hearing_aids.q2_organic_growth,
+                    data.key_financials.revenue.by_segment.hearing_care.q2_organic_growth,
+                    data.key_financials.revenue.by_segment.diagnostics.q2_organic_growth,
+                    data.key_financials.revenue.organic_growth
+                ],
+                backgroundColor: 'rgba(72, 187, 120, 0.2)',
+                borderColor: '#48BB78',
+                pointBackgroundColor: '#48BB78',
+                pointBorderColor: '#fff',
+                pointHoverBackgroundColor: '#fff',
+                pointHoverBorderColor: '#48BB78'
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: true,
+            layout: {
+                padding: {
+                    left: 10,
+                    right: 20,
+                    top: 10,
+                    bottom: 10
+                }
+            },
+            scales: {
+                r: {
+                    beginAtZero: true,
+                    max: Math.max(
+                        ...Object.values(data.key_financials.revenue.by_segment)
+                            .map(segment => Math.max(segment.organic_growth, segment.q2_organic_growth || 0))
+                    ) + 2,
+                    ticks: {
+                        callback: (value) => value + '%'
+                    }
+                }
+            },
+            plugins: {
+                tooltip: {
+                    callbacks: {
+                        label: (context) => `${context.dataset.label}: ${context.raw}%`
+                    }
+                }
+            }
+        }
+    });
+
+    // Profitability Metrics Chart
+    new Chart(document.getElementById('demant-profitability').getContext('2d'), {
+        type: 'bar',
+        data: {
+            labels: ['Gross Margin', 'EBITDA Margin', 'EBIT Margin'],
+            datasets: [{
+                label: 'Margin %',
+                data: [
+                    data.key_financials.profitability.gross_margin,
+                    data.key_financials.profitability.EBITDA.margin,
+                    data.key_financials.profitability.EBIT.margin
+                ],
+                backgroundColor: ['#4299E1', '#48BB78', '#F6AD55']
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: true,
+            layout: {
+                padding: {
+                    left: 10,
+                    right: 20,
+                    top: 10,
+                    bottom: 10
+                }
+            },
+                        scales: {
+                y: {
+                    beginAtZero: true,
+                    ticks: {
+                        color: textColor,
+                        callback: value => value + '%'
+                    },
+                    grid: { color: gridColor }
+                },
+                x: {
+                    ticks: { color: textColor },
+                    grid: { color: gridColor }
+                }
+            },
+            plugins: {
+                legend: {
+                    display: false
+                }
+            }
+        }
+    });
 }
 
 

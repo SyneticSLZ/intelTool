@@ -1,160 +1,233 @@
-const DemantData = {     
-    company_info: {       
-      name: "Demant A/S",       
-      headquarters: "Kongebakken 9, 2765 Smørum, Denmark",       
-      registration_number: "55675815",       
-      contact: {         
-        phone: "+45 39 17 71 00",         
-        email: "contact@demant.com",         
-        website: "demant.com"       
-      }     
-    },          
-    period: {       
-      quarter: "Q3",       
-      year: 2024,       
-      report_date: "November 8, 2024"     
-    },        
-    financial_highlights: {       
-      revenue: {         
-        total: 3800,         
-        yoy_growth: -4,         
-        organic_growth: -3,         
-        fx_impact: -1,         
-        ma_impact: 0,         
-        by_division: {           
-          hearing: {             
-            revenue: 1800,             
-            organic_growth: 5,             
-            yoy_growth: 3           
-          },           
-          diagnostics: {             
-            revenue: 1200,             
-            organic_growth: -5,             
-            yoy_growth: -6           
-          },           
-          communications: {             
-            revenue: 800,             
-            organic_growth: -15,             
-            yoy_growth: -15           
-          }         
-        },         
-        by_geography: {           
-          europe: {             
-            revenue: 1600,             
-            yoy_change: -200 // Calculated from 1800 in Q3 2023           
-          },           
-          north_america: {             
-            revenue: 1400,             
-            yoy_change: 50 // From 1350 in Q3 2023           
-          },           
-          rest_of_world: {             
-            revenue: 800,             
-            yoy_change: -100 // From 900 in Q3 2023           
-          }         
-        }       
-      },          
-      profitability: {         
-        gross_profit: {           
-          value: 2100,           
-          margin: 55.3,           
-          yoy_margin_change: 4.0         
-        },         
-        ebita: {           
-          value: 500,           
-          margin: 13.2,           
-          yoy_growth: 28,           
-          yoy_margin_change: 3.5         
-        },         
-        divisional_profits: {           
-          hearing: {             
-            value: 520,             
-            margin: 28.9,             
-            yoy_margin_change: 4.5           
-          },           
-          diagnostics: {             
-            value: 400,             
-            margin: 33.3,             
-            yoy_margin_change: -1.0           
-          },           
-          communications: {             
-            value: 40,             
-            margin: 5.0,             
-            yoy_margin_change: 1.0           
-          }         
-        }       
-      },          
-      cash_flow: {         
-        operating_activities: 950,         
-        investing_activities: -100,         
-        free_cash_flow: {           
-          excl_ma: 750,           
-          incl_ma: 850         
-        },         
-        cash_conversion: 150 // % of EBITA       
-      },          
-      balance_sheet: {         
-        total_assets: 28000,         
-        equity: 9500,         
-        equity_ratio: 33.9,         
-        net_interest_bearing_debt: 9000,         
-        leverage_ratio: {           
-          adjusted: 3.4,           
-          reported: 4.1         
-        },         
-        cash_and_equivalents: 1000       
-      }     
-    },        
-    operational_metrics: {       
-      employees: {         
-        total: 7000,         
-        yoy_change: 50 // From 6950 in Q3 2023       
-      },       
-      development_costs: {         
-        total: 330,         
-        capitalized: 120,         
-        rd_intensity: 8.7 // % of revenue       
-      }     
-    },        
-    capital_structure: {       
-      shares: {         
-        outstanding: 150000000,         
-        treasury: 5000000,         
-        percentage_treasury: 3.3       
-      },       
-      market_metrics: {         
-        share_price: 145.5,         
-        market_cap: 21700,         
-        foreign_ownership: "~65%",         
-        major_shareholders: [{           
-          name: "William Demant Foundation",           
-          ownership: ">15%"         
-        }]       
-      }     
-    },        
-    guidance_2024: {       
-      organic_growth: {         
-        range: "2% to 4%",         
-        previous: "3% to 6%"       
-      },       
-      ebita_margin: {         
-        range: "13% to 14%",         
-        confirmed: true       
-      },       
-      free_cash_flow_excl_ma: {         
-        target: ">1,000",         
-        upgraded: true       
-      }     
-    },        
-    ytd_performance: {       
-      revenue: 12000,       
-      organic_growth: 3,       
-      ebita: 1400,       
-      ebita_margin: 11.7,       
-      net_profit: 650     
-    }   
-  };       
-  
-//   export default demantData;
-  
+const DemantData = {
+  company: "Demant A/S",
+  fiscal_period: "H1 2024",
+  key_financials: {
+    revenue: {
+      total: 11087,
+      organic_growth: 3,
+      acquisition_growth: 2,
+      fx_impact: -1,
+      reported_growth: 4,
+      by_region: {
+        Europe: {
+          revenue: 4569,
+          growth: 7,
+          organic_growth: 2,
+          lcyGrowth: 6,
+          share: 41.2
+        },
+        North_America: {
+          revenue: 4609,
+          growth: 3,
+          organic_growth: 3,
+          lcyGrowth: 4,
+          share: 41.6
+        },
+        Asia: {
+          revenue: 1058,
+          growth: -6,
+          organic_growth: 2,
+          lcyGrowth: 2,
+          share: 9.5
+        },
+        Pacific: {
+          revenue: 536,
+          growth: 1,
+          organic_growth: 6,
+          lcyGrowth: 6,
+          share: 4.8
+        },
+        Rest_of_world: {
+          revenue: 315,
+          growth: 2,
+          organic_growth: 2,
+          lcyGrowth: 2,
+          share: 2.9
+        }
+      },
+      by_segment: {
+        hearing_aids: {
+          total: 6230,
+          organic_growth: 3,
+          acquisition_growth: 1,
+          fx_impact: -1,
+          reported_growth: 2,
+          internal_sales: 1208,
+          external_sales: 5022,
+          q2_revenue: 3123,
+          q2_organic_growth: 3,
+          unit_growth: -6,
+          asp_growth: 11
+        },
+        hearing_care: {
+          total: 4834,
+          organic_growth: 3,
+          acquisition_growth: 4,
+          fx_impact: 0,
+          reported_growth: 7,
+          q2_revenue: 2516,
+          q2_organic_growth: 5
+        },
+        diagnostics: {
+          total: 1231,
+          organic_growth: 3,
+          acquisition_growth: 0,
+          fx_impact: 0,
+          reported_growth: 3,
+          q2_revenue: 634,
+          q2_organic_growth: 0
+        }
+      }
+    },
+    profitability: {
+      gross_profit: 8510,
+      gross_margin: 76.8,
+      gross_profit_growth: 6,
+      production_costs: -2577,
+      rd_costs: {
+        total: -733,
+        growth: 21,
+        percent_of_revenue: 6.6
+      },
+      distribution_costs: {
+        total: -5154,
+        growth: 9
+      },
+      administrative_expenses: {
+        total: -586,
+        growth: 4
+      },
+      EBITDA: {
+        total: 2897,
+        margin: 26.1,
+        comparative_margin_h1_2023: 26.1
+      },
+      EBIT: {
+        before_special_items: 2068,
+        margin_before_special_items: 18.7,
+        reported: 2192,
+        margin: 19.8,
+        special_items: 124
+      },
+      net_financial_items: {
+        income: 53,
+        expenses: -463,
+        total: -410
+      },
+      tax: {
+        total: -428,
+        effective_rate: 24.0
+      },
+      profit_after_tax: {
+        continuing_operations: 1354,
+        discontinued_operations: -154,
+        total: 1200
+      }
+    },
+    balance_sheet: {
+      total_assets: 32390,
+      equity: 9522,
+      net_interest_bearing_debt: 13853,
+      gearing_multiple: 2.3,
+      working_capital: 3546,
+      goodwill: 13335,
+      lease_assets: 2630,
+      inventories: 2674,
+      trade_receivables: 3705,
+      cash: 1048
+    },
+    cash_flow: {
+      operating: 1491,
+      investing: -1097,
+      free_cash_flow: 1157,
+      financing: -191,
+      net_investments: -334,
+      acquisitions: -763,
+      share_buybacks: -1137,
+      capex: {
+        total: 375,
+        percent_of_revenue: 3.0
+      }
+    }
+  },
+  operational_metrics: {
+    employees: {
+      total: 21501,
+      change_from_previous_year: 822,
+      turnover: {
+        total: "n/a", // Not provided in report
+        voluntary: "n/a" // Not provided in report
+      }
+    },
+    infrastructure: {
+      offices: "n/a", // Not provided in report
+      production_sites: "n/a" // Not provided in report
+    },
+    rnd: {
+      costs: 733,
+      growth: 21,
+      percent_of_revenue: 6.6,
+      capitalized: "n/a" // Not provided in report
+    }
+  },
+  sustainability_metrics: {
+    emissions: {
+      scope_1_2_market_based: 16219,
+      scope_1_2_location_based: 16381
+    },
+    renewable_electricity_share: 24,
+    diversity: {
+      board_gender_ratio: {
+        women: 25,
+        men: 75,
+        target_2025: "n/a" // Not provided in report
+      },
+      all_managers_gender_ratio: {
+        women: 49,
+        men: 51
+      },
+      top_level_management_gender_ratio: {
+        women: 30,
+        men: 70
+      },
+      top_level_management_teams_on_target: 81
+    }
+  },
+  market_data: {
+    share_price: 301.40,
+    average_shares_outstanding: 218.97,
+    eps: {
+      continuing_operations: 6.18,
+      total: 5.47
+    },
+    free_cash_flow_per_share: 5.28
+  },
+  discontinued_operations: {
+    revenue: 602,
+    expenses: -719,
+    loss_on_sale: -36,
+    amortisation_depreciation: -78,
+    profit_before_tax: -231,
+    tax: 77,
+    total_loss: -154
+  },
+  historical_comparison: {
+    revenue: {
+      h1_2023: 10694,
+      h2_2023: 10907,
+      full_year_2023: 21601
+    },
+    organic_growth: {
+      h1_2023: 15,
+      full_year_2023: 14
+    },
+    ebit_margin: {
+      h1_2023: 20.2,
+      full_year_2023: 20.9
+    }
+  }
+};
 
-  export default DemantData;
+// console.log(JSON.stringify(demantData, null, 2));
+
+export default DemantData

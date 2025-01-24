@@ -320,7 +320,13 @@ function renderCompetitiveMap() {
                 </div>
                 <div class="flex items-center justify-between">
                     <span class="text-gray-600 dark:text-gray-400">Innovation Leader</span>
-                    <span class="font-medium text-blue-600">${innovationLeader} (${marketData.patentData[innovationLeader].totalPatents} patents)</span>
+                    <!-- <span class="font-medium text-blue-600">${innovationLeader} </span> -->
+                    <span class="font-medium text-blue-600 group relative cursor-pointer">
+    ${innovationLeader}
+    <div class="hidden group-hover:block absolute z-10 -translate-x-1/2 left-1/2 mt-2 px-3 py-2 bg-gray-900 text-white text-sm rounded whitespace-nowrap">
+        ${marketData.patentData[innovationLeader].totalPatents} patents
+    </div>
+</span>
                 </div>
                 <div class="flex items-center justify-between">
                     <span class="text-gray-600 dark:text-gray-400">Industry Stage</span>

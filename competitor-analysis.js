@@ -552,10 +552,10 @@ const app = {
     setupTabNavigation() {
         const tabContents = {
             'Market Analysis': this.renderMarketAnalysis.bind(this),
-            'Product Portfolio': this.renderProductPortfolio.bind(this),
+            'FDA Product Portfolio': this.renderProductPortfolio.bind(this),
             'Technology & Patents': this.renderTechnologyAnalysis.bind(this),
             'Digital Presence': this.renderDigitalPresence.bind(this),
-            'Strategic Initiatives': this.renderStrategicInitiatives.bind(this),
+            'VA Affairs': this.renderStrategicInitiatives.bind(this),
             'Financial Analysis': this.renderFinancialAnalysis.bind(this)
         };
 
