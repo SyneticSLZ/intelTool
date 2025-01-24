@@ -288,7 +288,7 @@ const mockCompetitors = {
                 filings: 22963
             },
             marketPosition: {
-                rank: 2,
+                rank: 3,
                 type: 'Challenger',
                 strength: 'High',
                 trend: 'up'
@@ -323,7 +323,7 @@ const mockCompetitors = {
                 filings: 26565
             },
             marketPosition: {
-                rank: 3,
+                rank: 4,
                 type: 'Challenger',
                 strength: 'High',
                 trend: 'stable'
@@ -363,7 +363,7 @@ const mockCompetitors = {
                 filings: 23000 // Approximate number of regulatory filings
             },
             marketPosition: {
-                rank: 3,
+                rank: 2,
                 type: 'Challenger',
                 strength: 'High',
                 trend: 'up'
@@ -439,13 +439,13 @@ const components = {
                 <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                     <button onclick="app.viewCompetitor(${competitor.id})" 
                         class="text-starkey-blue hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300 mr-3">
-                        View
+                        View Data
                     </button>
-                    <button onclick="app.editCompetitor(${competitor.id})" 
+                    <button style="display: none;" onclick="app.editCompetitor(${competitor.id})" 
                         class="text-green-600 hover:text-green-700 dark:text-green-400 dark:hover:text-green-300 mr-3">
                         Edit
                     </button>
-                    <button onclick="app.deleteCompetitor(${competitor.id})" 
+                    <button style="display: none;" onclick="app.deleteCompetitor(${competitor.id})" 
                         class="text-red-600 hover:text-red-700 dark:text-red-400 dark:hover:text-red-300">
                         Delete
                     </button>
