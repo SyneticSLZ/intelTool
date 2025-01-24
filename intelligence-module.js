@@ -480,12 +480,12 @@ function renderFinancialRadar() {
             'GN Resound': gnData.financial_highlights.profitability.ebita.margin,
             'Starkey': 15.0
         },
-        'Market Share (%)': {
-            'Sonova/Phonak': marketData.salesData['Sonova/Phonak'].marketShare,
-            'WS Audiology': marketData.salesData['WS Audiology'].marketShare,
-            'GN Resound': marketData.salesData['GN Resound'].marketShare,
-            'Starkey': marketData.salesData['Starkey'].marketShare
-        },
+        // 'Market Share (%)': {
+        //     'Sonova/Phonak': marketData.salesData['Sonova/Phonak'].marketShare,
+        //     'WS Audiology': marketData.salesData['WS Audiology'].marketShare,
+        //     'GN Resound': marketData.salesData['GN Resound'].marketShare,
+        //     'Starkey': marketData.salesData['Starkey'].marketShare
+        // },
         'R&D Investment (%)': {
             'Sonova/Phonak': (sonovaData.prior_year.costs.research_and_development / sonovaData.prior_year.key_financials.sales) * 100,
             'WS Audiology': wsData.operational_metrics.research_development.as_percent_of_sales,
