@@ -602,6 +602,22 @@ function getDatasetColor(index, alpha = 1) {
 }
 
 function toggleDarkMode() {
-    document.documentElement.classList.toggle('dark');
+    // document.documentElement.classList.toggle('dark');
+    
+
+
+    // const savedDarkMode = localStorage.getItem('darkMode');
+            
+    // // Set initial dark mode based on saved preference or system preference
+    // if (savedDarkMode !== null) {
+    //     if (savedDarkMode === 'true') {
+    //         console.log("off")
+    //         localStorage.setItem('darkMode', 'false');
+    //     } else {
+    //         console.log("on")
+    //         localStorage.setItem('darkMode', 'true');
+    //     }
+    // }
     renderAllCharts();
+
 }
