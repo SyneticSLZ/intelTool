@@ -232,36 +232,55 @@
       </div>
     </div>
 
-    <div id="market-share-breakdown" class="max-w-7xl mx-auto px-4 mt-6">
-        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-6">
-            <!-- Overall Summary -->
-            <div class="mb-8">
-                <h3 class="text-xl font-light mb-6 text-marcomm-dark dark:text-white">VA Market Share Overview</h3>
-                <div id="overall-summary" class="bg-marcomm-orange/5 dark:bg-marcomm-orange/10 rounded-lg p-6 border border-marcomm-orange/20">
-                    <!-- Will be dynamically populated -->
-                </div>
+<!-- Market Share Breakdown -->
+<div id="market-share-breakdown" class="max-w-7xl mx-auto px-4">
+    <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
+        <!-- Overall Summary -->
+        <div class="mb-8">
+            <h3 class="text-lg font-semibold mb-6 text-gray-900 dark:text-white">VA Market Share Overview</h3>
+            <div id="overall-summary" class="bg-amber-50 dark:bg-amber-900/30 rounded-lg p-6">
+                <!-- Will be dynamically populated -->
             </div>
-    
-            <!-- Category Groups -->
-            <div class="space-y-8">
-                <!-- Core Products -->
-                <div>
-                    <h4 class="text-lg font-light mb-4 text-marcomm-dark dark:text-white">Core Product Lines</h4>
-                    <div id="core-products" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                        <!-- Will be dynamically populated -->
+        </div>
+        
+        <!-- Category Groups -->
+        <div class="space-y-8">
+            <!-- Core Products -->
+            <div>
+                <h4 class="text-lg font-semibold mb-4 text-gray-900 dark:text-white">Core Product Lines</h4>
+                <div id="core-products" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- Product Cards will follow the colored card pattern -->
+                    <div class="bg-blue-50 dark:bg-blue-900/30 rounded-lg p-4">
+                        <!-- Dynamic content -->
+                    </div>
+                    <div class="bg-green-50 dark:bg-green-900/30 rounded-lg p-4">
+                        <!-- Dynamic content -->
+                    </div>
+                    <div class="bg-purple-50 dark:bg-purple-900/30 rounded-lg p-4">
+                        <!-- Dynamic content -->
                     </div>
                 </div>
-    
-                <!-- Accessories and Support -->
-                <div>
-                    <h4 class="text-lg font-light mb-4 text-marcomm-dark dark:text-white">Accessories & Support Products</h4>
-                    <div id="accessories" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                        <!-- Will be dynamically populated -->
+            </div>
+            
+            <!-- Accessories and Support -->
+            <div>
+                <h4 class="text-lg font-semibold mb-4 text-gray-900 dark:text-white">Accessories & Support Products</h4>
+                <div id="accessories" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- Accessory Cards will follow the same pattern -->
+                    <div class="bg-amber-50 dark:bg-amber-900/30 rounded-lg p-4">
+                        <!-- Dynamic content -->
+                    </div>
+                    <div class="bg-blue-50 dark:bg-blue-900/30 rounded-lg p-4">
+                        <!-- Dynamic content -->
+                    </div>
+                    <div class="bg-green-50 dark:bg-green-900/30 rounded-lg p-4">
+                        <!-- Dynamic content -->
                     </div>
                 </div>
             </div>
         </div>
     </div>
+</div>
   <!-- </div> -->
     <!-- <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-6 transition-colors duration-200">
         <h3 class="text-lg font-semibold mb-4 text-gray-900 dark:text-white">Strategic Focus Areas</h3>
@@ -4866,25 +4885,26 @@ function calculateOverallShare(data, selectedCompany) {
 }
 
 function createMarketShareCard(detail) {
-    
-    const shareColor = detail.share >= 30 ? 'text-green-600' :
-                      detail.share >= 15 ? 'text-blue-600' : 'text-gray-600';
+    // Updated color scheme to match the dashboard aesthetic
+    const shareColor = detail.share >= 30 ? 'text-green-600 dark:text-green-400' :
+                      detail.share >= 15 ? 'text-blue-600 dark:text-blue-400' : 
+                      'text-gray-600 dark:text-gray-400';
     
     return `
-        <div class="bg-white dark:bg-gray-700 rounded-lg p-4 shadow-sm hover:shadow-md transition-shadow duration-200">
+        <div class="bg-white dark:bg-gray-800 rounded-lg p-4 shadow hover:shadow-md transition-shadow duration-200">
             <div class="flex items-center justify-between mb-2">
-                <span class="text-sm font-medium text-gray-600 dark:text-gray-300 truncate" title="${detail.title}">
+                <span class="text-sm font-semibold text-gray-900 dark:text-white truncate" title="${detail.title}">
                     ${detail.title.split(' - ')[1] || detail.title}
                 </span>
-                <span class="text-lg font-medium ${shareColor}">
+                <span class="text-lg font-semibold ${shareColor}">
                     ${formatPercentage(detail.share)}
                 </span>
             </div>
-            <div class="w-full bg-gray-200 rounded-full h-1.5 mb-2">
-                <div class="bg-marcomm-orange h-1.5 rounded-full" 
-                     style="width: ${Math.min(100, detail.share)}%"></div>
+            <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-1.5 mb-2">
+                <div class="bg-amber-500 dark:bg-amber-400 h-1.5 rounded-full"
+                    style="width: ${Math.min(100, detail.share)}%"></div>
             </div>
-            <div class="flex justify-between text-xs text-gray-500 dark:text-gray-400">
+            <div class="flex justify-between text-xs text-gray-600 dark:text-gray-400">
                 <span>Revenue: ${formatCurrency(detail.sales)}</span>
                 <span>${formatPercentage(detail.share)} of ${formatCurrency(detail.totalSales)}</span>
             </div>
@@ -4900,40 +4920,42 @@ function updateMarketShareSection(companyId) {
         4: "Starkey",
         5: "Oticon"
     };
-
+    
     const selectedCompany = companyNames[companyId];
     
-    // fetch('paste.txt')
-    //     .then(response => response.text())
-    //     .then(text => {
-            const data = VAdata
-            
-            // Calculate overall metrics
-            const overall = calculateOverallShare(data, selectedCompany);
-            document.getElementById('market-metric').textContent = formatPercentage(overall.percentage);
-            
-            // Update overall summary
-            const summaryDiv = document.getElementById('overall-summary');
-            summaryDiv.innerHTML = `
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    <div>
-                        <h5 class="text-sm font-medium text-gray-600 dark:text-gray-400 mb-1">Overall Market Share</h5>
-                        <p class="text-3xl font-light text-marcomm-orange">${formatPercentage(overall.percentage)}</p>
-                    </div>
-                    <div>
-                        <h5 class="text-sm font-medium text-gray-600 dark:text-gray-400 mb-1">Total Revenue</h5>
-                        <p class="text-2xl font-light text-marcomm-dark dark:text-white">${formatCurrency(overall.companySales)}</p>
-                    </div>
-                    <div>
-                        <h5 class="text-sm font-medium text-gray-600 dark:text-gray-400 mb-1">Market Size</h5>
-                        <p class="text-2xl font-light text-marcomm-dark dark:text-white">${formatCurrency(overall.marketSize)}</p>
-                    </div>
-                </div>
-                <div class="w-full bg-gray-200 rounded-full h-2 mt-4">
-                    <div class="bg-marcomm-orange h-2 rounded-full" 
-                         style="width: ${Math.min(100, overall.percentage)}%"></div>
-                </div>
-            `;
+    const data = VAdata;
+    // Calculate overall metrics
+    const overall = calculateOverallShare(data, selectedCompany);
+    document.getElementById('market-metric').textContent = formatPercentage(overall.percentage);
+    
+    // Update overall summary with new styling
+    const summaryDiv = document.getElementById('overall-summary');
+    summaryDiv.innerHTML = `
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div>
+                <h5 class="text-sm font-semibold text-gray-900 dark:text-white mb-1">Overall Market Share</h5>
+                <p class="text-3xl font-semibold text-amber-600 dark:text-amber-400">
+                    ${formatPercentage(overall.percentage)}
+                </p>
+            </div>
+            <div>
+                <h5 class="text-sm font-semibold text-gray-900 dark:text-white mb-1">Total Revenue</h5>
+                <p class="text-2xl font-semibold text-gray-900 dark:text-white">
+                    ${formatCurrency(overall.companySales)}
+                </p>
+            </div>
+            <div>
+                <h5 class="text-sm font-semibold text-gray-900 dark:text-white mb-1">Market Size</h5>
+                <p class="text-2xl font-semibold text-gray-900 dark:text-white">
+                    ${formatCurrency(overall.marketSize)}
+                </p>
+            </div>
+        </div>
+        <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2 mt-4">
+            <div class="bg-amber-500 dark:bg-amber-400 h-2 rounded-full"
+                style="width: ${Math.min(100, overall.percentage)}%"></div>
+        </div>
+    `;
 
             // Process market share details
             const marketShareDetails = data.map(group => {
