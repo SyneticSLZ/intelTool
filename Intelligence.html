@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="light">
+<html lang="en" class="dark-mode-transition dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -17,6 +17,7 @@
             }
         }
     </script>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 </head>
@@ -106,7 +107,9 @@
     <script src="DemantData.js"></script>
     <script src="intelligence-module.js"></script>
     <script>
-
+    if (localStorage.getItem('darkMode') !== 'false') {
+        document.documentElement.classList.add('dark');
+    }
         
         // Enhanced Dark mode functionality
         document.addEventListener('DOMContentLoaded', function() {

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="dark-mode-transition dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -27,6 +27,7 @@
             }
         }
     </script>
+
     <style>
         .dark-mode-transition {
             transition: background-color 0.3s ease, color 0.3s ease;
@@ -2689,6 +2690,10 @@
 
     <script type="module"  src="competitor-analysis.js"></script>
     <script>
+            if (localStorage.getItem('darkMode') !== 'false') {
+        document.documentElement.classList.add('dark');
+    }
+
             const VAdata = [
     {
     title: "GROUP 1 - CUSTOM IN-THE-EAR HEARING AIDS",

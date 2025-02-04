@@ -1,7 +1,7 @@
 
 
 <!DOCTYPE html>
-<html lang="en" class="dark-mode-transition">
+<html lang="en" class="dark-mode-transition dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -24,6 +24,15 @@
             }
         }
     </script>
+    <style>
+        /* Add this before other styles */
+        html.dark-mode-transition {
+            visibility: hidden;
+        }
+        html.dark-mode-transition.ready {
+            visibility: visible;
+        }
+    </style>
     <style>
         /* Dark mode transitions */
         .dark-mode-transition {
@@ -160,7 +169,11 @@
 
     <script src="competitor-list.js"></script>
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
+            if (localStorage.getItem('darkMode') !== 'false') {
+        document.documentElement.classList.add('dark');
+    }
+    
+    document.addEventListener('DOMContentLoaded', function() {
     // Check system preference initially
     const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
     const savedDarkMode = localStorage.getItem('darkMode');
@@ -172,6 +185,9 @@
         document.documentElement.classList.add('dark');
         localStorage.setItem('darkMode', 'true');
     }
+    
+    // Add ready class to show content
+    document.documentElement.classList.add('ready');
     
     // Dark mode toggle functionality
     const darkModeToggle = document.getElementById('dark-mode-toggle');
